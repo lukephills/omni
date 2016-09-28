@@ -1,0 +1,9 @@
+test/**/*.node.ts
+
+--recursive
+--require ignore-styles
+--require test/setup/setup-mocha.js
+--require test/setup/setup-dom.js
+--require ts-node/register
+--colors
+--debug
