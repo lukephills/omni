@@ -1,21 +1,50 @@
+
 {
-	"rules": {
-		"no-unused-expression": true,
-		"no-duplicate-variable": true,
-		"no-duplicate-key": true,
-		"no-unused-variable": true,
-		"curly": true,
-		"class-name": true,
-		"semicolon": [true, "always"],
-    "trailing-comma": false,
-		"triple-equals": true,
-		"no-unexternalized-strings": [
-			true,
-			{
-				"signatures": ["localize", "nls.localize"],
-				"keyIndex": 0,
-				"messageIndex": 1
-			}
-		]
-	}
+  "rules": {
+    "class-name": true,
+    "curly": true,
+    "label-position": true,
+    "label-undefined": true,
+    "max-line-length": [
+      true,
+      140
+    ],
+    "no-duplicate-key": true,
+    "no-duplicate-variable": true,
+    "no-empty": false,
+    "no-eval": true,
+    "no-unused-expression": true,
+    "no-unused-variable": true,
+    "no-unreachable": true,
+    "no-use-before-declare": true,
+    "no-var-keyword": true,
+    "object-literal-sort-keys": false,
+    "one-line": [
+      true,
+      "check-open-brace",
+      "check-catch",
+      "check-else",
+      "check-whitespace"
+    ],
+    "quotemark": [
+      true,
+      "single"
+    ],
+    "radix": true,
+    "triple-equals": [
+      true,
+      "allow-null-check"
+    ],
+    "typedef-whitespace": [
+      true,
+      {
+        "call-signature": "nospace",
+        "index-signature": "nospace",
+        "parameter": "nospace",
+        "property-declaration": "nospace",
+        "variable-declaration": "nospace"
+      }
+    ],
+    "variable-name": false
+  }
 }
