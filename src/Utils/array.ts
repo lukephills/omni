@@ -52,3 +52,15 @@ export function getIndexFromArray(position: number, array: any[]): number {
 export function getItemFromArrayPool<T>(item: number, pool: T[]): T {
 	return pool[getIndexFromArray(item, pool)];
 }
+
+
+/**
+ * Converts a nodelist into an array
+ */
+export function nodeListToArray(els: NodeList): Element[] {
+  if (els.length) {
+    return Array.prototype.slice.call(els);
+  } else {
+    return [];
+  }
+}

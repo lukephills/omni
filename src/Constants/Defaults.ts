@@ -8,7 +8,45 @@ export const WAVEFORMS: WaveformStringType[] = [
 	'sawtooth',
 ]
 
+/**
+ * Colors
+ */
+export const palette = {
+  grey: 'rgb(198,199,192)', // grey
+  green: 'rgb(222,250,214)', // green
+  blue: 'rgb(194,227,252)', // blue
+  peach: 'rgb(252,224,204)', // peach
+  pink: 'rgb(248,204,228)', // pink
+  lightBlue: 'rgb(215,251,247)', // light blue
+  yellow: 'rgb(250,230,176)', // yellow
+  white: 'rgb(254,254,245)', // white-cream
+};
+
+
+// 	'rgb(198,199,192)', //grey
+// 	'rgb(215,251,247)', //light blue
+// 	'rgb(248,204,228)', //pink
+// 	'rgb(222,250,214)', //green
+// 	'rgb(181,195,229)', //purple
+// 	'rgb(252,224,204)', //peach
+// 	'rgb(194,227,252)', //blue
+// 	'rgb(250,230,176)', //yellow
+
+const colors: string[] = [
+  // 'rgb(198,199,192)', // grey
+  'rgba(210,211,209,1)',
+  'rgb(222,250,214)', // green
+  'rgb(194,227,252)', // blue
+  'rgb(252,224,204)', // peach
+  'rgb(248,204,228)', // pink
+  'rgb(222,250,214)', // green
+  'rgb(194,227,252)', // blue
+];
+
+
 export const DEFAULTS: any = {
+
+
 	Analyser: {
 		maxDecibels: -25,
 		minDecibels: -100,

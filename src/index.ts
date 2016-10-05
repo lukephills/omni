@@ -3,13 +3,12 @@ import 'normalize.css';
 import './Styles/styles.scss';
 import App from './Components/app';
 
+export let Omni = new App();
 
 const startApp = () => {
 	// Prevent touch scroll event on document //
 	// document.addEventListener('touchmove', function(e){e.preventDefault()}, false);
-  const app = new App();
-  // app.init();
-
+  Omni.init();
 }
 
 

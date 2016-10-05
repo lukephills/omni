@@ -1,12 +1,11 @@
-import {createIOSSafeAudioContext} from '../Utils/Audio/iOS';
-require('../Utils/audio-shim');
-import { DEFAULTS } from '../Constants/Defaults';
-import * as CanvasUtils from '../Utils/CanvasUtils';
-import {WaveformStringType} from '../Constants/AppTypings';
-import Looper from '../Utils/Looper/Looper';
-import {getFrequencyFromNoteIndexInScale, Scale} from '../Utils/Audio/scales';
-import Sine from './Audio/Sine';
-import Voice from './Audio/Voice';
+import {createIOSSafeAudioContext} from '../../Utils/Audio/iOS';
+import '../../Utils/audio-shim';
+import { DEFAULTS } from '../../Constants/Defaults';
+import * as CanvasUtils from '../../Utils/CanvasUtils';
+import {WaveformStringType} from '../../Constants/AppTypings';
+import Looper from '../../Utils/Looper/Looper';
+import {getFrequencyFromNoteIndexInScale, Scale} from '../../Utils/Audio/scales';
+import Sine from './Sine';
 
 interface IAnalysers {
 	live: AnalyserNode;
@@ -30,7 +29,7 @@ interface IOsc {
   osc: Sine;
 }
 
-class Audio {
+class Synth {
 
 	public context: AudioContext;
 	public voiceCount: number = DEFAULTS.VoiceCount;
@@ -269,4 +268,4 @@ class Audio {
 	}
 
 }
-export default Audio;
+export default Synth;

@@ -14,12 +14,33 @@ export function getPixelRatio(): number {
  * @param height
  * @returns {HTMLCanvasElement}
  */
-export function canvasResize(canvas: HTMLCanvasElement, width: number, height: number): HTMLCanvasElement {
+export function canvasResize(
+    canvas: HTMLCanvasElement,
+    width: number = canvas.clientWidth,
+    height: number = canvas.clientHeight
+  ): HTMLCanvasElement {
+
 	const ratio: number = getPixelRatio();
 	canvas.width = width * ratio;
 	canvas.height = height * ratio;
 	canvas.style.width = width + 'px';
 	canvas.style.height = height + 'px';
+	canvas.getContext('2d').setTransform(ratio, 0, 0, ratio, 0, 0);
+	return canvas;
+}
+
+/**
+ * Resets the size of the canvas based on the devices pixel ratio
+ */
+export function canvasRenderAtPixelRatio(
+    canvas: HTMLCanvasElement,
+    width: number = canvas.clientWidth,
+    height: number = canvas.clientHeight
+  ): HTMLCanvasElement {
+
+  const ratio: number = getPixelRatio();
+	canvas.width = width * ratio;
+	canvas.height = height * ratio;
 	canvas.getContext('2d').setTransform(ratio, 0, 0, ratio, 0, 0);
 	return canvas;
 }
@@ -120,7 +141,7 @@ export function getCoordinateFromEventAsPercentageWithinElement(e: MouseEvent | 
 // }
 
 
-export function getPercentageBetweenRange(x: number, min: number, max: number){
+export function getPercentageBetweenRange(x: number, min: number, max: number) {
 	return (100 * x)/(max - min);
 }
 
