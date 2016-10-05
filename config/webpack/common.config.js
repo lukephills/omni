@@ -3,7 +3,7 @@ const path = require('path');
 const ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 
 module.exports = {
-	entry: { 'app': './src/app.ts' },
+	entry: { 'index': './src/index.ts' },
 	resolve: {
 		extensions: ['', '.ts', '.tsx', '.js'],
 		root: path.resolve('src/'),
@@ -14,7 +14,7 @@ module.exports = {
       loaders: [
         {
           test: /\.tsx?$/,
-          loader: 'babel-loader!awesome-typescript-loader',
+          loader: 'awesome-typescript-loader',
           exclude: [/\.(browser|node|e2e)\.ts$/]
         },
         {

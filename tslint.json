@@ -2,13 +2,9 @@
 {
   "rules": {
     "class-name": true,
-    "curly": true,
+
     "label-position": true,
     "label-undefined": true,
-    "max-line-length": [
-      true,
-      140
-    ],
     "no-duplicate-key": true,
     "no-duplicate-variable": true,
     "no-empty": false,
@@ -25,10 +21,6 @@
       "check-catch",
       "check-else",
       "check-whitespace"
-    ],
-    "quotemark": [
-      true,
-      "single"
     ],
     "radix": true,
     "triple-equals": [
