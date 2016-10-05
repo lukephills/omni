@@ -23,61 +23,62 @@
         })(); </script>
 </head>
 <body>
-<div id="app" class="container">
-    <nav class="flex space-between">
-        <h1>omni</h1>
-        <ul class="flex">
-            <li><a href="" id="recordBtn" class="icon-record btn-record"></a></li>
-            <li><a href="" id="playBtn" class="icon-record btn-play"></a></li>
-            <li><a href="" id="menuBtn" class="icon-record btn-menu"></a></li>
-        </ul>
-    </nav>
-    <div class="flex middle-section">
-        <section class="xy-pad xs-col-12 sm-col-4 rel">
-            <h5 id="yEffectName" class="y-effect-name abs">filter</h5>
-            <canvas id="xyPad" class="abs"></canvas>
-            <h5 id="xEffectName" class="x-effect-name abs">reverb</h5>
-        </section>
-        <section class="pitch-constellation xs-col-12 sm-col-4">
-            <canvas id="pitchConstellation"></canvas>
-        </section>
-        <section class="scale-selector xs-col-12 sm-col-4">
-            <a href="" id="scaleSelectPrevBtn" class="icon-arrow-up"></a>
-            <h1 id="scaleName" class="scale-name">xenakis</h1>
-            <a href="" id="scaleSelectNextBtn" class="icon-arrow-down"></a>
-            <div class="fav-scale-controller">
-                <a href="" id="addFavScaleBtn" class="icon-plus btn-add-fav-scale"></a>
-                <a href="" id="removeFavScaleBtn" class="icon-minus btn-remove-fav-scale is-hidden"></a>
-            </div>
-        </section>
+<div id="app" class="container fixed-window">
+    <div class="flex main-view">
+      <nav class="flex space-between nav">
+          <h1>omni</h1>
+          <ul class="flex space-between">
+              <li><a href="" id="recordBtn" class="icon-record"></a></li>
+              <li><a href="" id="playBtn" class="icon-play"></a></li>
+              <li><a href="" id="menuBtn" class="icon-menu"></a></li>
+          </ul>
+      </nav>
+      <div class="flex middle-section">
+          <section class="xy-pad-section rel">
+              <div class="xy-pad">
+                <canvas id="xyPad" class="abs"></canvas>
+              </div>
+          </section>
+          <section class="pitch-constellation">
+              <canvas id="pitchConstellation"></canvas>
+          </section>
+          <section class="scale-selector">
+              <span href="" id="scaleSelectPrevBtn" class="icon-arrow-up"></span>
+              <h1 id="scaleName" class="scale-name">xenakis</h1>
+              <span href="" id="scaleSelectNextBtn" class="icon-arrow-down"></span>
+          </section>
+          <div class="fav-scale-controller">
+              <a href="" id="addFavScaleBtn" class="icon-plus"></a>
+              <a href="" id="removeFavScaleBtn" class="icon-minus is-hidden"></a>
+          </div>
+      </div>
+      <div class="flex space-between selector-section">
+          <section class="drone-selector">
+              <!--<h5>drone</h5>-->
+              <ul class="flex" id="drone-selector-buttons">
+                  <li>i</li>
+                  <li>ii</li>
+                  <li>iii</li>
+                  <li>iv</li>
+                  <li class="is-selected">v</li>
+                  <li>vi</li>
+                  <li>vii</li>
+                  <li>i</li>
+              </ul>
+          </section>
+          <section class="fav-scale-selector">
+              <ul class="flex">
+                  <li>locrian maj3</li>
+                  <li>major triad</li>
+                  <li class="is-selected">xenakis</li>
+                  <li>burmese</li>
+              </ul>
+          </section>
+      </div>
+      <section class="flex harp">
+          <canvas id="harp"></canvas>
+      </section>
     </div>
-    <div class="flex space-between">
-        <section class="drone-selector">
-            <h5>drone</h5>
-            <ul class="flex">
-                <li>i</li>
-                <li>ii</li>
-                <li>iii</li>
-                <li>iv</li>
-                <li>v</li>
-                <li class="is-selected">vi</li>
-                <li>vii</li>
-                <li>i</li>
-            </ul>
-        </section>
-        <section class="fav-scale-selector">
-            <h5>saved scales</h5>
-            <ul class="flex">
-                <li class="is-selected">locrian maj3</li>
-                <li>major triad</li>
-                <li>xenakis</li>
-                <li>burmese</li>
-            </ul>
-        </section>
-    </div>
-    <section class="harp">
-        <canvas id="harp"></canvas>
-    </section>
 
     <div class="settings-overlay is-hidden">
         <nav>
@@ -88,9 +89,9 @@
             </ul>
         </nav>
         <section class="scaleInfoSelector">
-            <a href="" id="scaleSelectPrevBtn" class="icon-arrow-left"></a>
-            <h1 class="scale-name js-scale-name">xenakis</h1>
-            <a href="" id="scaleSelectNextBtn" class="icon-arrow-right"></a>
+            <span id="scaleSelectPrevBtn" class="icon-arrow-left"></span>
+            <h1 id="scaleName" class="scale-name js-scale-name">xenakis</h1>
+            <span id="scaleSelectNextBtn" class="icon-arrow-right"></span>
             <p id="scaleDescription">A Fox who had never seen a Lion one day met one, and was so terrified at the sight of him that he was ready to die with fear.
 </p>
             <p class="bold">frequencies starting on middle c</p>
