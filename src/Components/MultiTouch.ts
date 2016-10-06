@@ -17,7 +17,7 @@ class MultiTouch {
 	constructor(el, callbacks: MultiTouchCallbacks) {
 		this.callbacks = callbacks;
 		this._pointers = {};
-		
+
 		// Bind listeners
 		this.onMouseDown = this.onMouseDown.bind(this);
 		this.onMouseUp = this.onMouseUp.bind(this);
@@ -29,7 +29,7 @@ class MultiTouch {
 		el.addEventListener('touchmove', this.onTouchMove.bind(this));
 	}
 
-	onMouseDown(e){
+	onMouseDown(e) {
 		window.addEventListener('mouseup', this.onMouseUp);
 		window.addEventListener('mousemove', this.onMouseMove);
 
@@ -41,7 +41,7 @@ class MultiTouch {
 		}
 	}
 
-	onTouchStart(e: TouchEvent){
+	onTouchStart(e: TouchEvent) {
 		e.preventDefault();
 
 		const touches = e.changedTouches;
@@ -58,12 +58,12 @@ class MultiTouch {
 		e.preventDefault();
 		// if this pointer exists
 		if (this._pointers[MOUSE_ID]) {
-			if (this.callbacks.onMouseUp){
+			if (this.callbacks.onMouseUp) {
 				this.callbacks.onMouseUp(e, MOUSE_ID);
 			}
 			delete this._pointers[MOUSE_ID];
 		}
-		
+
 		window.removeEventListener('mouseup', this.onMouseUp)
 		window.removeEventListener('mousemove', this.onMouseMove)
 	}

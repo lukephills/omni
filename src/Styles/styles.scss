@@ -323,14 +323,29 @@ li {
   margin: auto;
   text-align: center;
 }
-.pitch-constellation {
+.pitch-constellation-section {
   display: flex;
   justify-content: center;
   .middle-section & {
     flex: 4;
   }
-  canvas {
-    width: 100%;
+  .circle {
+    $d: 340px;
+    width: $d;
+    height: $d;
+    border-radius: 50%;
+    background: rgba(255,105,105,1);
+    position: relative;
+    div {
+      $lineWidth: 3px;
+      width: $lineWidth;
+      height: $d / 2;
+      position: absolute;
+      background: rgba(0,0,0,1);
+      left: ($d / 2) - ($lineWidth/2);
+      transform-origin: bottom;
+      transition: transform 0.2s ease-in-out;
+    }
   }
   min-width: auto;
   @include sm {

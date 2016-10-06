@@ -1,14 +1,10 @@
-// import {Omni} from '../index.ts'
-
-// TODO: switch to short list
-import {scales} from '../Utils/Scales/scales-shortlist';
+import {Omni} from '../index.ts'
 
 class ScaleSelector {
 
   private activeScaleListItem: Element;
 	private activeScaleClassName: string =  'scale-list-item--active';
-  private prevBtnEl = document.getElementById('scaleSelectPrevBtn');
-  private nextBtnEl = document.getElementById('scaleSelectNextBtn');
+
   private scaleNameEl = document.getElementById('scaleName');
   private scaleNameList = [];
   private scaleIdx: number = 0;
@@ -18,29 +14,15 @@ class ScaleSelector {
     // this.appendScaleChoices();
     // this.scaleNameEl.innerHTML = scales
 
-    for (let scaleName in scales) {
+    for (let scaleName in Omni.scales) {
 			if (scaleName) {
         this.scaleNameList.push(scaleName);
 		  }
     }
 
     console.log(this.scaleNameList);
-    this.prev = this.prev.bind(this);
-    this.next = this.next.bind(this);
-
-    this.prevBtnEl.addEventListener('click', this.prev);
-    this.nextBtnEl.addEventListener('click', this.next);
-
-    // this.prevBtnEl.addEventListener('mousedown', this.pointerDown.bind(this));
-
-
 
     this.render();
-  }
-
-  // TODO: scroll faster when pointer is down and holding
-  pointerDown() {
-
   }
 
   prev() {
@@ -65,23 +47,8 @@ class ScaleSelector {
 
   render() {
     this.scaleNameEl.innerHTML = this.scaleNameList[this.scaleIdx];
+    Omni.setScale(this.scaleNameList[this.scaleIdx]);
   }
-
-  /**
-   * add scales to carousel
-   */
-	// appendScaleChoices() {
-	// 	// append list items to the container
-	// 	let listItems = '';
-	// 	for (let key in Scales) {
-	// 		if (key) {
-  //       listItems += `<li class="scale-list-item ${key}" data-scale="${key}">${key}</li>`;
-	// 	  }
-  //   }
-	// 	this.container.innerHTML = listItems;
-	// 	this.container.addEventListener('click', this.handleScaleChange.bind(this), false);
-	// }
-
 
   /**
    * on scale changed
