@@ -2,18 +2,19 @@ import Harp from './Harp';
 import PitchConstellation from './PitchConstellation';
 import ScaleSelector from './ScaleSelector';
 import DroneSelector from './DroneSelector';
-import {scales} from '../Utils/Scales/scales-shortlist';
+import {scales, IScale} from '../Utils/Scales/scales-shortlist';
+import {getFrequencyTET} from '../Utils/Audio/scales';
 
 interface IState {
   droneIdx: number;
   scale: IScale;
 }
 
-interface IScale {
-  name: string;
-  frequencies: number[];
-  description: string;
-}
+// interface IScale {
+//   name: string;
+//   frequencies: number[];
+//   description: string;
+// }
 
 class App {
 
@@ -22,13 +23,14 @@ class App {
   pitchConstellation: PitchConstellation;
   scaleSelector: ScaleSelector;
   droneSelector: DroneSelector;
-  scales = scales;
+  scales: IScale[] = scales;
   private prevScaleBtn = document.getElementById('scaleSelectPrevBtn');
   private nextScaleBtn = document.getElementById('scaleSelectNextBtn');
 
 
 
   constructor() {
+
 
     // DEFAULT STATE
     this.state = {
@@ -86,19 +88,18 @@ class App {
     this.scaleSelector.next();
   }
 
-  setScale(scaleName: string, cb: (state: IState) => any = function(){}) {
-    this.state.scale = {
-      frequencies: this.scales[scaleName].frequencies,
-      name: scaleName,
-      description: this.scales[scaleName].description,
-    }
+  setScale(scaleIdx: number = 0, cb: (state: IState) => any = function(){}) {
+
+    this.state.scale = this.scales[scaleIdx];
+
     console.log('new state =', this.state);
     cb(this.state);
     this.scaleDidChange();
   }
 
   scaleDidChange() {
-    this.pitchConstellation.drawLines(this.randomNumberBetween(3,12));
+    this.pitchConstellation.drawLines(this.state.scale.frequencies);
+    this.harp.updateScale(this.state.scale.frequencies);
   }
 
   randomNumberBetween(min, max) {
@@ -117,6 +118,7 @@ class App {
    */
   draw() {
     this.harp.draw();
+    this.pitchConstellation.drawLines(this.state.scale.frequencies);
   }
 
 

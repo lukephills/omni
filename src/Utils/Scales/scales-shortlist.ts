@@ -1,14 +1,6 @@
-//TODO: check this
-import {notEqual} from 'assert';
-const ratio = 1.0594645048603144;
-const middleC = 261.6255653006;
-const NOTE_STRINGS = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B']
+import {getFrequencyTET} from '../Audio/scales';
 
-// Gets frequency from degree in 12 tone equal temp
-function tET(degree) {
-  //TODO: instead of fixed 12 tone ratio, calculate it
-  return middleC * Math.pow(ratio, degree);
-}
+const NOTE_STRINGS = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B']
 
 const midiPitchC = 60
 //TODO: all the conversion functions needed http://www.flutopedia.com/pitch_to_frequency.htm
@@ -53,219 +45,263 @@ export function midiToNote(midi: number): string {
 //TODO: Euler https://en.wikipedia.org/wiki/Euler%E2%80%93Fokker_genus
 //TODO: Bohlen-Pierce https://en.wikipedia.org/wiki/Bohlen%E2%80%93Pierce_scale
 
+export interface IScale {
+  name: string;
+  intervals?: number[];
+  frequencies?: number[];
+  description: string;
+}
 
-export const scales = {
-  'Acoustic': {
+const _scales: IScale[] = [
+  {
+    name: 'Acoustic',
     intervals: [0, 2, 4, 6, 7, 9],
     description: 'The acoustic scale, (also known as the overtone scale) differs from the major scale in having a raised fourth and lowered seventh scale degree. Traditionally, the scale persists in the music of peoples of South Siberia, especially in Tyvan music.'
   },
-  'Adonai Malakh': {
+  {
+    name: 'Adonai Malakh',
     intervals: [0, 2, 4, 5, 7, 8, 10],
     description: 'The Adonai malakh scale is a musical mode used in Jewish music. \'Adonai malakh\' (\'God is King\'), a line from Psalm 93, is set using the Adonai malakh scale at the close of the introduction to the Kabalat Shabat (Friday evening synagogue service).'
   },
-  'Aeolian (Natural Minor)': {
+  {
+    name: 'Aeolian',
     intervals: [0, 2, 3, 5, 7, 8, 10],
-
     description: `The Aeolian mode is also known as the 'natural minor' scale and has the same notes as its relative major scale, but is built starting from the sixth note. On a piano using only white keys, the Aeolian mode would start from A`
   },
-  'Algerian': {
+  {
+    name: 'Algerian',
     intervals: [0, 2, 3, 6, 7, 8, 11],
     description: 'The Algerian Scale is a scale which is frequently found in Algerian, Berber, and North African music. The frequent use of 1.5 steps(or whole-and-a-half steps) in the scale helps create a sound which is commonly associated with Moorish music.'
   },
-  'Altered': {
+  {
+    name: 'Altered',
     intervals: [0, 1, 3, 4, 6, 8, 10],
     description: ''
   },
-  'Augmented': {
+  {
+    name: 'Augmented',
     intervals: [0, 3, 4, 7, 8, 11],
     description: ''
   },
-  'Bebop Dominant': {
+  {
+    name: 'Bebop Dominant',
     intervals: [0, 2, 4, 5, 7, 9, 10, 11],
     description: ''
   },
-  'Blues': {
+  {
+    name: 'Blues',
     intervals: [0, 3, 5, 6, 7, 10],
     description: ''
   },
-  'Chromatic': {
+  {
+    name: 'Chromatic',
     intervals: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
     description: ''
   },
-  'Dorian': {
+  {
+    name: 'Dorian',
     intervals: [0, 2, 3, 5, 7, 9, 10],
     description: ''
   },
-  'Double Harmonic': {
+  {
+    name: 'Double Harmonic',
     intervals: [0, 1, 4, 5, 7, 8, 11],
     description: ''
   },
-  'Enigmatic': {
+  {
+    name: 'Enigmatic',
     intervals: [0, 1, 4, 6, 8, 10, 11],
     description: ''
   },
-  'Flamenco': {
+  {
+    name: 'Flamenco',
     intervals: [0, 1, 4, 5, 7, 8, 11],
     description: ''
   },
-  'Gypsy': {
+  {
+    name: 'Gypsy',
     intervals: [0, 2, 3, 6, 7, 8, 10],
     description: ''
   },
-  'Half Diminished': {
+  {
+    name: 'Half Diminished',
     intervals: [0, 2, 3, 5, 6, 8, 10],
     description: ''
   },
-  'Harmonic Major': {
+  {
+    name: 'Harmonic Major',
     intervals: [0, 2, 4, 5, 7, 8, 11],
     description: ''
   },
-  'Harmonic Minor': {
+  {
+    name: 'Harmonic Minor',
     intervals: [0, 2, 3, 5, 7, 8, 11],
     description: ''
   },
-  'Hirajoshi': {
+  {
+    name: 'Hirajoshi',
     intervals: [0, 2, 3, 7, 8],
     description: ''
   },
-  'Hungarian Gypsy': {
+  {
+    name: 'Hungarian Gypsy',
     intervals: [0, 2, 3, 6, 7, 8, 11],
     description: ''
   },
-  'Hungarian Minor': {
+  {
+    name: 'Hungarian Minor',
     intervals: [0, 2, 3, 6, 7, 8, 11],
     description: ''
   },
   //TODO: check - is same as gypsy
-  'Insen': {
+  {
+    name: 'Insen',
     intervals: [0, 1, 5, 7, 10],
     description: ''
   },
-  'Major': {
+  {
+    name: 'Major',
     intervals: [0, 2, 4, 5, 7, 9, 11],
     description: ''
   },
-  'Istrian': {
+  {
+    name: 'Istrian',
     intervals: [0, 1, 3, 4, 6, 7],
     description: ''
   },
-  'Iwato': {
+  {
+    name: 'Iwato',
     intervals: [0, 1, 5, 6, 10],
     description: ''
   },
-  'Just Major': {
+  {
+    name: 'Just Major',
     frequencies: [261.6255653006, 294.328760963175, 327.03195662575, 348.8340870674666, 392.4383479509, 436.04260883433335, 490.54793493862496],
     description: `Major scale using 'just' tuning. The frequencies of notes are related by ratios of small whole numbers. Any interval tuned in this way is called a pure or just interval. Pure intervals are important in music because they naturally tend to be perceived by humans as consonant: pleasing or satisfying. This differs from Equal Temperament where an octave is divided into 12 equal parts.`
   },
-  'Locrian': {
+  {
+    name: 'Locrian',
     intervals: [0, 1, 3, 5, 6, 8, 10],
     description: ''
   },
-  'Lydian Augmented': {
+  {
+    name: 'Lydian Augmented',
     intervals: [0, 2, 4, 6, 8, 9, 11],
     description: ''
   },
-  'Lydian': {
+  {
+    name: 'Lydian',
     intervals: [0, 2, 4, 6, 7, 9, 11],
     description: ''
   },
-  'Major Bepop': {
+  {
+    name: 'Major Bepop',
     intervals: [0, 2, 4, 5, 7, 8, 9, 11],
     description: ''
   },
-  'Major Locrian': {
+  {
+    name: 'Major Locrian',
     intervals: [0, 2, 4, 5, 6, 8, 10],
     description: ''
   },
-  'Major Pentatonic': {
+  {
+    name: 'Major Pentatonic',
     intervals: [0, 2, 4, 7, 9],
     description: ''
   },
-  'Melodic Minor': {
+  {
+    name: 'Melodic Minor',
     intervals: [0, 2, 3, 5, 7, 8, 9, 10, 11],
     description: ''
   },
-  'Melodic Minor Ascending': {
+  {
+    name: 'Melodic Minor Ascending',
     intervals: [0, 2, 3, 5, 7, 9, 11],
     description: ''
   },
-  'Minor Pentatonic': {
+  {
+    name: 'Minor Pentatonic',
     intervals: [0, 3, 5, 7, 10],
     description: ''
   },
-  'Minyō': {
+  {
+    name: 'Minyō',
     intervals: [0, 2, 5, 7, 9],
     description: ''
   },
-  'Mixolydian': {
+  {
+    name: 'Mixolydian',
     intervals: [0, 2, 4, 5, 7, 9, 10],
     description: ''
   },
-  'Neapolitan Major': {
+  {
+    name: 'Neapolitan Major',
     intervals: [0, 1, 3, 5, 7, 9, 11],
     description: ''
   },
-  'Neapolitan Minor': {
+  {
+    name: 'Neapolitan Minor',
     intervals: [0, 1, 3, 5, 7, 8, 11],
     description: ''
   },
-  'Octatonic': {
+  {
+    name: 'Octatonic',
     intervals: [0, 2, 3, 5, 6, 8, 9, 11],
     description: ''
   },
-  'Persian': {
+  {
+    name: 'Persian',
     intervals: [0, 1, 4, 5, 6, 8, 11],
     description: ''
   },
-  'Phrygian Dominant': {
+  {
+    name: 'Phrygian Dominant',
     intervals: [0, 1, 4, 5, 7, 8, 10],
     description: '' //https://en.wikipedia.org/wiki/Phrygian_dominant_scale
   },
-  'Phrygian': {
+  {
+    name: 'Phrygian',
     intervals: [0, 1, 3, 5, 7, 8, 10],
     description: ''
   },
-  'Prometheus': {
+  {
+    name: 'Prometheus',
     intervals: [0, 2, 4, 6, 9, 10],
     description: ''
   },
-  'Tritone': {
+  {
+    name: 'Tritone',
     intervals: [0, 1, 4, 6, 7, 10],
     description: ''
   },
-  'Ukranian Dorian': {
+  {
+    name: 'Ukranian Dorian',
     intervals: [0, 2, 3, 6, 7, 9, 10],
     description: ''
   },
-  'Whole Tone': {
+  {
+    name: 'Whole Tone',
     intervals: [0, 2, 4, 6, 8, 10],
     description: ''
   },
-  'Major Triad': {
+  {
+    name: 'Major Triad',
     intervals: [0, 4, 7],
     description: 'The three notes that make up a major chord include the root note, a major third and a perfect fifth. It is one of the basic building blocks of tonal music, the Western common practice period and Western pop, folk and rock music.'
   },
-  'Minor Triad': {
+  {
+    name: 'Minor Triad',
     intervals: [0, 3, 7],
     description: 'The minor chord, along with the major chord, is one of the basic building blocks of tonal music. In comparison with a major chord, minor has a darker and sadder sound.'
   },
 
-  'just': {
+  {
+    name: 'just',
     frequencies: [261.6255653006, 261.6255653006 * (9 / 8), 261.6255653006 * (5 / 4), 261.6255653006 * (4 / 3), 261.6255653006 * (3 / 2), 261.6255653006 * (5 / 3), 261.6255653006 * (15 / 8)],
     description: '5 out of 19-tET',
   },
-  'EqualTemp': {
-    frequencies: [tET(0),
-    tET(2),
-    tET(4),
-    tET(5),
-    tET(7),
-    tET(9),
-    tET(11),
-    ],
-    description: '5 out of 19-tET'
-  },
-  'olympos': {
+  {
+    name: 'olympos',
     frequencies: [
       261.6255653006,
       279.06726965397,
@@ -275,7 +311,8 @@ export const scales = {
     ],
     description: 'Scale of ancient Greek flutist Olympos, 6th century BC as reported by Partch'
   },
-  'badings1': {
+  {
+    name: 'badings1',
     frequencies: [
       261.6255653006,
       294.32876096318,
@@ -287,7 +324,8 @@ export const scales = {
     ],
     description: 'Henk Badings, harmonic scale, Lydomixolydisch'
   },
-  'bolivia': {
+  {
+    name: 'bolivia',
     frequencies: [
       261.6255653006,
       315.83481057014,
@@ -300,7 +338,8 @@ export const scales = {
     ],
     description: 'Observed scale from pan-pipe from La Paz. 1/1=171 Hz.'
   },
-  'breed-blues1': {
+  {
+    name: 'breed-blues1',
     frequencies: [
       261.6255653006,
       296.76515515861,
@@ -312,7 +351,8 @@ export const scales = {
     ],
     description: `Graham Breed's blues scale in 22-tET`
   },
-  'breed-kleismic': {
+  {
+    name: 'breed-kleismic',
     frequencies: [
       261.6255653006,
       272.15636435185,
@@ -324,7 +364,8 @@ export const scales = {
     ],
     description: 'Kleismic temperament, g=317.080, 5-limit'
   },
-  'burma3': {
+  {
+    name: 'burma3',
     frequencies: [
       261.6255653006,
       287.71029735626,
@@ -336,7 +377,8 @@ export const scales = {
     ],
     description: 'Burmese scale, von Hornbostel'
   },
-  'burt11': {
+  {
+    name: 'burt11',
     frequencies: [
       261.6255653006,
       344.24416486921,
@@ -353,7 +395,8 @@ export const scales = {
     ],
     description: `W. Burt's 19enhharm #11`
   },
-  'burt3': {
+  {
+    name: 'burt3',
     frequencies: [
       261.6255653006,
       281.75060878526,
@@ -370,7 +413,8 @@ export const scales = {
     ],
     description: `W. Burt's 13enhharm #3`
   },
-  'burt_primes': {
+  {
+    name: 'burt primes',
     frequencies: [
       261.6255653006,
       267.75741448733,
@@ -429,7 +473,8 @@ export const scales = {
     ],
     description: 'Warren Burt, primes until 251. \'Some Numbers\', Dec. 2002'
   },
-  'bushmen': {
+  {
+    name: 'bushmen',
     frequencies: [
       261.6255653006,
       347.0163224393,
@@ -438,7 +483,8 @@ export const scales = {
     ],
     description: 'Observed scale of South-African bushmen, almost (4 notes) equal pentatonic'
   },
-  'degung1': {
+  {
+    name: 'degung1',
     frequencies: [
       261.6255653006,
       286.1303811777,
@@ -448,7 +494,8 @@ export const scales = {
     ],
     description: 'Gamelan Degung, Kabupaten Sukabumi. 1/1=363 Hz'
   },
-  'degung6': {
+  {
+    name: 'degung6',
     frequencies: [
       261.6255653006,
       273.29426590363,
@@ -458,7 +505,8 @@ export const scales = {
     ],
     description: 'Gamelan Degung, Kacherbonan Cheribon. 1/1=426 Hz'
   },
-  'diablack': {
+  {
+    name: 'diablack',
     frequencies: [
       261.6255653006,
       279.06726965397,
@@ -473,7 +521,8 @@ export const scales = {
     ],
     description: 'Unique 256/245&2048/2025 Fokker block'
   },
-  'diamond_tetr': {
+  {
+    name: 'diamond tetr',
     frequencies: [
       261.6255653006,
       271.31540105247,
@@ -486,7 +535,8 @@ export const scales = {
     ],
     description: `Tetrachord Modular Diamond based on Archytas's Enharmonic`
   },
-  'diaphonic_5': {
+  {
+    name: 'diaphonic 5',
     frequencies: [
       261.6255653006,
       299.00064605783,
@@ -496,7 +546,8 @@ export const scales = {
     ],
     description: 'D5-tone Diaphonic Cycle'
   },
-  'diaphonic_7': {
+  {
+    name: 'diaphonic 7',
     frequencies: [
       261.6255653006,
       285.40970760065,
@@ -508,7 +559,8 @@ export const scales = {
     ],
     description: '7-tone Diaphonic Cycle, disjunctive form on 4/3 and 3/2'
   },
-  'diat15_inv': {
+  {
+    name: 'diat15 inv',
     frequencies: [
       261.6255653006,
       279.06726965397,
@@ -521,7 +573,8 @@ export const scales = {
     ],
     description: 'Inverted Tonos-15 Harmonia, a harmonic series from 15 from 30.'
   },
-  'diat_enh': {
+  {
+    name: 'diat enh',
     frequencies: [
       261.6255653006,
       269.29177952703,
@@ -533,7 +586,8 @@ export const scales = {
     ],
     description: 'Diat. + Enharm. Diesis, Dorian Mode'
   },
-  'diat_gold': {
+  {
+    name: 'diat gold',
     frequencies: [
       261.6255653006,
       292.38332274669,
@@ -545,7 +599,8 @@ export const scales = {
     ],
     description: 'Diatonic scale with ratio between whole and half tone the Golden Section'
   },
-  'diat_hemchrom': {
+  {
+    name: 'diat hemchrom',
     frequencies: [
       261.6255653006,
       273.20871865617,
@@ -557,7 +612,8 @@ export const scales = {
     ],
     description: 'Diat. + Hem. Chrom. Diesis, Another genus of Aristoxenos, Dorian Mode'
   },
-  'didy_enh': {
+  {
+    name: 'didy enh',
     frequencies: [
       261.6255653006,
       270.06509966514,
@@ -569,7 +625,8 @@ export const scales = {
     ],
     description: `Dorian mode of Didymos's Enharmonic`
   },
-  'chin_huang': {
+  {
+    name: 'chin huang',
     frequencies: [
       261.6255653006,
       331.11985608357,
@@ -580,7 +637,8 @@ export const scales = {
     ],
     description: 'Huang Zhong qin tuning'
   },
-  'chin_lusheng': {
+  {
+    name: 'chin lusheng',
     frequencies: [
       261.6255653006,
       316.38258506467,
@@ -591,7 +649,8 @@ export const scales = {
     ],
     description: `Observed tuning of a small Lusheng, 1/1=d, OdC '97'`
   },
-  'zalzal2': {
+  {
+    name: 'zalzal2',
     frequencies: [
       261.6255653006,
       294.32876096318,
@@ -603,7 +662,8 @@ export const scales = {
     ],
     description: `Zalzal's Scale, a medieval Islamic with Ditone Diatonic & 10/9 x 13/12 x 72/65`
   },
-  'xenakis_chrom': {
+  {
+    name: 'xenakis chrom',
     frequencies: [
       261.6255653006,
       274.52698453615,
@@ -615,7 +675,8 @@ export const scales = {
     ],
     description: `Xenakis's Byzantine Liturgical mode, 5 + 19 + 6 parts`
   },
-  'xenakis_diat': {
+  {
+    name: 'xenakis diat',
     frequencies: [
       261.6255653006,
       293.66476791741,
@@ -627,7 +688,8 @@ export const scales = {
     ],
     description: `Xenakis's Byzantine Liturgical mode, 12 + 11 + 7 parts`
   },
-  'xenakis_schrom': {
+  {
+    name: 'xenakis schrom',
     frequencies: [
       261.6255653006,
       279.86396690685,
@@ -639,7 +701,8 @@ export const scales = {
     ],
     description: `Xenakis's Byzantine Liturgical mode, 7 + 16 + 7 parts`
   },
-  'mbira_zimb': {
+  {
+    name: 'mbira zimb',
     frequencies: [
       261.6255653006,
       276.86260193655,
@@ -652,7 +715,8 @@ export const scales = {
     ],
     description: 'Shona mbira scale'
   },
-  'sanza': {
+  {
+    name: 'sanza',
     frequencies: [
       261.6255653006,
       293.15632631094,
@@ -666,7 +730,8 @@ export const scales = {
     ],
     description: `African N'Gundi Sanza (idiophone; set of lamellas, thumb-plucked)`
   },
-  'sanza2': {
+  {
+    name: 'sanza2',
     frequencies: [
       261.6255653006,
       390.63923480058,
@@ -678,7 +743,8 @@ export const scales = {
     ],
     description: 'African Baduma Sanza (idiophone, like mbira)'
   },
-  'selisir': {
+  {
+    name: 'selisir',
     frequencies: [
       261.6255653006,
       278.78833362316,
@@ -689,7 +755,8 @@ export const scales = {
     ],
     description: 'Gamelan semara pagulingan, Bali. Pagan Kelod'
   },
-  'turkish': {
+  {
+    name: 'turkish',
     frequencies: [
       261.6255653006,
       279.06726965397,
@@ -701,7 +768,8 @@ export const scales = {
     ],
     description: 'Turkish, 5-limit from Palmer on a Turkish music record, harmonic minor inverse'
   },
-  'tritriad26': {
+  {
+    name: 'tritriad26',
     frequencies: [
       261.6255653006,
       294.32876096318,
@@ -713,7 +781,8 @@ export const scales = {
     ],
     description: 'Tritriadic scale of the 26:30:39 triad'
   },
-  'tritriad7': {
+  {
+    name: 'tritriad7',
     frequencies: [
       261.6255653006,
       264.29521392612,
@@ -725,7 +794,8 @@ export const scales = {
     ],
     description: 'Tritriadic scale of the 7:9:11 triad'
   },
-  'tranh3': {
+  {
+    name: 'tranh3',
     frequencies: [
       261.6255653006,
       317.68818643644,
@@ -736,7 +806,8 @@ export const scales = {
     ],
     description: 'Sa Mac Dan Tranh scale'
   },
-  'tranh2': {
+  {
+    name: 'tranh2',
     frequencies: [
       261.6255653006,
       290.69507255622,
@@ -746,7 +817,8 @@ export const scales = {
     ],
     description: 'Dan Ca Dan Tranh Scale'
   },
-  'tiby1': {
+  {
+    name: 'tiby1',
     frequencies: [
       261.6255653006,
       295.66718139806,
@@ -758,7 +830,8 @@ export const scales = {
     ],
     description: `Tiby's 1st Byzantine Liturgical genus, 12 + 13 + 3 parts`
   },
-  'tetratriad1': {
+  {
+    name: 'tetratriad1',
     frequencies: [
       261.6255653006,
       290.69507255622,
@@ -772,7 +845,8 @@ export const scales = {
     ],
     description: '3:5:9 Tetratriadic scale'
   },
-  'tartini_7': {
+  {
+    name: 'tartini 7',
     frequencies: [
       261.6255653006,
       294.32876096318,
@@ -784,7 +858,8 @@ export const scales = {
     ],
     description: 'Tartini (1754) with 2 neochromatic tetrachords, 1/1=d, Minor Gipsy (Slovakia)'
   },
-  'chimes_peck': {
+  {
+    name: 'chimes peck',
     frequencies: [
       261.6255653006,
       327.03195662575,
@@ -798,7 +873,8 @@ export const scales = {
     ],
     description: 'Kris Peck, 9-tone windchime tuning. TL 7-3-2001'
   },
-  'chrom_soft3': {
+  {
+    name: 'chrom soft3',
     frequencies: [
       261.6255653006,
       271.31540105247,
@@ -810,7 +886,8 @@ export const scales = {
     ],
     description: `Soft chromatic genus is from K. Schlesinger's modified Mixolydian Harmonia`
   },
-  'cluster6i': {
+  {
+    name: 'cluster6i',
     frequencies: [
       261.6255653006,
       313.95067836072,
@@ -821,7 +898,8 @@ export const scales = {
     ],
     description: 'Six-Tone Triadic Cluster 5:6:7'
   },
-  'cons8': {
+  {
+    name: 'cons8',
     frequencies: [
       261.6255653006,
       348.83408706747,
@@ -830,7 +908,8 @@ export const scales = {
     ],
     description: 'Set of intervals with num + den <= 8 not exceeding 2/1'
   },
-  'cons9': {
+  {
+    name: 'cons9',
     frequencies: [
       261.6255653006,
       327.03195662575,
@@ -840,7 +919,8 @@ export const scales = {
     ],
     description: 'Set of intervals with num + den <= 9 not exceeding 2/1'
   },
-  'gunkali': {
+  {
+    name: 'gunkali',
     frequencies: [
       261.6255653006,
       275.93321340298,
@@ -852,7 +932,8 @@ export const scales = {
     ],
     description: 'Indian mode Gunkali, see Daniï¿½lou: Intr. to the Stud. of Mus. Scales, p.175'
   },
-  'gumbeng': {
+  {
+    name: 'gumbeng',
     frequencies: [
       261.6255653006,
       305.03156112838,
@@ -863,7 +944,8 @@ export const scales = {
     ],
     description: 'Scale of gumbeng ensemble, Java. 1/1=440 Hz.'
   },
-  'farey3': {
+  {
+    name: 'farey3',
     frequencies: [
       261.6255653006,
       313.95067836072,
@@ -873,7 +955,8 @@ export const scales = {
     ],
     description: 'Farey fractions between 0 and 1 until 3rd level, normalised by 2/1'
   },
-  'finnamore': {
+  {
+    name: 'finnamore',
     frequencies: [
       261.6255653006,
       277.97716313189,
@@ -886,7 +969,8 @@ export const scales = {
     ],
     description: `David J. Finnamore, Tuning List 9 May '97. Tetrachordal scale, 17/16x19/17x64/57`
   },
-  'enh14': {
+  {
+    name: 'enh14',
     frequencies: [
       261.6255653006,
       267.70988077271,
@@ -898,7 +982,8 @@ export const scales = {
     ],
     description: '14/11 Enharmonic'
   },
-  'euler_enh': {
+  {
+    name: 'euler enh',
     frequencies: [
       261.6255653006,
       267.90457886781,
@@ -910,7 +995,8 @@ export const scales = {
     ],
     description: `Euler's Old Enharmonic, From Tentamen Novae Theoriae Musicae`
   },
-  'exptriad2': {
+  {
+    name: 'exptriad2',
     frequencies: [
       261.6255653006,
       306.59245933664,
@@ -922,7 +1008,8 @@ export const scales = {
     ],
     description: 'Two times expanded major triad'
   },
-  'indian_e': {
+  {
+    name: 'indian e',
     frequencies: [
       261.6255653006,
       275.58617649731,
@@ -934,7 +1021,8 @@ export const scales = {
     ],
     description: 'Observed Indian mode'
   },
-  'indian-raja': {
+  {
+    name: 'indian-raja',
     frequencies: [
       261.6255653006,
       294.32876096318,
@@ -945,7 +1033,8 @@ export const scales = {
     ],
     description: 'A folk scale from Rajasthan, India'
   },
-  'iraq': {
+  {
+    name: 'iraq',
     frequencies: [
       261.6255653006,
       290.3675288125,
@@ -958,7 +1047,8 @@ export const scales = {
     ],
     description: 'Iraq 8-tone scale, Ellis'
   },
-  'adjeng': {
+  {
+    name: 'adjeng',
     frequencies: [
       261.6255653006,
       285.30470202322,
@@ -968,7 +1058,8 @@ export const scales = {
     ],
     description: 'Soeroepan adjeng'
   },
-  'aeolic': {
+  {
+    name: 'aeolic',
     frequencies: [
       261.6255653006,
       294.32876096318,
@@ -980,7 +1071,8 @@ export const scales = {
     ],
     description: 'Ancient Greek Aeolic, also tritriadic scale of the 54:64:81 triad'
   },
-  'augmented': {
+  {
+    name: 'augmented',
     frequencies: [
       261.6255653006,
       312.71213182188,
@@ -991,7 +1083,8 @@ export const scales = {
     ],
     description: 'Augmented temperament, g=91.2, oct=1/3, 5-limit'
   },
-  'harm-doreninv1': {
+  {
+    name: 'harm-doreninv1',
     frequencies: [
       261.6255653006,
       321.08592105074,
@@ -1003,7 +1096,8 @@ export const scales = {
     ],
     description: `1st Inverted Schlesinger's Enharmonic Dorian Harmonia`
   },
-  'harm-dorinv1': {
+  {
+    name: 'harm-dorinv1',
     frequencies: [
       261.6255653006,
       309.19384990071,
@@ -1015,7 +1109,8 @@ export const scales = {
     ],
     description: `1st Inverted Schlesinger's Chromatic Dorian Harmonia`
   },
-  'harm11s': {
+  {
+    name: 'harm11s',
     frequencies: [
       261.6255653006,
       65.40639132515,
@@ -1039,7 +1134,8 @@ export const scales = {
     ],
     description: 'Harm. 1/4-11/4 and subh. 4/1-4/11. Joseph Pehrson 1999'
   },
-  'harm3': {
+  {
+    name: 'harm3',
     frequencies: [
       261.6255653006,
       327.03195662575,
@@ -1048,7 +1144,8 @@ export const scales = {
     ],
     description: 'Third octave of the harmonic overtone series'
   },
-  'harm6': {
+  {
+    name: 'harm6',
     frequencies: [
       261.6255653006,
       294.32876096318,
@@ -1059,7 +1156,8 @@ export const scales = {
     ],
     description: 'Harmonics 6-12'
   },
-  'harmd-hypol': {
+  {
+    name: 'harmd-hypol',
     frequencies: [
       261.6255653006,
       287.78812183066,
@@ -1072,7 +1170,8 @@ export const scales = {
     ],
     description: 'HarmD-Hypolydian'
   },
-  'harrison_5': {
+  {
+    name: 'harrison 5',
     frequencies: [
       261.6255653006,
       279.06726965397,
@@ -1082,7 +1181,8 @@ export const scales = {
     ],
     description: 'From Lou Harrison, a pelog style pentatonic'
   },
-  'harrison_5_1': {
+  {
+    name: 'harrison 5 1',
     frequencies: [
       261.6255653006,
       285.40970760065,
@@ -1092,7 +1192,8 @@ export const scales = {
     ],
     description: 'From Lou Harrison, a pelog style pentatonic'
   },
-  'harrison_5_4': {
+  {
+    name: 'harrison 5 4',
     frequencies: [
       261.6255653006,
       279.06726965397,
@@ -1102,7 +1203,8 @@ export const scales = {
     ],
     description: 'From Lou Harrison, a pelog style pentatonic'
   },
-  'harrison_joy': {
+  {
+    name: 'harrison joy',
     frequencies: [
       261.6255653006,
       294.32876096318,
@@ -1113,7 +1215,8 @@ export const scales = {
     ],
     description: `Lou Harrison's Joyous 6`
   },
-  'hexany11': {
+  {
+    name: 'hexany11',
     frequencies: [
       261.6255653006,
       294.32876096318,
@@ -1124,7 +1227,8 @@ export const scales = {
     ],
     description: '1.3.7.9 Hexany on 1.3' //https://en.wikipedia.org/wiki/Hexany
   },
-  'hexany15': {
+  {
+    name: 'hexany15',
     frequencies: [
       261.6255653006,
       327.03195662575,
@@ -1134,7 +1238,8 @@ export const scales = {
     ],
     description: '1.3.5.15 2)4 hexany (1.15 tonic) degenerate, symmetrical pentatonic'
   },
-  'hexany22': {
+  {
+    name: 'hexany22',
     frequencies: [
       261.6255653006,
       276.76092858245,
@@ -1144,7 +1249,8 @@ export const scales = {
     ],
     description: '1.11.121.1331 Hexany, a degenerate pentatonic form'
   },
-  'arist_diat': {
+  {
+    name: 'arist diat',
     frequencies: [
       261.6255653006,
       293.66476791741,
@@ -1156,7 +1262,8 @@ export const scales = {
     ],
     description: 'Phrygian octave species on E, 12 + 6 + 12 parts'
   },
-  'mboko_bow': {
+  {
+    name: 'mboko bow',
     frequencies: [
       261.6255653006,
       347.61817721989,
@@ -1164,4 +1271,16 @@ export const scales = {
     ],
     description: 'African Mboko Mouth Bow (chordophone, single string, plucked)'
   }
+]
+
+function convertIntervalsToFrequencies(scales: IScale[]): IScale[] {
+  const convertedScales = scales;
+  for (let scale in scales) {
+    if (scales[scale].intervals) {
+      convertedScales[scale].frequencies = scales[scale].intervals.map(s => getFrequencyTET(s));
+    }
+  }
+  return convertedScales;
 }
+
+export const scales = convertIntervalsToFrequencies(_scales);

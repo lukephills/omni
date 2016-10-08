@@ -35,7 +35,7 @@ export function scaleFromRoot(scale: Scale, root: number): Scale {
  */
 export function scaleFromRoots(scale: Scale, roots: number[]): Scale {
 	const newScales: Scale[] = [];
-	for (let i = 0, l = roots.length; i < l; i++){
+	for (let i = 0, l = roots.length; i < l; i++) {
 		newScales[i] = scaleFromRoot(scale, roots[i]);
 	}
 	return combineScales(newScales);
@@ -63,6 +63,41 @@ export function getFrequencyFromNoteIndexInScale(noteIndex: number, scale: Scale
 	return getFrequencyFromRootAndOctave(note, octave);
 }
 
+
+
+export const equalTempRatio12 = 1.0594645048603144;
+export const middleC = 261.6255653006;
+
+/**
+ * Gets the frequency from degree
+ */
+export function getFrequency(root: number, degree: number, ratio: number = equalTempRatio12): number {
+  return root * Math.pow(ratio, degree);
+}
+
+/**
+ * Gets the degree from frequency root and ratio
+ * Default ratio is 12TET
+ */
+export function getDegree(frequency: number, root: number, ratio: number  = equalTempRatio12): number {
+  return Math.log(frequency / root) / Math.log(ratio);
+}
+
+/**
+ * Uses a modulo to always return a number between 0 & 12 for pitch constellation
+ */
+export function getDegreeWithin12(frequency: number, root: number = middleC): number {
+  return getDegree(frequency, root) % 12;
+}
+
+/**
+ * Gets frequency from degree within 12 tone temperament
+ * Default root is middle C
+ */
+export function getFrequencyTET(degree: number, root: number = middleC): number {
+  return getFrequency(root, degree, equalTempRatio12)
+}
+
 /**
  * returns frequency using the root frequency and octave number
  * @param root
@@ -70,7 +105,7 @@ export function getFrequencyFromNoteIndexInScale(noteIndex: number, scale: Scale
  * @returns {number}
  */
 export function getFrequencyFromRootAndOctave(root: number, octave: number): number {
-	return root * (Math.pow(2, octave));
+  return getFrequency(root, octave, 2);
 }
 
 function extendScaleLength(scale, numberOfNotes){
@@ -116,8 +151,8 @@ function getRatio(note1, note2) {
  * @param scale
  * @returns {number|boolean}
  */
-export function getPerfectFifthIndex(scale: Scale): number {
-	return getNoteIndexWithRatio(scale, justInnotationRatios[7]);
+export function getPerfectFifthIndex(scale: Scale, accuracy: number = 1.01): number {
+	return getNoteIndexWithRatio(scale, justInnotationRatios[7], accuracy);
 }
 
 /**
@@ -126,8 +161,8 @@ export function getPerfectFifthIndex(scale: Scale): number {
  * @param scale
  * @returns {number|boolean}
  */
-export function getPerfectFourthIndex(scale: Scale): number {
-	return getNoteIndexWithRatio(scale, justInnotationRatios[5]);
+export function getPerfectFourthIndex(scale: Scale, accuracy: number = 1.01): number {
+	return getNoteIndexWithRatio(scale, justInnotationRatios[5], accuracy);
 }
 
 /**

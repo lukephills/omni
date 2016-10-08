@@ -4,7 +4,7 @@ $color-dark-grey: rgba(184,185,183,1);
 $color-light-grey: rgba(210,211,209,1);
 $color-white: rgba(255,255,255,1);
 $color-cream: rgba(255,255,250, 1);
-$color-bg: $color-cream;
+$color-bg: rgba(0,0,0,1);
 $color-border: $color-light-grey;
 
 
@@ -329,8 +329,17 @@ li {
   .middle-section & {
     flex: 4;
   }
+
+  $d: 340px;
+  .pitch-constellation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: $d;
+    height: $d;
+  }
   .circle {
-    $d: 340px;
     width: $d;
     height: $d;
     border-radius: 50%;
@@ -339,13 +348,64 @@ li {
     div {
       $lineWidth: 3px;
       width: $lineWidth;
-      height: $d / 2;
+      height: ($d / 2) + 2;
       position: absolute;
       background: rgba(0,0,0,1);
       left: ($d / 2) - ($lineWidth/2);
       transform-origin: bottom;
       transition: transform 0.2s ease-in-out;
     }
+  }
+  span {
+    position: absolute;
+    font-size: 12px;
+
+    // numbers on a clock face
+    &.n0 {
+      top: -20px;
+    }
+    &.n1 {
+      top: 6px;
+      right: 17%;
+    }
+    &.n2 {
+      top: 22%;
+      right: 2%;
+    }
+    &.n3 {
+      right: -30px;
+    }
+    &.n4 {
+      right: 8px;
+      bottom: 20%;
+    }
+    &.n5 {
+      bottom: 0;
+      right: 22%;
+    }
+    &.n6 {
+      bottom: -20px;
+    }
+    &.n7 {
+      bottom: 0px;
+      left: 22%;
+    }
+    &.n8 {
+      bottom: 20%;
+      left: -2px;
+    }
+    &.n9 {
+      left: -16px;
+    }
+    &.n10 {
+      top: 21%;
+      left: -3px;
+    }
+    &.n11 {
+      top: 4px;
+      left: 22%;
+    }
+
   }
   min-width: auto;
   @include sm {

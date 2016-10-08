@@ -10,7 +10,7 @@ import {getPerfectFifthIndex, getPerfectFourthIndex} from '../Utils/Audio/scales
 class Harp {
   public audio: Synth
   public lines: number = 32;
-  public octavesToDisplay = 5;
+  public octavesToDisplay = 3;
   private touches: IdentifierIndexMap;
 	private activeTouches: any = {};
   private pixelRatio: number = getPixelRatio();

@@ -6,19 +6,24 @@ class ScaleSelector {
 	private activeScaleClassName: string =  'scale-list-item--active';
 
   private scaleNameEl = document.getElementById('scaleName');
-  private scaleNameList = [];
+  private scaleNameList: string[] = [];
   private scaleIdx: number = 0;
 
   constructor() {
 
     // this.appendScaleChoices();
     // this.scaleNameEl.innerHTML = scales
+    console.log(Omni.scales)
 
-    for (let scaleName in Omni.scales) {
-			if (scaleName) {
-        this.scaleNameList.push(scaleName);
-		  }
-    }
+    this.scaleNameList = Omni.scales.map(scale => scale.name)
+
+
+
+    // for (let scaleName in Omni.scales) {
+		// 	if (scaleName) {
+    //     this.scaleNameList.push(scaleName);
+		//   }
+    // }
 
     console.log(this.scaleNameList);
 
@@ -47,27 +52,8 @@ class ScaleSelector {
 
   render() {
     this.scaleNameEl.innerHTML = this.scaleNameList[this.scaleIdx];
-    Omni.setScale(this.scaleNameList[this.scaleIdx]);
+    Omni.setScale(this.scaleIdx);
   }
-
-  /**
-   * on scale changed
-   */
-	handleScaleChange(e): void {
-		if (e.target !== e.currentTarget) {
-			let scaleId = e.target.dataset.scale;
-			console.log('changed to:', scaleId);
-
-			this.activeScaleListItem.classList.remove(this.activeScaleClassName);
-			this.activeScaleListItem = e.target;
-			this.activeScaleListItem.classList.add(this.activeScaleClassName);
-
-			// this.onUpdate(this.scales[scaleId].frequencies);
-		}
-		e.stopPropagation();
-	}
-
-
 }
 
 export default ScaleSelector;
