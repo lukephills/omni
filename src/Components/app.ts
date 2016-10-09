@@ -117,7 +117,7 @@ class App {
    * DRAW ALL COMPONENTS
    */
   draw() {
-    this.harp.draw();
+    this.harp.draw(this.state.scale.frequencies);
     this.pitchConstellation.drawLines(this.state.scale.frequencies);
   }
 

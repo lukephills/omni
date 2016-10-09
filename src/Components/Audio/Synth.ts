@@ -134,7 +134,7 @@ class Synth {
 
 	public NoteOn(noteIndex: number, volume: number, index: number): void {
 
-    const frequency = getFrequencyFromNoteIndexInScale(noteIndex, this.scale);
+    const frequency = getFrequencyFromNoteIndexInScale(noteIndex, this.scale, -1);
 
     for (let [key, value] of this.oscillators.entries()) {
       // find an inactive osc

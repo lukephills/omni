@@ -57,9 +57,9 @@ export function combineScales(array: Scale[]): Scale {
  * @param noteIndex - 0 would be the 1st note in the scale, 11 would be the 12th note in the scale.
  * @returns {number}
  */
-export function getFrequencyFromNoteIndexInScale(noteIndex: number, scale: Scale): number {
+export function getFrequencyFromNoteIndexInScale(noteIndex: number, scale: Scale, octaveModifier: number = 0): number {
 	let note = scale[getIndexFromArray(noteIndex,  scale)];
-	let octave = getIteration(noteIndex, scale.length) - 2;
+	let octave = getIteration(noteIndex, scale.length) + octaveModifier; //todo this -1 should be passed in to the function
 	return getFrequencyFromRootAndOctave(note, octave);
 }
 

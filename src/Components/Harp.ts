@@ -36,7 +36,7 @@ class Harp {
 		});
   }
 
-  draw(): void {
+  draw(scale): void {
 		// this._DrawAnimationFrame = requestAnimationFrame(this.draw.bind(this));
 		console.log('DRAW');
 
@@ -44,17 +44,51 @@ class Harp {
 		const w: number = this.canvas.width / this.pixelRatio;
 		const h: number = this.canvas.height / this.pixelRatio;
 		const {lines} = this;
-    const colors = Object.keys(palette).map(key => palette[key]);
+    // const colors = Object.keys(palette).map(key => palette[key]);
 		const lineWidth = w / lines;
+    // some of this doesn't need to be called every draw loop
+    const borderWidth = 3;
 
-		// console.log(this.audio.scale.length);
 
 		ctx.clearRect(0, 0, w, h);
 
+    const p5 = getPerfectFifthIndex(scale);
+		const color1 = '#FF6969';
+		const color2 = '#FFC3C3';
+
+
+
+
 		// DRAW THE LINES
 		for (let i = 0; i < lines; i++) {
-			ctx.fillStyle = getItemFromArrayPool(i, colors);
-			ctx.fillRect(lineWidth * i, 0, lineWidth + 1, h); // +1 is for overlap to avoid nasty small white lines
+
+      // Root note
+      if (i % scale.length === 0) {
+        ctx.fillStyle = color1;
+        ctx.fillRect(i * lineWidth, 0, lineWidth + 1, h);
+      }
+
+      // Perfect 5th note
+      if (i % scale.length === p5) {
+        ctx.fillStyle = color2;
+        ctx.fillRect(i * lineWidth, 0, lineWidth + 1, h); // +1 is for overlap to avoid nasty small gaps
+      }
+
+      // All line borders
+
+      ctx.fillStyle = 'white';
+      ctx.fillRect(i * lineWidth, 0,   borderWidth, h);
+
+      // // Only show line borders inbetween root and perfect 5 notes
+      // if (!(
+      //   i % (scale.length) === 0 ||
+      //   i % (scale.length) === 1 ||
+      //   i % (scale.length) === p5 ||
+      //   i % (scale.length) === p5 + 1
+      // )) {
+      //   ctx.fillStyle = 'white';
+      //   ctx.fillRect(i * lineWidth, 0,   borderWidth, h);
+      // }
 		}
 	}
 
@@ -105,12 +139,14 @@ class Harp {
   updateScale(scale) {
 		const len = scale.length;
 		const p5 = getPerfectFifthIndex(scale);
-		const p4 = getPerfectFourthIndex(scale);
+
 
 		let colors = [];
-		colors[0] = palette.grey;
-		colors[p5] = palette.pink;
-		colors[p4] = palette.peach;
+		// colors[0] = palette.grey;
+		// colors[0] = 'fff';
+		// colors[p5] = palette.pink;
+		colors[0] = 'FF6969';
+		colors[p5] = 'FFC3C3';
 		for (let i = 0; i < len; i++) {
 			if (!colors[i]) {
 				colors[i] = (i % 2 === 0) ? palette.green : palette.blue;
@@ -122,7 +158,7 @@ class Harp {
 
 		this.colors = colors;
 		this.audio.scale = scale;
-		this.draw();
+		this.draw(scale);
 	}
 
 	private _getNoteIndexFromPosition(x: number): number {

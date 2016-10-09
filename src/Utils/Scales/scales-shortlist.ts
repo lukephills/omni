@@ -675,32 +675,32 @@ const _scales: IScale[] = [
     ],
     description: `Xenakis's Byzantine Liturgical mode, 5 + 19 + 6 parts`
   },
-  {
-    name: 'xenakis diat',
-    frequencies: [
-      261.6255653006,
-      293.66476791741,
-      326.46944327063,
-      349.22823143301,
-      391.99543598175,
-      440,
-      489.15147723638
-    ],
-    description: `Xenakis's Byzantine Liturgical mode, 12 + 11 + 7 parts`
-  },
-  {
-    name: 'xenakis schrom',
-    frequencies: [
-      261.6255653006,
-      279.86396690685,
-      326.46944327063,
-      349.22823143301,
-      391.99543598175,
-      419.32216217931,
-      489.15147723638
-    ],
-    description: `Xenakis's Byzantine Liturgical mode, 7 + 16 + 7 parts`
-  },
+  // {
+  //   name: 'xenakis diat',
+  //   frequencies: [
+  //     261.6255653006,
+  //     293.66476791741,
+  //     326.46944327063,
+  //     349.22823143301,
+  //     391.99543598175,
+  //     440,
+  //     489.15147723638
+  //   ],
+  //   description: `Xenakis's Byzantine Liturgical mode, 12 + 11 + 7 parts`
+  // },
+  // {
+  //   name: 'xenakis schrom',
+  //   frequencies: [
+  //     261.6255653006,
+  //     279.86396690685,
+  //     326.46944327063,
+  //     349.22823143301,
+  //     391.99543598175,
+  //     419.32216217931,
+  //     489.15147723638
+  //   ],
+  //   description: `Xenakis's Byzantine Liturgical mode, 7 + 16 + 7 parts`
+  // },
   {
     name: 'mbira zimb',
     frequencies: [
@@ -1181,28 +1181,28 @@ const _scales: IScale[] = [
     ],
     description: 'From Lou Harrison, a pelog style pentatonic'
   },
-  {
-    name: 'harrison 5 1',
-    frequencies: [
-      261.6255653006,
-      285.40970760065,
-      313.95067836072,
-      392.4383479509,
-      418.60090448096
-    ],
-    description: 'From Lou Harrison, a pelog style pentatonic'
-  },
-  {
-    name: 'harrison 5 4',
-    frequencies: [
-      261.6255653006,
-      279.06726965397,
-      313.95067836072,
-      392.4383479509,
-      490.54793493862
-    ],
-    description: 'From Lou Harrison, a pelog style pentatonic'
-  },
+  // {
+  //   name: 'harrison 5 1',
+  //   frequencies: [
+  //     261.6255653006,
+  //     285.40970760065,
+  //     313.95067836072,
+  //     392.4383479509,
+  //     418.60090448096
+  //   ],
+  //   description: 'From Lou Harrison, a pelog style pentatonic'
+  // },
+  // {
+  //   name: 'harrison 5 4',
+  //   frequencies: [
+  //     261.6255653006,
+  //     279.06726965397,
+  //     313.95067836072,
+  //     392.4383479509,
+  //     490.54793493862
+  //   ],
+  //   description: 'From Lou Harrison, a pelog style pentatonic'
+  // },
   {
     name: 'harrison joy',
     frequencies: [
@@ -1215,18 +1215,18 @@ const _scales: IScale[] = [
     ],
     description: `Lou Harrison's Joyous 6`
   },
-  {
-    name: 'hexany11',
-    frequencies: [
-      261.6255653006,
-      294.32876096318,
-      305.22982618403,
-      343.38355445704,
-      392.4383479509,
-      457.84473927605
-    ],
-    description: '1.3.7.9 Hexany on 1.3' //https://en.wikipedia.org/wiki/Hexany
-  },
+  // {
+  //   name: 'hexany11',
+  //   frequencies: [
+  //     261.6255653006,
+  //     294.32876096318,
+  //     305.22982618403,
+  //     343.38355445704,
+  //     392.4383479509,
+  //     457.84473927605
+  //   ],
+  //   description: '1.3.7.9 Hexany on 1.3' //https://en.wikipedia.org/wiki/Hexany
+  // },
   {
     name: 'hexany15',
     frequencies: [
@@ -1236,19 +1236,19 @@ const _scales: IScale[] = [
       392.4383479509,
       418.60090448096
     ],
-    description: '1.3.5.15 2)4 hexany (1.15 tonic) degenerate, symmetrical pentatonic'
+    description: '1.3.5.15 2)4 hexany (1.15 tonic) degenerate, symmetrical pentatonic' // https://en.wikipedia.org/wiki/Hexany
   },
-  {
-    name: 'hexany22',
-    frequencies: [
-      261.6255653006,
-      276.76092858245,
-      359.73515228832,
-      380.54627680087,
-      494.63583439645
-    ],
-    description: '1.11.121.1331 Hexany, a degenerate pentatonic form'
-  },
+  // {
+  //   name: 'hexany22',
+  //   frequencies: [
+  //     261.6255653006,
+  //     276.76092858245,
+  //     359.73515228832,
+  //     380.54627680087,
+  //     494.63583439645
+  //   ],
+  //   description: '1.11.121.1331 Hexany, a degenerate pentatonic form'
+  // },
   {
     name: 'arist diat',
     frequencies: [
