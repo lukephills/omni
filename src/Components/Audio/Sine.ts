@@ -38,10 +38,10 @@ class Sine extends ToneTS {
 	}
 
 
-  public noteOff(): void {
-    // stop the note
-    this.ADSR.release();
-  }
+  // public noteOff(): void {
+  //   // stop the note
+  //   this.ADSR.release();
+  // }
 
 	// private discard() {
 	// 	// this.osc = null;

@@ -3,7 +3,9 @@ import PitchConstellation from './PitchConstellation';
 import ScaleSelector from './ScaleSelector';
 import DroneSelector from './DroneSelector';
 import {scales, IScale} from '../Utils/Scales/scales-shortlist';
-import {getFrequencyTET} from '../Utils/Audio/scales';
+
+import {KeyboardManager} from './Inputs/KeyboardManager';
+import {getKeyBinding, getKeyType, KeyType, KeyboardEventLatest} from './Inputs/KeyboardBindings';
 
 interface IState {
   droneIdx: number;
@@ -24,6 +26,8 @@ class App {
   scaleSelector: ScaleSelector;
   droneSelector: DroneSelector;
   scales: IScale[] = scales;
+  keyboardManager: KeyboardManager;
+
   private prevScaleBtn = document.getElementById('scaleSelectPrevBtn');
   private nextScaleBtn = document.getElementById('scaleSelectNextBtn');
 
@@ -73,6 +77,13 @@ class App {
 
     // draw everything
     this.draw();
+
+    // initialize keyboard events
+    this.keyboardManager = new KeyboardManager({
+      onKeyDown: this.onKeyDown.bind(this),
+      onKeyUp: this.onKeyUp.bind(this),
+    });
+
 	}
 
   onScaleChange(direction: 'prev' | 'next', e) {
@@ -124,7 +135,24 @@ class App {
 
 
 
+  onKeyDown(e: KeyboardEventLatest) {
+    const key = getKeyBinding(e);
+    const keyType: KeyType = getKeyType(key);
 
+
+    if (keyType === 'harp') {
+      this.harp.onKeyDown(key - 20)
+    }
+
+    console.log('start ', key)
+  }
+
+  onKeyUp(e: KeyboardEventLatest) {
+    const key = getKeyBinding(e);
+    const keyType: KeyType = getKeyType(key);
+
+    console.log('stop ', key)
+  }
 
 }
 

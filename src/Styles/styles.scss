@@ -178,13 +178,15 @@ li {
   justify-content: space-between;
 }
 
-
+.btn {
+  cursor: pointer;
+}
 
 
 
 // ICONS //
 
-[class^=icon] {
+[class*=icon] {
   display: block;
   width: 60px;
   height: 60px;
@@ -333,10 +335,6 @@ li {
 
   $d: 340px;
   .pitch-constellation {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
     width: $d;
     height: $d;
   }
@@ -345,7 +343,7 @@ li {
     height: $d;
     border-radius: 50%;
     background: rgba(255,105,105,1);
-    position: relative;
+    position: absolute;
     div {
       $lineWidth: 3px;
       width: $lineWidth;
@@ -357,54 +355,66 @@ li {
       transition: transform 0.2s ease-in-out;
     }
   }
+  .letters {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
   span {
     position: absolute;
     font-size: 12px;
+    padding: 30px;
+    transform-origin: center;
+    cursor: pointer;
+    color: $color-dark-grey;
+
+    -moz-user-select: none; /* Firefox */
+    -webkit-user-select: none; /* Chrome, Safari, and Opera */
+    -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
+    user-select: none;
+
+    &:hover, &:active {
+      // font-weight: 900;
+      color: $color-primary;
+    }
 
     // numbers on a clock face
     &.n0 {
-      top: -20px;
+      transform: translate(0, -183px);
     }
     &.n1 {
-      top: 6px;
-      right: 17%;
+      transform: translate(93px, -157px);
     }
     &.n2 {
-      top: 22%;
-      right: 2%;
+      transform: translate(159px, -89px);
     }
     &.n3 {
-      right: -30px;
+      transform: translate(183px, 2px);
     }
     &.n4 {
-      right: 8px;
-      bottom: 20%;
+      transform: translate(156px, 92px);
     }
     &.n5 {
-      bottom: 0;
-      right: 22%;
+      transform: translate(91px, 159px);
     }
     &.n6 {
-      bottom: -20px;
+      transform: translate(2px, 183px);
     }
     &.n7 {
-      bottom: 0px;
-      left: 22%;
+      transform: translate(-91px, 159px);
     }
     &.n8 {
-      bottom: 20%;
-      left: -2px;
+      transform: translate(-156px, 92px);
     }
     &.n9 {
-      left: -16px;
+      transform: translate(-183px, 2px);
     }
     &.n10 {
-      top: 21%;
-      left: -3px;
+      transform: translate(-159px, -89px);
     }
     &.n11 {
-      top: 4px;
-      left: 22%;
+      transform: translate(-93px, -157px);
     }
 
   }
@@ -477,6 +487,7 @@ li {
   flex-direction: column;
   justify-content: flex-end;
   width: 100%;
+  cursor: pointer;
   @include sm {
     width: 50%;
   }

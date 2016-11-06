@@ -132,7 +132,7 @@ class Synth {
     return this.context;
 	}
 
-	public NoteOn(noteIndex: number, volume: number, index: number): void {
+	public NoteOn(noteIndex: number, volume: number = 100, index: number): void {
 
     const frequency = getFrequencyFromNoteIndexInScale(noteIndex, this.scale, -1);
 
@@ -160,7 +160,6 @@ class Synth {
     // if this oscillator has the index given stop it and set it to inactive
     if (this.oscillators.has(index)) {
       let oscillator = this.oscillators.get(index);
-      oscillator.osc.noteOff();
       oscillator.active = false;
     }
 	}

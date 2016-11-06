@@ -132,6 +132,10 @@ class Harp {
     }
 	}
 
+  onKeyDown(key: number) {
+    this.audio.NoteOn(key, undefined, -1);
+  }
+
   onResize() {
     canvasRenderAtPixelRatio(this.canvas);
   }
