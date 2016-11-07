@@ -1,4 +1,4 @@
-import {Omni} from '../index.ts'
+import {Omni} from '../index'
 
 class ScaleSelector {
 
@@ -51,8 +51,10 @@ class ScaleSelector {
   }
 
   render() {
-    this.scaleNameEl.innerHTML = this.scaleNameList[this.scaleIdx];
-    Omni.setScale(this.scaleIdx);
+    if (this.scaleNameEl) {
+      this.scaleNameEl.innerHTML = this.scaleNameList[this.scaleIdx];
+      Omni.setScale(this.scaleIdx);
+    }
   }
 }
 

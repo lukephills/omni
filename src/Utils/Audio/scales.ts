@@ -47,7 +47,7 @@ export function scaleFromRoots(scale: Scale, roots: number[]): Scale {
  * @param array
  */
 export function combineScales(array: Scale[]): Scale {
-	return uniq([].concat(...array).sort((a, b) => a - b));
+	return uniq([0].concat(...array).sort((a, b) => a - b));
 }
 
 
@@ -120,7 +120,7 @@ function extendScaleLength(scale, numberOfNotes){
  * @returns {number[]}
  */
 export function getOvertones(freq: number, amount: number): number[] {
-	let harmonics = [];
+	let harmonics: number[] = [];
 	for (let i = 0; i<amount; i++) {
 		harmonics[i] = freq*(i+2);
 	}
@@ -134,7 +134,7 @@ export function getOvertones(freq: number, amount: number): number[] {
  * @returns {Array}
  */
 export function getUndertones(freq: number, amount: number): number[] {
-	let subharmonics = [];
+	let subharmonics: number[] = [];
 	for (let i = 0; i<amount; i++) {
 		subharmonics[i] = freq/(i+2);
 	}

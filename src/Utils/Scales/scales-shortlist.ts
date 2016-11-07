@@ -54,7 +54,7 @@ export interface IScale {
 
 const _scales: IScale[] = [
   {
-    name: 'Acoustic',
+    name: 'Acoustic √',
     intervals: [0, 2, 4, 6, 7, 9],
     description: 'The acoustic scale, (also known as the overtone scale) differs from the major scale in having a raised fourth and lowered seventh scale degree. Traditionally, the scale persists in the music of peoples of South Siberia, especially in Tyvan music.'
   },
@@ -638,7 +638,7 @@ const _scales: IScale[] = [
     description: 'Huang Zhong qin tuning'
   },
   {
-    name: 'chin lusheng',
+    name: 'chin lusheng √',
     frequencies: [
       261.6255653006,
       316.38258506467,
@@ -1276,8 +1276,9 @@ const _scales: IScale[] = [
 function convertIntervalsToFrequencies(scales: IScale[]): IScale[] {
   const convertedScales = scales;
   for (let scale in scales) {
-    if (scales[scale].intervals) {
-      convertedScales[scale].frequencies = scales[scale].intervals.map(s => getFrequencyTET(s));
+    const intervals = scales[scale].intervals;
+    if (intervals) {
+      convertedScales[scale].frequencies = intervals.map(s => getFrequencyTET(s));
     }
   }
   return convertedScales;

@@ -1,6 +1,6 @@
 import Synth from './Audio/Synth';
 import {getDegreeWithin12} from '../Utils/Audio/scales';
-import {nodeListToArray} from '../Utils/array.ts'
+import {nodeListToArray} from '../Utils/array'
 
 class PitchConstellation {
 
@@ -8,7 +8,7 @@ class PitchConstellation {
   public lines: number = 32;
   public octavesToDisplay = 5;
 
-  constructor(private el: HTMLElement) {}
+  constructor(private el: HTMLElement | null) {}
 
   /**
    * Takes an array of frequencies and draws the resulting lines
@@ -16,6 +16,9 @@ class PitchConstellation {
   drawLines(frequencies: number[]): void {
 
     const newNumberOfLines = frequencies.length;
+
+    if (!this.el) return;
+
     const currentLinesArray = nodeListToArray(this.el.children);
     const currentNumberOfLines = currentLinesArray.length;
 

@@ -29,7 +29,7 @@ class Looper {
 	private isOverdubPressed: boolean = false;
 	private tempLoopLength: number = this.maxLoopDuration+1;
 	private loopLength: number = this.tempLoopLength;
-	private nextLoopStartTime: number = null;
+	private nextLoopStartTime: number;
 	private output: AudioNode;
 	private playbackSchedulerTimeout: number;
 	private processor: ScriptProcessorNode;
@@ -152,13 +152,15 @@ class Looper {
 		this.processor.onaudioprocess = this.onaudioprocess;
 	}
 
+
+
 	/**
 	 * Stop Recording
 	 */
 	public stopRecording(): void {
 		this.setLoopLength(this.loops[0]);
 		this.isRecording = false;
-		this.processor.onaudioprocess = null;
+		// this.processor.onaudioprocess = null;
 	}
 
 	/**
@@ -236,7 +238,7 @@ class Looper {
 			}
 		}
 
-		
+
 		WorkerTimer.setTimeout(() => {
 			// Merge all buffers in buffers list
 			const mergedBuffer: AudioBuffer = mergeBuffers(buffers, this.context);
@@ -277,8 +279,8 @@ class Looper {
 	public reset(): void {
 		this.loops = [];
 		this.loopLength = this.tempLoopLength;
-		this.playbackSchedulerTimeout = null;
-		this.nextLoopStartTime = null;
+		// this.playbackSchedulerTimeout = null;
+		// this.nextLoopStartTime = null;
 		this._id = -1;
 	}
 

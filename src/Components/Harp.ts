@@ -145,7 +145,7 @@ class Harp {
 		const p5 = getPerfectFifthIndex(scale);
 
 
-		let colors = [];
+		let colors: string[] = [];
 		// colors[0] = palette.grey;
 		// colors[0] = 'fff';
 		// colors[p5] = palette.pink;

@@ -138,10 +138,10 @@ class Synth {
 
     for (let [key, value] of this.oscillators.entries()) {
       // find an inactive osc
-      if (value.active) {
-        // osc is active so keep searching
-       continue;
-      } else {
+      // if (value.active) {
+      //   // osc is active so keep searching
+      //  continue;
+      // } else {
         // osc is inactive, set it's frequency, trigger it & set it to active.
         console.log(key, value);
         value.osc.frequency = frequency;
@@ -149,7 +149,7 @@ class Synth {
         value.index = index;
         value.active = true;
         break;
-      }
+      // }
     }
 
 
@@ -160,7 +160,9 @@ class Synth {
     // if this oscillator has the index given stop it and set it to inactive
     if (this.oscillators.has(index)) {
       let oscillator = this.oscillators.get(index);
-      oscillator.active = false;
+      if (oscillator) {
+        oscillator.active = false;
+      }
     }
 	}
 

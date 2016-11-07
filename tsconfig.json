@@ -12,7 +12,7 @@
     "noLib": false,
     "outDir": "build",
     "removeComments": false,
-    "strictNullChecks": false,
+    "strictNullChecks": true,
     "sourceMap": false,
     "inlineSourceMap": false,
     "suppressImplicitAnyIndexErrors": false,

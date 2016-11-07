@@ -5,7 +5,7 @@ export class IdentifierIndexMap {
 	private identifiers: Map<number, number> = new Map();
 
 	public GetIndexFromIdentifier(identifier: number): number {
-		return this.identifiers.get(identifier);
+		return this.identifiers.get(identifier) || 0;
 	}
 
 	public Remove(identifier: number): void {

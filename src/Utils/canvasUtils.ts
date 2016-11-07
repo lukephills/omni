@@ -25,7 +25,11 @@ export function canvasResize(
 	canvas.height = height * ratio;
 	canvas.style.width = width + 'px';
 	canvas.style.height = height + 'px';
-	canvas.getContext('2d').setTransform(ratio, 0, 0, ratio, 0, 0);
+
+  const ctx = canvas.getContext('2d');
+  if (ctx) {
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+  }
 	return canvas;
 }
 
@@ -41,7 +45,10 @@ export function canvasRenderAtPixelRatio(
   const ratio: number = getPixelRatio();
 	canvas.width = width * ratio;
 	canvas.height = height * ratio;
-	canvas.getContext('2d').setTransform(ratio, 0, 0, ratio, 0, 0);
+  const ctx = canvas.getContext('2d');
+  if (ctx) {
+	  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+  }
 	return canvas;
 }
 

@@ -1,7 +1,7 @@
 class Loop {
 
-	public activeBufferSource: AudioBufferSourceNode = null;
-	public buffer: AudioBuffer = null;
+	public activeBufferSource: AudioBufferSourceNode;
+	public buffer: AudioBuffer;
 	public id: number;
 	public output: GainNode;
 	public overdubCount: number;
@@ -54,7 +54,6 @@ class Loop {
 	public stop(): void {
 		if (this.activeBufferSource) {
 			this.activeBufferSource.stop(this.context.currentTime);
-			this.activeBufferSource = null;
 		}
 	}
 

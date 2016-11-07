@@ -1,4 +1,4 @@
-import {Omni} from '../../index.ts';
+import {Omni} from '../../index';
 
 
 interface callbackOptions {
@@ -20,6 +20,9 @@ export class KeyboardManager {
   }
 
   onKeyDown(e: KeyboardEvent) {
+
+    // todo if command or shift isn't down ...
+
     // If key isn't already down fire event and add to list
     if (!this.keysDown.has(e.key)) {
       this.callbacks.onKeyDown(e)

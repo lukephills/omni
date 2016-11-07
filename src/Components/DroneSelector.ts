@@ -1,5 +1,5 @@
-import {Omni} from '../index.ts';
-import {nodeListToArray} from '../Utils/array.ts'
+import {Omni} from '../index';
+import {nodeListToArray} from '../Utils/array'
 
 
 class DroneSelector {
@@ -41,17 +41,20 @@ class DroneSelector {
   }
 
   onPointerUp(e: MouseEvent | TouchEvent) {
-    this.droneSelectorEl.removeEventListener('mousemove', this.onMouseMove)
-    this.droneSelectorEl.removeEventListener('touchmove', this.onTouchMove)
+    if (this.droneSelectorEl) {
+      this.droneSelectorEl.removeEventListener('mousemove', this.onMouseMove)
+      this.droneSelectorEl.removeEventListener('touchmove', this.onTouchMove)
+    }
   }
 
   onPointerDown(e: MouseEvent | TouchEvent) {
     // let idx = this.getBtnPressedIdx(e);
     e.preventDefault();
 
-    this.droneSelectorEl.addEventListener('mousemove', this.onMouseMove)
-    this.droneSelectorEl.addEventListener('touchmove', this.onTouchMove)
-
+    if (this.droneSelectorEl) {
+      this.droneSelectorEl.addEventListener('mousemove', this.onMouseMove)
+      this.droneSelectorEl.addEventListener('touchmove', this.onTouchMove)
+    }
 
     const el = (<Element>e.target)
     const id = el.id;
@@ -126,18 +129,22 @@ class DroneSelector {
   }
 
   addEventListeners() {
-    this.droneSelectorEl.addEventListener('mousedown', this.onPointerDown)
-    this.droneSelectorEl.addEventListener('touchstart', this.onPointerDown)
-    this.droneSelectorEl.addEventListener('mouseup', this.onPointerUp)
-    this.droneSelectorEl.addEventListener('touchend', this.onPointerUp)
+    if (this.droneSelectorEl) {
+      this.droneSelectorEl.addEventListener('mousedown', this.onPointerDown)
+      this.droneSelectorEl.addEventListener('touchstart', this.onPointerDown)
+      this.droneSelectorEl.addEventListener('mouseup', this.onPointerUp)
+      this.droneSelectorEl.addEventListener('touchend', this.onPointerUp)
+    }
   }
 
   appendDroneButtons() {
-    // append the <li> drone buttons
-    this.droneSelectorEl.innerHTML = this.getDroneElsList();
+    if (this.droneSelectorEl) {
+      // append the <li> drone buttons
+      this.droneSelectorEl.innerHTML = this.getDroneElsList();
+      // store each btn in cache for querying
+      this.droneSelectorBtnEls = nodeListToArray(this.droneSelectorEl.childNodes)
+    }
 
-    // store each btn in cache for querying
-    this.droneSelectorBtnEls = nodeListToArray(this.droneSelectorEl.childNodes)
 
   }
 

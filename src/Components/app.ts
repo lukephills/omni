@@ -5,7 +5,7 @@ import DroneSelector from './DroneSelector';
 import {scales, IScale} from '../Utils/Scales/scales-shortlist';
 
 import {KeyboardManager} from './Inputs/KeyboardManager';
-import {getKeyBinding, getKeyType, KeyType, KeyboardEventLatest} from './Inputs/KeyboardBindings';
+import {getKeyBinding, getKeyType, KeyType, KeyboardEventLatest, keyboardCodeMap} from './Inputs/KeyboardBindings';
 
 interface IState {
   droneIdx: number;
@@ -51,8 +51,12 @@ class App {
 
     }
 
-    this.prevScaleBtn.addEventListener('click', e => this.onScaleChange('prev', e));
-    this.nextScaleBtn.addEventListener('click', e => this.onScaleChange('next', e));
+    if (this.prevScaleBtn) {
+      this.prevScaleBtn.addEventListener('click', e => this.onScaleChange('prev', e));
+    }
+    if (this.nextScaleBtn) {
+      this.nextScaleBtn.addEventListener('click', e => this.onScaleChange('next', e));
+    }
 
   }
 
@@ -109,8 +113,10 @@ class App {
   }
 
   scaleDidChange() {
-    this.pitchConstellation.drawLines(this.state.scale.frequencies);
-    this.harp.updateScale(this.state.scale.frequencies);
+    if (this.state.scale.frequencies) {
+      this.pitchConstellation.drawLines(this.state.scale.frequencies);
+      this.harp.updateScale(this.state.scale.frequencies);
+    }
   }
 
   randomNumberBetween(min, max) {
@@ -128,8 +134,10 @@ class App {
    * DRAW ALL COMPONENTS
    */
   draw() {
-    this.harp.draw(this.state.scale.frequencies);
-    this.pitchConstellation.drawLines(this.state.scale.frequencies);
+    if (this.state.scale.frequencies) {
+      this.harp.draw(this.state.scale.frequencies);
+      this.pitchConstellation.drawLines(this.state.scale.frequencies);
+    }
   }
 
 
@@ -142,8 +150,9 @@ class App {
 
     if (keyType === 'harp') {
       this.harp.onKeyDown(key - 20)
+    } else if (keyType === 'control') {
+      this.emitKeyControlAction(key);
     }
-
     console.log('start ', key)
   }
 
@@ -152,6 +161,17 @@ class App {
     const keyType: KeyType = getKeyType(key);
 
     console.log('stop ', key)
+  }
+
+  emitKeyControlAction(key: number) {
+    switch (key) {
+      case keyboardCodeMap.ArrowUp:
+
+        break;
+
+      default:
+        break;
+    }
   }
 
 }
