@@ -1,7 +1,5 @@
-import {Omni} from '../../index';
 
-
-interface callbackOptions {
+interface CallbackOptions {
   onKeyDown: (e: KeyboardEvent) => any;
   onKeyUp: (e: KeyboardEvent) => any;
 }
@@ -10,7 +8,7 @@ export class KeyboardManager {
 
   keysDown: Set<string>
 
-  constructor(private callbacks: callbackOptions) {
+  constructor(private callbacks: CallbackOptions) {
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
 

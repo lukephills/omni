@@ -108,9 +108,6 @@ export function getFrequencyFromRootAndOctave(root: number, octave: number): num
   return getFrequency(root, octave, 2);
 }
 
-function extendScaleLength(scale, numberOfNotes){
-
-}
 
 
 /**
@@ -141,9 +138,12 @@ export function getUndertones(freq: number, amount: number): number[] {
 	return subharmonics;
 }
 
-function getRatio(note1, note2) {
+export function getRatio(note1, note2) {
 	return note1/note2;
 }
+
+
+export const justInnotationRatios = [1, 25/24, 9/8, 6/5, 5/4, 4/3, 45/32, 3/2, 8/5, 5/3, 9/5, 15/8];
 
 /**
  * Checks if scale has a perfect fifth to within 1.01 accuracy.
@@ -196,11 +196,10 @@ export function isNumberCloseBy(num: number, num2: number, maxDist: number): boo
 }
 
 
-export const justInnotationRatios = [1, 25/24, 9/8, 6/5, 5/4, 4/3, 45/32, 3/2, 8/5, 5/3, 9/5, 15/8];
 
-function convertScaleToJustInnotation(scale) {
-	for (var i = 1; i < scale.length; i++) {
-		var ratio = getRatio(scale[i], scale[i-1]);
-		// if (ratio)
-	}
-}
+// function convertScaleToJustInnotation(scale) {
+// 	for (let i = 1; i < scale.length; i++) {
+// 		const ratio = getRatio(scale[i], scale[i-1]);
+// 		// if (ratio)
+// 	}
+// }

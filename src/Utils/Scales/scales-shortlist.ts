@@ -2,7 +2,8 @@ import {getFrequencyTET} from '../Audio/scales';
 
 const NOTE_STRINGS = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B']
 
-const midiPitchC = 60
+// const midiPitchC = 60
+
 //TODO: all the conversion functions needed http://www.flutopedia.com/pitch_to_frequency.htm
 
 /**

@@ -2,8 +2,8 @@ import {Omni} from '../index'
 
 class ScaleSelector {
 
-  private activeScaleListItem: Element;
-	private activeScaleClassName: string =  'scale-list-item--active';
+  // private activeScaleListItem: Element;
+	// private activeScaleClassName: string =  'scale-list-item--active';
 
   private scaleNameEl = document.getElementById('scaleName');
   private scaleNameList: string[] = [];
