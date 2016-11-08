@@ -3,9 +3,9 @@ import {getPixelRatio, getCoordinateFromEventAsPercentageWithinElement} from '..
 import MultiTouch from './MultiTouch';
 import Synth from './Audio/Synth'
 import {palette} from '../Constants/Defaults'
-import {getItemFromArrayPool} from '../Utils/array';
+// import {getItemFromArrayPool} from '../Utils/array';
 import {canvasRenderAtPixelRatio} from '../Utils/CanvasUtils';
-import {getPerfectFifthIndex, getPerfectFourthIndex} from '../Utils/Audio/scales';
+import {getPerfectFifthIndex} from '../Utils/Audio/scales';
 
 class Harp {
   public audio: Synth

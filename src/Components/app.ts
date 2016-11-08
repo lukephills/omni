@@ -160,15 +160,23 @@ class App {
     const key = getKeyBinding(e);
     const keyType: KeyType = getKeyType(key);
 
-    console.log('stop ', key)
+    console.log('stop ', key, keyType)
   }
 
   emitKeyControlAction(key: number) {
     switch (key) {
       case keyboardCodeMap.ArrowUp:
-
+        this.scaleSelector.prev();
         break;
-
+      case keyboardCodeMap.ArrowDown:
+        this.scaleSelector.next();
+        break;
+      case keyboardCodeMap.ArrowLeft:
+        this.scaleSelector.prev();
+        break;
+      case keyboardCodeMap.ArrowRight:
+        this.scaleSelector.next();
+        break;
       default:
         break;
     }

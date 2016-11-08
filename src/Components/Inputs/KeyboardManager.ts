@@ -19,7 +19,8 @@ export class KeyboardManager {
 
   onKeyDown(e: KeyboardEvent) {
 
-    // todo if command or shift isn't down ...
+    // Ignore if command, shift, alt or ctrl are down
+    if (e.metaKey || e.shiftKey || e.altKey || e.ctrlKey) return;
 
     // If key isn't already down fire event and add to list
     if (!this.keysDown.has(e.key)) {
@@ -29,6 +30,10 @@ export class KeyboardManager {
   }
 
   onKeyUp(e: KeyboardEvent) {
+
+    // Ignore if command, shift, alt or ctrl are down
+    if (e.metaKey || e.shiftKey || e.altKey || e.ctrlKey) return;
+
     // Fire event
     this.callbacks.onKeyUp(e);
 
