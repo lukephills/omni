@@ -149,7 +149,7 @@ class App {
 
 
     if (keyType === 'harp') {
-      this.harp.onKeyDown(key - 20)
+      this.harp.onKeyDown(key)
     } else if (keyType === 'control') {
       this.emitKeyControlAction(key);
     }

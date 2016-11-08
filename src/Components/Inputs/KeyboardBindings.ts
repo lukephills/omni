@@ -7,51 +7,48 @@
  */
 export const keyboardCodeMap: KeyboardCodes = {
 
-  // Row 1
-  Backquote: 44,
-  Digit1: 45,
-  Digit2: 46,
-  Digit3: 47,
-  Digit4: 48,
-  Digit5: 49,
-  Digit6: 50,
-  Digit7: 51,
-  Digit8: 52,
-  Digit9: 53,
-  Digit0: 54,
-  Minus: 55,
-  Equal: 56,
-  Backspace: 57,
+  // Row 1 - 0-9 Drone toggles
+  Digit1: 41,
+  Digit2: 42,
+  Digit3: 43,
+  Digit4: 44,
+  Digit5: 45,
+  Digit6: 46,
+  Digit7: 47,
+  Digit8: 48,
+  Digit9: 49,
+  Digit0: 50,
+
 
   // Row 2
-  KeyQ: 31,
-  KeyW: 32,
-  KeyE: 33,
-  KeyR: 34,
-  KeyT: 35,
-  KeyY: 36,
-  KeyU: 37,
-  KeyI: 38,
-  KeyO: 39,
-  KeyP: 40,
-  BracketLeft: 41,
-  BracketRight: 42,
-  Backslash: 43,
+  KeyQ: 21,
+  KeyW: 22,
+  KeyE: 23,
+  KeyR: 24,
+  KeyT: 25,
+  KeyY: 26,
+  KeyU: 27,
+  KeyI: 28,
+  KeyO: 29,
+  KeyP: 30,
+  BracketLeft: 31,
+  BracketRight: 32,
+  Backslash: 33,
 
   // Row 3
-  KeyA: 20,
-  KeyS: 21,
-  KeyD: 22,
-  KeyF: 23,
-  KeyG: 24,
-  KeyH: 25,
-  KeyJ: 26,
-  KeyK: 27,
-  KeyL: 28,
-  Semicolon: 29,
-  Quote: 30,
+  KeyA: 10,
+  KeyS: 11,
+  KeyD: 12,
+  KeyF: 13,
+  KeyG: 14,
+  KeyH: 15,
+  KeyJ: 16,
+  KeyK: 17,
+  KeyL: 18,
+  Semicolon: 19,
+  Quote: 20,
 
-  // Row 4 - Drone toggles
+  // Row 4
   KeyZ: 0,
   KeyX: 1,
   KeyC: 2,
@@ -60,9 +57,8 @@ export const keyboardCodeMap: KeyboardCodes = {
   KeyN: 5,
   KeyM: 6,
   Comma: 7,
-
-  Period: 100, // Purge - Stop all sounds
-  Slash: 110, // Record / Overdub
+  Period: 8,
+  Slash: 9,
 
 
 
@@ -79,26 +75,17 @@ export const keyboardCodeMap: KeyboardCodes = {
   // Tab to switch between fav scales (TODO: add shift tab to switch back)
   Tab: 105,
 
-  // Start / Stop recording playback
-  Space: 111,
-  Enter: 111,
+  Minus: 80, // remove from favourites?
+  Equal: 81, // add to favourites?
 
-  // Numpad to switch octave ?
-  NumpadAdd: 106,
-  NumpadSubtract: 107,
+  Backspace: 100, // Purge - Stop all sounds
+
+  Backquote: 110, // Record / Overdub
+  Space: 111, // Start / Stop recording playback
+  Enter: 111, // Start / Stop recording playback
 
   // Switch between scale constellation and xy pad
   CapsLock: 108,
-
-
-  // Control keys
-  ControlLeft: 200,
-  MetaLeft: 201,
-  MetaRight: 201,
-  AltLeft: 202,
-  AltRight: 202,
-  ShiftLeft: 203,
-  ShiftRight: 203,
 
 
 };
@@ -124,10 +111,10 @@ export type KeyType = 'harp' | 'drone' | 'control';
 export function getKeyType(key: number): KeyType {
   let type: KeyType;
 
-  if (key >= 0 && key <= 9) {
-    type = 'drone';
-  } else if (key >= 20 && key <= 60) {
+  if (key >= 0 && key <= 40) {
     type = 'harp';
+  } else if (key >= 41 && key <= 50) {
+    type = 'drone';
   } else {
     type = 'control';
   }
@@ -207,7 +194,6 @@ export interface KeyboardCodes {
   Enter: number;
 
   // Row 4
-  ShiftLeft: number;
   KeyZ: number;
   KeyX: number;
   KeyC: number;
@@ -218,23 +204,15 @@ export interface KeyboardCodes {
   Comma: number;
   Period: number;
   Slash: number;
-  ShiftRight: number;
 
   // Row 5
-  ControlLeft: number;
-  MetaLeft: number;
-  AltLeft: number;
   Space: number;
-  MetaRight: number;
-  AltRight: number;
   ArrowUp: number;
   ArrowRight: number;
   ArrowDown: number;
   ArrowLeft: number;
 
   // Extra keys
-  NumpadAdd: number;
-  NumpadSubtract: number;
   CapsLock: number;
 
 }
@@ -296,7 +274,6 @@ const _keyboardCodeMapFallback = {
   13: keyboardCodeMap.Enter,
 
   // Row 4
-  16: keyboardCodeMap.ShiftLeft,
   90: keyboardCodeMap.KeyZ,
   88: keyboardCodeMap.KeyX,
   67: keyboardCodeMap.KeyC,
@@ -307,15 +284,9 @@ const _keyboardCodeMapFallback = {
   188: keyboardCodeMap.Comma,
   190: keyboardCodeMap.Period,
   191: keyboardCodeMap.Slash,
-  // 16: keyboardCodeMap.ShiftRight, // keyCode is the same for both shift keys
 
   // Row 5
-  17: keyboardCodeMap.ControlLeft,
-  18: keyboardCodeMap.AltLeft,
-  91: keyboardCodeMap.MetaLeft,
   32: keyboardCodeMap.Space,
-  93: keyboardCodeMap.MetaRight,
-  // 18: keyboardCodeMap.AltRight, // keyCode is the same for both alt keys
   38: keyboardCodeMap.ArrowUp,
   37: keyboardCodeMap.ArrowLeft,
   40: keyboardCodeMap.ArrowDown,
