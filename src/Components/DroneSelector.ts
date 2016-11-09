@@ -1,4 +1,3 @@
-import {Omni} from '../index';
 import {nodeListToArray} from '../Utils/array'
 
 
@@ -9,6 +8,7 @@ class DroneSelector {
   private droneLabels = ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii'];
   private droneSelectorBtnEls: Element[] = [];
   // drone: Drone;
+  droneIdx = -1;
 
   constructor() {
 
@@ -25,14 +25,17 @@ class DroneSelector {
   }
 
   setDrone(idx: number) {
-    Omni.state.droneIdx = idx;
+    // Omni.state.droneIdx = idx;
+    this.droneIdx = idx;
 
     if (idx >= 0) {
       // start drone on note idx
       // this.drone.noteOn(Omni.state.scale[idx])
+      console.log('start drone', idx +1)
     } else {
       // stop drone
       // this.drone.noteOff()
+      console.log('stop drone')
     }
   }
 

@@ -37,6 +37,7 @@ class Synth {
 	public looper: Looper;
 
 	public scale: Scale;
+  rootNoteIdx = 0;
 
 	// Gains
 	public masterVolume: GainNode;
@@ -134,6 +135,8 @@ class Synth {
 
 	public NoteOn(noteIndex: number, volume: number = 100, index: number): void {
 
+    const rootNoteIdx = this.rootNoteIdx;
+    console.log(rootNoteIdx);
     const frequency = getFrequencyFromNoteIndexInScale(noteIndex, this.scale, -1);
 
     for (let [key, value] of this.oscillators.entries()) {

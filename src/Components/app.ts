@@ -2,7 +2,9 @@ import Harp from './Harp';
 import PitchConstellation from './PitchConstellation';
 import ScaleSelector from './ScaleSelector';
 import DroneSelector from './DroneSelector';
+import RootNoteSelector from './RootNoteSelector';
 import {scales, IScale} from '../Utils/Scales/scales-shortlist';
+import {scaleFromRoot12Idx} from '../Utils/Audio/scales';
 
 import {KeyboardManager} from './Inputs/KeyboardManager';
 import {getKeyBinding, getKeyType, KeyType, KeyboardEventLatest, keyboardCodeMap} from './Inputs/KeyboardBindings';
@@ -10,6 +12,8 @@ import {getKeyBinding, getKeyType, KeyType, KeyboardEventLatest, keyboardCodeMap
 interface IState {
   droneIdx: number;
   scale: IScale;
+  scaleIdx: number;
+  rootNoteIdx: number;
 }
 
 // interface IScale {
@@ -24,6 +28,7 @@ class App {
   harp: Harp;
   pitchConstellation: PitchConstellation;
   scaleSelector: ScaleSelector;
+  rootNoteSelector: RootNoteSelector;
   droneSelector: DroneSelector;
   scales: IScale[] = scales;
   keyboardManager: KeyboardManager;
@@ -42,12 +47,18 @@ class App {
       // the index of the active drone button. (-1 means none are active)
       droneIdx: -1,
 
+      // current scale choice index
+      scaleIdx: 0,
+
       // current scale choice
       scale: {
         frequencies: [261.6255653006, 274.52698453615, 329.62755691287, 349.22823143301, 391.99543598175, 411.32572372413, 493.88330125613],
         name: 'Xenakis',
         description: 'This is a description for Xenakis'
       },
+
+      // The musical key choice
+      rootNoteIdx: 0,
 
     }
 
@@ -76,6 +87,9 @@ class App {
     // initialise scale selector
     this.scaleSelector = new ScaleSelector()
 
+    // initialise root note selector
+    this.rootNoteSelector = new RootNoteSelector()
+
     // initialise drone selector
     this.droneSelector = new DroneSelector()
 
@@ -103,20 +117,30 @@ class App {
     this.scaleSelector.next();
   }
 
-  setScale(scaleIdx: number = 0, cb: (state: IState) => any = function(){}) {
+  setScale(scaleIdx = this.state.scaleIdx, rootNoteIdx = this.state.rootNoteIdx) {
+
+    this.state.scaleIdx = scaleIdx;
 
     this.state.scale = this.scales[scaleIdx];
 
-    console.log('new state =', this.state);
-    cb(this.state);
+    // transform scale frequencies using rootNote idx
+    if (this.state.scale.frequencies) {
+      this.state.scale.frequencies = scaleFromRoot12Idx(this.state.scale.frequencies, rootNoteIdx);
+    }
+    this.onStateChange();
     this.scaleDidChange();
   }
 
   scaleDidChange() {
     if (this.state.scale.frequencies) {
       this.pitchConstellation.drawLines(this.state.scale.frequencies);
-      this.harp.updateScale(this.state.scale.frequencies);
+      this.harp.updateScale(this.state.scale.frequencies, this.state.rootNoteIdx);
     }
+  }
+
+  setRootNote(rootNoteIdx: number) {
+    this.state.rootNoteIdx = rootNoteIdx;
+    this.setScale();
   }
 
   randomNumberBetween(min, max) {
@@ -127,6 +151,10 @@ class App {
     this.harp.onResize();
 		this.draw();
 	}
+
+  onStateChange() {
+    console.log('new state =', this.state);
+  }
 
 
 
@@ -150,6 +178,8 @@ class App {
 
     if (keyType === 'harp') {
       this.harp.onKeyDown(key)
+    } else if (keyType === 'rootNote') {
+      this.rootNoteSelector.setKey(key - 40);
     } else if (keyType === 'control') {
       this.emitKeyControlAction(key);
     }

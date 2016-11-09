@@ -7,17 +7,19 @@
  */
 export const keyboardCodeMap: KeyboardCodes = {
 
-  // Row 1 - 0-9 Drone toggles
-  Digit1: 41,
-  Digit2: 42,
-  Digit3: 43,
-  Digit4: 44,
-  Digit5: 45,
-  Digit6: 46,
-  Digit7: 47,
-  Digit8: 48,
-  Digit9: 49,
-  Digit0: 50,
+  // Row 1 - Root note changes
+  Digit1: 40,
+  Digit2: 41,
+  Digit3: 42,
+  Digit4: 43,
+  Digit5: 44,
+  Digit6: 45,
+  Digit7: 46,
+  Digit8: 47,
+  Digit9: 48,
+  Digit0: 49,
+  Minus: 50,
+  Equal: 51,
 
 
   // Row 2
@@ -68,15 +70,13 @@ export const keyboardCodeMap: KeyboardCodes = {
 
   // Arrows to switch scale
   ArrowUp: 101,
-  ArrowRight: 101,
+  ArrowLeft: 101,
   ArrowDown: 102,
-  ArrowLeft: 102,
+  ArrowRight: 102,
 
   // Tab to switch between fav scales (TODO: add shift tab to switch back)
   Tab: 105,
 
-  Minus: 80, // remove from favourites?
-  Equal: 81, // add to favourites?
 
   Backspace: 100, // Purge - Stop all sounds
 
@@ -104,17 +104,17 @@ export function getKeyBinding(e: KeyboardEventLatest): number {
 }
 
 
-export type KeyType = 'harp' | 'drone' | 'control';
+export type KeyType = 'harp' | 'rootNote' | 'control';
 /**
  * Returns the type of key control using the key binding number
  */
 export function getKeyType(key: number): KeyType {
   let type: KeyType;
 
-  if (key >= 0 && key <= 40) {
+  if (key >= 0 && key <= 39) {
     type = 'harp';
-  } else if (key >= 41 && key <= 50) {
-    type = 'drone';
+  } else if (key >= 40 && key <= 52) {
+    type = 'rootNote';
   } else {
     type = 'control';
   }

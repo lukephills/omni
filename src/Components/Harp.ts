@@ -140,7 +140,10 @@ class Harp {
     canvasRenderAtPixelRatio(this.canvas);
   }
 
-  updateScale(scale) {
+  updateScale(scale, rootNoteIdx = 0) {
+
+    console.log(scale);
+
 		const len = scale.length;
 		const p5 = getPerfectFifthIndex(scale);
 
@@ -162,6 +165,7 @@ class Harp {
 
 		this.colors = colors;
 		this.audio.scale = scale;
+    this.audio.rootNoteIdx = rootNoteIdx;
 		this.draw(scale);
 	}
 

@@ -10,6 +10,17 @@ import {
 
 export type Scale = number[];
 
+
+/**
+ * Takes a Scale and a root idx within 12 tone ET and returns an updated scale beginning at the root
+ * @param scale: Scale
+ * @param rootIdx: number
+ * @returns {Scale}
+ */
+export function scaleFromRoot12Idx(scale: Scale, rootIdx: number): Scale {
+	return scaleFromRoot(scale, getFrequencyTET(rootIdx));
+}
+
 /**
  * Takes a Scale and a root frequency and returns an updated scale beginning at the root
  * @param scale: Scale

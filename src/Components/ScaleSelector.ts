@@ -1,4 +1,4 @@
-import {Omni} from '../index'
+import {Omni} from '../index';
 
 class ScaleSelector {
 

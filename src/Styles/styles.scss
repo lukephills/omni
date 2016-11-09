@@ -1,6 +1,7 @@
 // COLOURS //
 
-$color-dark-grey: rgba(184,185,183,1);
+$color-dark-grey: rgba(121,121,121,1);
+$color-mid-grey: rgba(184,185,183,1);
 $color-light-grey: rgba(210,211,209,1);
 $color-white: rgba(255,255,255,1);
 $color-cream: rgba(255,255,250, 1);
@@ -93,7 +94,7 @@ body {
   font-size: 15px;
   font-style: italic;
   background: $color-bg;
-  color: $color-dark-grey;
+  color: $color-mid-grey;
 
   @include sm {
     font-size: 17px;
@@ -374,11 +375,6 @@ li {
     -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
     user-select: none;
 
-    &:hover, &:active {
-      // font-weight: 900;
-      color: $color-primary;
-    }
-
     // numbers on a clock face
     &.n0 {
       transform: translate(0, -183px);
@@ -506,6 +502,7 @@ li {
     flex: 1;
     max-width: 60px;
     height: 45px;
+    color: $color-dark-grey;
     @include sm {
       height: 57px;
     }
@@ -568,6 +565,6 @@ li {
 }
 
 .is-selected {
-  background: $color-primary;
-  color: $color-white;
+  // background: $color-primary;
+  color: $color-white !important;
 }
