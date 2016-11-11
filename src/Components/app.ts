@@ -3,8 +3,11 @@ import PitchConstellation from './PitchConstellation';
 import ScaleSelector from './ScaleSelector';
 import DroneSelector from './DroneSelector';
 import RootNoteSelector from './RootNoteSelector';
+import FavScaleSelector from './FavScaleSelector';
 import {scales, IScale} from '../Utils/Scales/scales-shortlist';
 import {scaleFromRoot12Idx} from '../Utils/Audio/scales';
+
+import {log} from '../Utils/logger'
 
 import {KeyboardManager} from './Inputs/KeyboardManager';
 import {getKeyBinding, getKeyType, KeyType, KeyboardEventLatest, keyboardCodeMap} from './Inputs/KeyboardBindings';
@@ -14,6 +17,7 @@ interface IState {
   scale: IScale;
   scaleIdx: number;
   rootNoteIdx: number;
+  octave: number;
 }
 
 // interface IScale {
@@ -30,6 +34,7 @@ class App {
   scaleSelector: ScaleSelector;
   rootNoteSelector: RootNoteSelector;
   droneSelector: DroneSelector;
+  favScaleSelector: FavScaleSelector;
   scales: IScale[] = scales;
   keyboardManager: KeyboardManager;
 
@@ -59,6 +64,9 @@ class App {
 
       // The musical key choice
       rootNoteIdx: 0,
+
+      // octave
+      octave: -1,
 
     }
 
@@ -93,6 +101,9 @@ class App {
     // initialise drone selector
     this.droneSelector = new DroneSelector()
 
+    // initialise favourite scale selector
+    this.favScaleSelector = new FavScaleSelector()
+
     // draw everything
     this.draw();
 
@@ -117,16 +128,21 @@ class App {
     this.scaleSelector.next();
   }
 
-  setScale(scaleIdx = this.state.scaleIdx, rootNoteIdx = this.state.rootNoteIdx) {
+  setScale(scaleIdx = this.state.scaleIdx, rootNoteIdx = this.state.rootNoteIdx, octave = this.state.octave) {
 
     this.state.scaleIdx = scaleIdx;
 
     this.state.scale = this.scales[scaleIdx];
 
-    // transform scale frequencies using rootNote idx
-    if (this.state.scale.frequencies) {
-      this.state.scale.frequencies = scaleFromRoot12Idx(this.state.scale.frequencies, rootNoteIdx);
+    let freqs = this.state.scale.frequencies
+
+
+
+    // transform scale frequencies using rootNote idx and lower by 1 octave
+    if (freqs) {
+      this.state.scale.frequencies = scaleFromRoot12Idx(freqs, rootNoteIdx, this.state.octave);
     }
+
     this.onStateChange();
     this.scaleDidChange();
   }

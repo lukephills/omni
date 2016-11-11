@@ -55,9 +55,9 @@ export interface IScale {
 
 const _scales: IScale[] = [
   {
-    name: 'Acoustic',
+    name: 'Tuvan',
     intervals: [0, 2, 4, 6, 7, 9],
-    description: 'The acoustic scale, (also known as the overtone scale) differs from the major scale in having a raised fourth and lowered seventh scale degree. Traditionally, the scale persists in the music of peoples of South Siberia, especially in Tyvan music.'
+    description: `Also known as the 'Acoustic' or 'Overtone' scale, differs from the major scale in having a raised fourth and lowered seventh. Traditionally, the scale persists in the music of peoples of South Siberia, especially in Tuvan music.`
   },
   {
     name: 'Adonai Malakh',
@@ -1013,7 +1013,7 @@ const _scales: IScale[] = [
   // },
   {
     //maybe
-    name: 'indian e',
+    name: 'indian e find a better raja',
     frequencies: [
       261.6255653006,
       275.58617649731,
@@ -1025,19 +1025,19 @@ const _scales: IScale[] = [
     ],
     description: 'Observed Indian mode'
   },
-  {
-    //maybe
-    name: 'indian-raja',
-    frequencies: [
-      261.6255653006,
-      294.32876096318,
-      327.03195662575,
-      348.83408706747,
-      392.4383479509,
-      490.54793493862
-    ],
-    description: 'A folk scale from Rajasthan, India'
-  },
+  // {
+  //   //maybe
+  //   name: 'indian-raja',
+  //   frequencies: [
+  //     261.6255653006,
+  //     294.32876096318,
+  //     327.03195662575,
+  //     348.83408706747,
+  //     392.4383479509,
+  //     490.54793493862
+  //   ],
+  //   description: 'A folk scale from Rajasthan, India'
+  // },
   {
     name: 'Iraq',
     frequencies: [
@@ -1140,7 +1140,7 @@ const _scales: IScale[] = [
   //   description: 'Harm. 1/4-11/4 and subh. 4/1-4/11. Joseph Pehrson 1999'
   // },
   {
-    name: 'harm3',
+    name: 'Harmonics',
     frequencies: [
       261.6255653006,
       327.03195662575,
@@ -1149,18 +1149,18 @@ const _scales: IScale[] = [
     ],
     description: 'Third octave of the harmonic overtone series'
   },
-  {
-    name: 'harm6',
-    frequencies: [
-      261.6255653006,
-      294.32876096318,
-      327.03195662575,
-      359.73515228832,
-      392.4383479509,
-      457.84473927605
-    ],
-    description: 'Harmonics 6-12'
-  },
+  // {
+  //   name: 'harm6',
+  //   frequencies: [
+  //     261.6255653006,
+  //     294.32876096318,
+  //     327.03195662575,
+  //     359.73515228832,
+  //     392.4383479509,
+  //     457.84473927605
+  //   ],
+  //   description: 'Harmonics 6-12'
+  // },
   // {
   //   name: 'harmd-hypol',
   //   frequencies: [
@@ -1175,18 +1175,18 @@ const _scales: IScale[] = [
   //   ],
   //   description: 'HarmD-Hypolydian'
   // },
-  {
-    //MAYBE
-    name: 'harrison 5',
-    frequencies: [
-      261.6255653006,
-      279.06726965397,
-      313.95067836072,
-      392.4383479509,
-      418.60090448096
-    ],
-    description: 'From Lou Harrison, a pelog style pentatonic'
-  },
+  // {
+  //   //MAYBE
+  //   name: 'harrison 5',
+  //   frequencies: [
+  //     261.6255653006,
+  //     279.06726965397,
+  //     313.95067836072,
+  //     392.4383479509,
+  //     418.60090448096
+  //   ],
+  //   description: 'From Lou Harrison, a pelog style pentatonic'
+  // },
   // {
   //   name: 'harrison 5 1',
   //   frequencies: [

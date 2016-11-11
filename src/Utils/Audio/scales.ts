@@ -10,6 +10,8 @@ import {
 
 export type Scale = number[];
 
+export const equalTempRatio12 = 1.0594645048603144;
+export const middleC = 261.6255653006;
 
 /**
  * Takes a Scale and a root idx within 12 tone ET and returns an updated scale beginning at the root
@@ -17,8 +19,8 @@ export type Scale = number[];
  * @param rootIdx: number
  * @returns {Scale}
  */
-export function scaleFromRoot12Idx(scale: Scale, rootIdx: number): Scale {
-	return scaleFromRoot(scale, getFrequencyTET(rootIdx));
+export function scaleFromRoot12Idx(scale: Scale, rootIdx: number, octave: number = 0): Scale {
+	return scaleFromRoot(scale, getFrequencyTET(rootIdx, getFrequencyFromRootAndOctave(middleC, octave)));
 }
 
 /**
@@ -76,8 +78,6 @@ export function getFrequencyFromNoteIndexInScale(noteIndex: number, scale: Scale
 
 
 
-export const equalTempRatio12 = 1.0594645048603144;
-export const middleC = 261.6255653006;
 
 /**
  * Gets the frequency from degree

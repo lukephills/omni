@@ -5,7 +5,7 @@ class DroneSelector {
 
   private droneBtnElId = 'drone-selector-btn';
   private droneSelectorEl = document.getElementById('drone-selector-buttons');
-  private droneLabels = ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii'];
+  private droneLabels = ['i', 'v'];
   private droneSelectorBtnEls: Element[] = [];
   // drone: Drone;
   droneIdx = -1;
@@ -153,7 +153,7 @@ class DroneSelector {
 
   getDroneElsList() {
     let buttonList = '';
-    const numberOfDroneNotes = 7; //TODO: get this from Omni.state.scale.length
+    const numberOfDroneNotes = this.droneLabels.length;
 
     for (let i = 0; i < numberOfDroneNotes; i++) {
       buttonList += `<li id="drone-selector-btn-${i}">${this.droneLabels[i]}</li>`

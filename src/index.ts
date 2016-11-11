@@ -32,3 +32,13 @@ declare var module: any; // TODO: add webpack HMR typings
 if (module.hot) {
   module.hot.accept();
 }
+
+/**
+ * Override console.log for debug mode
+ */
+const DEBUG = true;
+
+// const logAlias: any = console.log;
+// console.log = (...args) => {
+//   if (DEBUG) logAlias(...args)
+// }

@@ -2,11 +2,9 @@ import {Omni} from '../index';
 
 class ScaleSelector {
 
-  // private activeScaleListItem: Element;
-	// private activeScaleClassName: string =  'scale-list-item--active';
+  scaleNameList: string[] = [];
 
   private scaleNameEl = document.getElementById('scaleName');
-  private scaleNameList: string[] = [];
   private scaleIdx: number = 0;
 
   constructor() {
@@ -25,35 +23,34 @@ class ScaleSelector {
 		//   }
     // }
 
-    console.log(this.scaleNameList);
+    this.render();
+  }
 
+  setTo(idx: number) {
+    this.scaleIdx = idx;
     this.render();
   }
 
   prev() {
     if (this.scaleIdx === 0) {
-      this.scaleIdx = this.scaleNameList.length - 1;
+      this.setTo(this.scaleNameList.length - 1);
     } else {
-      this.scaleIdx--;
+      this.setTo(this.scaleIdx - 1);
     }
-
-    this.render();
   }
 
   next() {
     if (this.scaleIdx === this.scaleNameList.length - 1) {
-      this.scaleIdx = 0;
+      this.setTo(0);
     } else {
-      this.scaleIdx++;
+      this.setTo(this.scaleIdx + 1);
     }
-
-    this.render();
   }
 
   render() {
+    Omni.setScale(this.scaleIdx);
     if (this.scaleNameEl) {
       this.scaleNameEl.innerHTML = this.scaleNameList[this.scaleIdx];
-      Omni.setScale(this.scaleIdx);
     }
   }
 }
