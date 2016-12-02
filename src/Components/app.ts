@@ -4,10 +4,11 @@ import ScaleSelector from './ScaleSelector';
 import DroneSelector from './DroneSelector';
 import RootNoteSelector from './RootNoteSelector';
 import FavScaleSelector from './FavScaleSelector';
+import LoopController from './LoopController';
 import {scales, IScale} from '../Utils/Scales/scales-shortlist';
 import {scaleFromRoot12Idx} from '../Utils/Audio/scales';
 
-import {log} from '../Utils/logger'
+// import {log} from '../Utils/logger'
 
 import {KeyboardManager} from './Inputs/KeyboardManager';
 import {getKeyBinding, getKeyType, KeyType, KeyboardEventLatest, keyboardCodeMap} from './Inputs/KeyboardBindings';
@@ -35,6 +36,7 @@ class App {
   rootNoteSelector: RootNoteSelector;
   droneSelector: DroneSelector;
   favScaleSelector: FavScaleSelector;
+  loopController: LoopController;
   scales: IScale[] = scales;
   keyboardManager: KeyboardManager;
 
@@ -92,6 +94,9 @@ class App {
     // pitch constellation
     this.pitchConstellation = new PitchConstellation(document.getElementById('pitchConstellation'))
 
+    // initialise favourite scale selector
+    this.favScaleSelector = new FavScaleSelector()
+
     // initialise scale selector
     this.scaleSelector = new ScaleSelector()
 
@@ -101,8 +106,14 @@ class App {
     // initialise drone selector
     this.droneSelector = new DroneSelector()
 
-    // initialise favourite scale selector
-    this.favScaleSelector = new FavScaleSelector()
+
+    // initialise loop controller
+    const recBtnEl = document.getElementById('recordBtn');
+    const playBtnEl = document.getElementById('playBtn');
+    if (recBtnEl && playBtnEl) {
+      this.loopController = new LoopController(recBtnEl, playBtnEl);
+    }
+
 
     // draw everything
     this.draw();
@@ -145,6 +156,8 @@ class App {
 
     this.onStateChange();
     this.scaleDidChange();
+
+    this.favScaleSelector.setActiveClass(scaleIdx);
   }
 
   scaleDidChange() {
@@ -218,10 +231,10 @@ class App {
         this.scaleSelector.next();
         break;
       case keyboardCodeMap.ArrowLeft:
-        this.scaleSelector.prev();
+        this.favScaleSelector.prev();
         break;
       case keyboardCodeMap.ArrowRight:
-        this.scaleSelector.next();
+        this.favScaleSelector.next();
         break;
       default:
         break;

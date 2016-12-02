@@ -5,6 +5,8 @@ import RecorderWorker from './RecorderWorker';
 import Loop from './Loop';
 import {appendBuffer, weakenBuffer} from '../Audio/buffers';
 
+type LooperStates = 'stopped' | 'playing' | 'recording' | 'overdubbing';
+
 /**
  * LOOPER
  * Record, overdub and playback loops in the same style as a Line 6 DL4 Green Delay
@@ -23,6 +25,7 @@ class Looper {
 	public maxLoopDuration: number = 30; // seconds
 	public recordMono: boolean = true;
 	public volumeReduceAmount: number = 1.1;
+  public state: LooperStates = 'stopped';
 
 	private context: AudioContext;
 	private input: AudioNode;
@@ -31,7 +34,7 @@ class Looper {
 	private loopLength: number = this.tempLoopLength;
 	private nextLoopStartTime: number;
 	private output: AudioNode;
-	private playbackSchedulerTimeout: number;
+	private playbackSchedulerTimeout: number | null;
 	private processor: ScriptProcessorNode;
 	private resumeOverdubbingpPressed: boolean = false;
 	private _id: number = -1;
@@ -79,54 +82,59 @@ class Looper {
 	/**
 	 * When the record/overdub button is pressed
 	 */
-	public onRecordPress(): void {
-		//TODO: instead of if else, make a switch statement to detect this.recordState
+	public recordBtnPressed(): void {
 		// STOPPED STATE
 		if (!this.isRecording && !this.isOverdubbing && !this.isPlaying) {
-			//if (this.isPlaying){
-			//	this.stopPlaying();
-			//}
 			this.reset();
 			this.startRecording();
+      this.state = 'recording';
 		}
 		// FIRST RECORDING STATE
 		else if (this.isRecording && !this.isOverdubbing) {
 			this.startOverdubbing();
+      this.state = 'overdubbing';
 		}
 		// PLAYING BACK STATE
 		else if (this.isPlaying && !this.isRecording) {
 			this.resumeOverdubbing();
+      this.state = 'overdubbing';
 		}
 		// OVERDUBBING STATE
 		else if (this.isOverdubbing) {
 			this.stopRecording();
 			this.stopPlaying();
+      this.state = 'stopped';
 		}
+    console.log('this recording state =', this.state)
 	}
 
 	/**
 	 * When the playback/stop button is pressed
 	 */
-	public onPlaybackPress(): void {
+	public playBtnPressed(): void {
 		// if playing, stop playing
 		if (this.isPlaying && !this.isOverdubbing) {
 			this.stopPlaying();
+      this.state = 'stopped';
 		}
 
 		// if recording, stop recording
 		else if (this.isRecording && !this.isPlaying) {
 			this.stopRecording();
 			this.startPlaying();
+      this.state = 'playing';
 		}
 
 		// if overdubbing, stop overdubbing but carry on playing
 		else if (this.isRecording && this.isPlaying) {
 			this.stopRecording();
+      this.state = 'playing';
 		}
 
 		// if not playing or recording/overdubbing but loops exist, play them
 		else if (!this.isRecording && this.hasRecordings) {
 			this.startPlaying();
+      this.state = 'playing';
 		}
 	}
 
@@ -160,7 +168,7 @@ class Looper {
 	public stopRecording(): void {
 		this.setLoopLength(this.loops[0]);
 		this.isRecording = false;
-		// this.processor.onaudioprocess = null;
+    (<any>this.processor).onaudioprocess = null;
 	}
 
 	/**
@@ -207,8 +215,8 @@ class Looper {
 		// Weaken all loops and add to buffers array
 		for (let i in this.loops) {
 			if (this.loops[i].buffer !== null) {
-				let newBuffer: AudioBuffer = weakenBuffer(
-					this.loops[i].buffer, this.loops[i].output.gain.value / weakenAmount, this.context);
+				let newBuffer = weakenBuffer(
+					<AudioBuffer>this.loops[i].buffer, this.loops[i].output.gain.value / weakenAmount, this.context);
 
 				// Buffers with a start offset (ie. the first loop from a resumed overdub)
 				// Shift their buffer data over by the offset amount
@@ -270,7 +278,7 @@ class Looper {
 				command: 'exportWAV',
 				type: 'audio/wav',
 			});
-		}, 0)
+		}, 0);
 	}
 
 	/**
@@ -279,8 +287,8 @@ class Looper {
 	public reset(): void {
 		this.loops = [];
 		this.loopLength = this.tempLoopLength;
-		// this.playbackSchedulerTimeout = null;
-		// this.nextLoopStartTime = null;
+
+    this.playbackSchedulerTimeout = null;
 		this._id = -1;
 	}
 
@@ -289,7 +297,9 @@ class Looper {
 	 * @param loop
 	 */
 	private setLoopLength(loop: Loop): void {
-		this.loopLength = loop.buffer.duration + loop.startOffset;
+    if (loop.buffer) {
+      this.loopLength = loop.buffer.duration + loop.startOffset;
+    }
 	}
 
 	/**
@@ -315,7 +325,7 @@ class Looper {
 				// this.loopLength. Otherwise there is a short audio dropout caused by timing inaccuracies.
 				// TODO: this could be made more efficient
 				if (this.loops[i].startOffset > 0) {
-					this.loops[i].startOffset = this.loopLength - this.loops[i].buffer.duration;
+					this.loops[i].startOffset = this.loopLength - (<AudioBuffer>this.loops[i].buffer).duration;
 				}
 				this.loops[i].play();
 			}
@@ -366,7 +376,7 @@ class Looper {
 		}
 
 		// update loop with new audio
-		newLoop.buffer = appendBuffer(newLoop.buffer, e.inputBuffer, this.context);
+		newLoop.buffer = appendBuffer(<AudioBuffer>newLoop.buffer, e.inputBuffer, this.context);
 
 		// save the updated loop
 		this.loops[this.loops.length - 1] = newLoop;

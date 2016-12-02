@@ -233,6 +233,34 @@ li {
   background: url(../assets/icons/icon-minus.svg) center center no-repeat;
 }
 
+.btn-record {
+  @extend .icon-record;
+  &.is-overdubbing {
+    @extend .icon-minus;
+  }
+  &.is-recording, &.is-playing {
+    @extend .icon-plus;
+  }
+}
+
+.btn-play {
+  @extend .icon-play;
+  &.is-playing {
+    @extend .icon-minus; //todo change to stop icon
+  }
+}
+
+.is-recording {
+  background: url(../assets/icons/icon-plus.svg) center center no-repeat;
+}
+
+.is-overdubbing {
+  background: url(../assets/icons/icon-minus.svg) center center no-repeat;
+}
+
+.is-playing {
+  background: url(../assets/icons/icon-minus.svg) center center no-repeat;
+}
 
 
 

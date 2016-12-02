@@ -2,8 +2,8 @@
  * Keyboard note values
  * Organised into rows of alphanumeric keys and computer control keys at the bottom
  *
- * Rows 3 - 1 are harp notes (20+)
- * Row 4 is drone notes (0 - 9)
+ * Rows 2 - 4 are harp notes
+ * Row 1 is root key changes (1 to '=')
  */
 export const keyboardCodeMap: KeyboardCodes = {
 
@@ -68,11 +68,13 @@ export const keyboardCodeMap: KeyboardCodes = {
   // Misc keys
   //
 
-  // Arrows to switch scale
+  // Arrows up & down to switch scale
   ArrowUp: 101,
-  ArrowLeft: 101,
   ArrowDown: 102,
-  ArrowRight: 102,
+
+  // Arrows left & right to switch between favourite scales
+  ArrowLeft: 103,
+  ArrowRight: 104,
 
   // Tab to switch between fav scales (TODO: add shift tab to switch back)
   Tab: 105,

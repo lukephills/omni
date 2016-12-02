@@ -1,7 +1,7 @@
-import {nodeListToArray} from '../Utils/array'
-import {IScale} from '../Utils/Scales/scales-shortlist';
+import { nodeListToArray } from '../Utils/array'
+import { IScale } from '../Utils/Scales/scales-shortlist';
 
-import {Omni} from '../index';
+import { Omni } from '../index';
 
 
 class FavScaleSelector {
@@ -9,6 +9,7 @@ class FavScaleSelector {
   private favScaleSelectorEl = document.getElementById('fav-scale-buttons');
   private addButtonEl = document.getElementById('addFavScaleBtn');
   private favScaleBtnId = 'fav-selector-btn';
+  private favScaleBtnEls: Element[] = [];
 
   /**
    * An array containing the scaleIdx's corresponding to the favourite scales
@@ -19,6 +20,11 @@ class FavScaleSelector {
    * Max amount of favourites to store
    */
   maxAmount = 3;
+
+  /**
+   * Current active favourite scale index. Set to -1 if none are active
+   */
+  private _activeFavIdx = -1;
 
   constructor() {
 
@@ -34,17 +40,14 @@ class FavScaleSelector {
     // don't add scale again if it's already in favourites
     if (this.favourites.indexOf(scaleIdx) === -1) {
       this.favourites.push(scaleIdx);
+
+      // Cap amount of favourites to the maximum amount
+      if (this.favourites.length > this.maxAmount) {
+        this.favourites.splice(0, 1);
+      }
+
+      this.render();
     }
-
-    // Cap amount of favourites to the maximum amount
-    if (this.favourites.length > this.maxAmount) {
-      this.favourites.splice(0,1);
-    }
-
-    console.log(this.favourites);
-
-    this.render();
-
   }
 
 
@@ -59,19 +62,43 @@ class FavScaleSelector {
 
   onScalePressed(e: MouseEvent | TouchEvent) {
     e.preventDefault();
-    const scaleIdx = this.getBtnPressedIdx((<Element>e.target));
+    const el = (<Element>e.target)
+    const scaleIdx = this.getBtnPressedIdx(el);
     Omni.scaleSelector.setTo(scaleIdx);
   }
 
-  // addActiveClass(el) {
-  //   this.removeAllActiveClasses();
-  //   el.classList.add('is-selected');
-  // }
+  next() {
+    // switch to next favourite
+    this._incrementActiveIdx();
+    console.log('change to ', this._activeFavIdx)
+    Omni.scaleSelector.setTo(this.favourites[this._activeFavIdx]);
+  }
 
-  // removeAllActiveClasses() {
-  //   // find and remove all is-selected classes from buttons
-  //   this.droneSelectorBtnEls.forEach(el => el.classList.remove('is-selected'));
-  // }
+  prev() {
+    // switch to prev favourite
+    this._decrementActiveIdx();
+    console.log('change to ', this._activeFavIdx)
+    Omni.scaleSelector.setTo(this.favourites[this._activeFavIdx]);
+  }
+
+  setActiveClass(scaleIdx) {
+    this.removeAllActiveClasses();
+    const idx = this.favourites.indexOf(scaleIdx)
+
+    // if the current scale is a fav pick
+    if (idx !== -1) {
+      const el = document.getElementById(`${this.favScaleBtnId}-${scaleIdx}`)
+      if (el) el.classList.add('is-selected');
+    }
+
+    // make sure the active favourite idx is updated (-1 if not a current favourite)
+    this._activeFavIdx = idx;
+  }
+
+  removeAllActiveClasses() {
+    // find and remove all is-selected classes from buttons
+    this.favScaleBtnEls.forEach(el => el.classList.remove('is-selected'));
+  }
 
   addEventListeners() {
     // Add button
@@ -91,6 +118,9 @@ class FavScaleSelector {
     if (this.favScaleSelectorEl) {
       // append the <li> drone buttons
       this.favScaleSelectorEl.innerHTML = this.favScaleBtnElsList;
+
+      // store each btn in cache for querying
+      this.favScaleBtnEls = nodeListToArray(this.favScaleSelectorEl.childNodes)
     }
   }
 
@@ -107,6 +137,23 @@ class FavScaleSelector {
 
   render() {
     this.updateFavScaleButtons();
+    this.setActiveClass(Omni.state.scaleIdx);
+  }
+
+  private _incrementActiveIdx() {
+    if (this._activeFavIdx >= this.favourites.length - 1) {
+      this._activeFavIdx = 0
+    } else {
+      this._activeFavIdx++;
+    }
+  }
+
+  private _decrementActiveIdx() {
+    if (this._activeFavIdx <= 0) {
+      this._activeFavIdx = this.favourites.length - 1
+    } else {
+      this._activeFavIdx--;
+    }
   }
 
 }

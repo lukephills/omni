@@ -41,7 +41,7 @@ class Synth {
 
 	// Gains
 	public masterVolume: GainNode;
-	public thereminOutput: GainNode;
+	public synthOut: GainNode;
 	// public oscillatorGains: GainNode[];
 	public scuzzGain: GainNode;
 	public recordingGain: GainNode;
@@ -71,7 +71,7 @@ class Synth {
 		this.routeSounds();
 		this.setupAnalysers();
 
-		this.looper = new Looper(this.thereminOutput, this.recordingGain);
+		this.looper = new Looper(this.synthOut, this.recordingGain);
 
 		this.scale = [261.6255653006, 274.52698453615, 329.62755691287, 349.22823143301, 391.99543598175, 411.32572372413, 493.88330125613];
 	}
@@ -79,7 +79,7 @@ class Synth {
 	public createNodes(): void {
 		// Gains
 		this.masterVolume = this.context.createGain();
-		this.thereminOutput = this.context.createGain();
+		this.synthOut = this.context.createGain();
 		// this.oscillatorGains = [];
 		this.scuzzGain = this.context.createGain();
 		this.recordingGain = this.context.createGain();
@@ -197,11 +197,11 @@ class Synth {
 	// }
 
 	onRecordPress() {
-		this.looper.onRecordPress();
+		this.looper.recordBtnPressed();
 	}
 
 	onPlaybackPress() {
-		this.looper.onPlaybackPress();
+		this.looper.playBtnPressed();
 	}
 
 	public StopPlayback(): void {
@@ -252,10 +252,10 @@ class Synth {
 		// this.delay.connect(this.feedback);
 		// this.delay.connect(this.compressor);
 		this.feedback.connect(this.delay);
-		this.compressor.connect(this.thereminOutput);
+		this.compressor.connect(this.synthOut);
 
 		// THEREMIN ROUTE
-		this.thereminOutput.connect(this.analysers.live);
+		this.synthOut.connect(this.analysers.live);
 		this.analysers.live.connect(this.masterVolume);
 
 		this.recordingGain.connect(this.analysers.recording);

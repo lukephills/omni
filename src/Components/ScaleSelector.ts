@@ -5,25 +5,16 @@ class ScaleSelector {
   scaleNameList: string[] = [];
 
   private scaleNameEl = document.getElementById('scaleName');
-  private scaleIdx: number = 0;
+  private scaleIdx: number;
 
   constructor() {
 
-    // this.appendScaleChoices();
-    // this.scaleNameEl.innerHTML = scales
-    console.log(Omni.scales)
-
     this.scaleNameList = Omni.scales.map(scale => scale.name)
 
+    console.log(this.scaleNameList)
 
-
-    // for (let scaleName in Omni.scales) {
-		// 	if (scaleName) {
-    //     this.scaleNameList.push(scaleName);
-		//   }
-    // }
-
-    this.render();
+    // By default set to first scale
+    this.setTo(0);
   }
 
   setTo(idx: number) {
