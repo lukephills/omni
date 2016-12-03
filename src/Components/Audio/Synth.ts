@@ -6,6 +6,8 @@ import {WaveformStringType} from '../../Constants/AppTypings';
 import Looper from '../../Utils/Looper/Looper';
 import {getFrequencyFromNoteIndexInScale, Scale} from '../../Utils/Audio/scales';
 import Sine from './Sine';
+import CrappyDistortion from './CrappyDistortion';
+import FeedbackDelay from './FeedbackDelay';
 
 interface IAnalysers {
 	live: AnalyserNode;
@@ -242,12 +244,16 @@ class Synth {
 		// Connect the Scuzz
 		this.scuzz.connect(this.scuzzGain);
 
+    var distortion = new CrappyDistortion(this.context, 5, 'none');
+    var delay = new FeedbackDelay(this.context, 0.1, 0.6, 0.5);
 
     // connect all the oscillators in the pool
     for (let {osc} of this.oscillators.values()) {
       // osc is inactive, set it's frequency, trigger it & set it to active.
-      osc.connect(this.compressor);
+      osc.connect(delay);
     }
+
+    delay.connect(this.compressor)
 
 		// this.delay.connect(this.feedback);
 		// this.delay.connect(this.compressor);

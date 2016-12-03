@@ -1,8 +1,13 @@
-import ToneTS from './ToneTs';
+import AudioNodeBase from './AudioNodeBase';
 import ADSR from './ADSR';
 import {getOvertones} from '../../Utils/Audio/scales';
 
-class Sine extends ToneTS {
+
+// var c = new AudioContext();
+// var osc = c.createOscillator();
+
+
+class Sine extends AudioNodeBase {
 
   public input: GainNode;
   public output: GainNode;
@@ -78,7 +83,8 @@ class Sine extends ToneTS {
 			this.overtoneGains[i] = this.ctx.createGain();
 			this.overtoneGains[i].gain.value = 1 / (i + 4);
 			this.overtoneOscs[i].connect(this.overtoneGains[i]);
-			this.overtoneGains[i].connect(this.ADSR.gainNode);
+			this.overtoneGains[i].connect(this.ADSR);
+
 		});
 
 		// console.log(overtones);
@@ -90,8 +96,8 @@ class Sine extends ToneTS {
 
 
 
-		this.osc.connect(this.ADSR.gainNode);
-		this.ADSR.gainNode.connect(this.output);
+		this.osc.connect(this.ADSR);
+		this.ADSR.connect(this.output);
 	}
 
 
