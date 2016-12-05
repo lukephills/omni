@@ -35,11 +35,11 @@ class Sine extends AudioNodeBase {
 		this.osc.stop(now + this.attack + this.release);
 
 		this.overtoneOscs.forEach((osc) => {
-			osc.start();
+			osc.start(now);
 			osc.stop(now + this.attack + this.release);
 		});
 
-		this.ADSR.trigger(now, volume, this.attack, this.release);
+		this.ADSR.triggerAttackRelease(now, volume, this.attack, this.release);
 	}
 
 
