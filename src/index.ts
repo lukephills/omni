@@ -9,6 +9,9 @@ const startApp = () => {
 	// Prevent touch scroll event on document //
 	// document.addEventListener('touchmove', function(e){e.preventDefault()}, false);
   Omni.init();
+
+  // Add active class to body to hide loaders and overlays
+  document.body.classList.add('app-active');
 }
 
 

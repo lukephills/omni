@@ -587,6 +587,7 @@ li {
 }
 
 
+
 // MODIFIERS
 
 .is-hidden {
@@ -596,4 +597,16 @@ li {
 .is-selected {
   // background: $color-primary;
   color: $color-white !important;
+}
+
+// APP IS ACTIVE
+
+.app-active {
+  .startOverlay {
+    display: none;
+  }
+  .loading-spinner {
+    display: none;
+    animation: none;
+  }
 }

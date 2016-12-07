@@ -1,15 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-    <!-- Allow everything in development -->
-    <!--meta http-equiv="Content-Security-Policy"
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+	<!-- Allow everything in development -->
+	<!--meta http-equiv="Content-Security-Policy"
           content="default-src *;
                  style-src 'self' 'unsafe-inline';
                  script-src 'self' 'unsafe-inline' 'unsafe-eval'"-->
 
-    <script type="text/javascript">
+  <style>
+    .overlay {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: rgba(0,0,0,1);
+    }
+
+    .loading-spinner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      margin: auto;
+      width: 40px;
+      height: 40px;
+      background: rgba(255,105,105,1);
+      opacity: 0.3;
+      border-radius: 50%;
+      animation: glow 0.8s ease-in infinite alternate;
+    }
+    @keyframes glow { from { opacity: 0.3 } to { opacity: 1 } }
+
+  </style>
+
+	<script type="text/javascript">
         WebFontConfig = {
             google: { families: [ 'Roboto:300i', 'Lora:400i,700i' ] }
         };
@@ -22,151 +51,166 @@
             s.parentNode.insertBefore(wf, s);
         })(); </script>
 </head>
+
 <body>
-<div id="app" class="container fixed-window">
-    <div class="flex main-view">
-      <nav class="flex space-between nav">
-          <h1>omni</h1>
-          <ul class="flex space-between">
-              <li><span href="" id="recordBtn" class="btn icon-record btn-record"></span></li>
-              <li><span href="" id="playBtn" class="btn icon-play btn-play"></span></li>
-              <li><span href="" id="menuBtn" class="btn icon-menu"></span></li>
-          </ul>
-      </nav>
-      <div class="flex middle-section">
-          <section class="xy-pad-section rel">
-              <div class="xy-pad">
-                <canvas id="xyPad" class="abs"></canvas>
-              </div>
-          </section>
-          <section class="pitch-constellation-section">
-            <div class="pitch-constellation">
-              <div class="circle" id="pitchConstellation"></div>
-              <div class="letters" id="pitch-constellation-letters">
+	<div id="app" class="container fixed-window">
+		<div class="flex main-view">
+			<nav class="flex space-between nav">
+				<h1>omni</h1>
+				<ul class="flex space-between">
+					<li><span id="recordBtn" class="btn icon-record btn-record"></span></li>
+					<li><span id="playBtn" class="btn icon-play btn-play"></span></li>
+					<li><span id="menuBtn" class="btn icon-menu"></span></li>
+				</ul>
+			</nav>
+			<div class="flex middle-section">
+				<section class="xy-pad-section rel">
+					<div class="xy-pad">
+						<canvas id="xyPad" class="abs"></canvas>
+					</div>
+				</section>
+				<section class="pitch-constellation-section">
+					<div class="pitch-constellation">
+						<div class="circle" id="pitchConstellation"></div>
+						<div class="letters" id="pitch-constellation-letters">
 
-                  <span id="n0" class="n0 is-selected">C</span>
-                  <span id="n1" class="n1">C#</span>
-                  <span id="n2" class="n2">D</span>
-                  <span id="n3" class="n3">D#</span>
-                  <span id="n4" class="n4">E</span>
-                  <span id="n5" class="n5">F</span>
-                  <span id="n6" class="n6">F#</span>
-                  <span id="n7" class="n7">G</span>
-                  <span id="n8" class="n8">G#</span>
-                  <span id="n9" class="n9">A</span>
-                  <span id="n10" class="n10">A#</span>
-                  <span id="n11" class="n11">B</span>
+							<span id="n0" class="n0 is-selected">C</span>
+							<span id="n1" class="n1">C#</span>
+							<span id="n2" class="n2">D</span>
+							<span id="n3" class="n3">D#</span>
+							<span id="n4" class="n4">E</span>
+							<span id="n5" class="n5">F</span>
+							<span id="n6" class="n6">F#</span>
+							<span id="n7" class="n7">G</span>
+							<span id="n8" class="n8">G#</span>
+							<span id="n9" class="n9">A</span>
+							<span id="n10" class="n10">A#</span>
+							<span id="n11" class="n11">B</span>
 
-              </div>
-            </div>
+						</div>
+					</div>
 
-          </section>
-          <section class="scale-selector">
-              <span id="scaleSelectPrevBtn" class="icon-arrow-up"></span>
-              <h1 id="scaleName" class="scale-name">xenakis</h1>
-              <span id="scaleSelectNextBtn" class="icon-arrow-down"></span>
-          </section>
-          <div class="fav-scale-controller">
-              <a id="addFavScaleBtn" class="icon-plus"></a>
-          </div>
-      </div>
-      <div class="flex space-between selector-section">
-          <section class="drone-selector">
-              <!--<h5>drone</h5>-->
-              <ul class="flex" id="drone-selector-buttons">
-                  <li>i</li>
-                  <li>ii</li>
-                  <li>iii</li>
-                  <li>iv</li>
-                  <li class="is-selected">v</li>
-                  <li>vi</li>
-                  <li>vii</li>
-                  <li>i</li>
-              </ul>
-          </section>
-          <section class="fav-scale-selector">
-              <ul class="flex" id="fav-scale-buttons">
-                  <!--<li>locrian maj3</li>
+				</section>
+				<section class="scale-selector">
+					<span id="scaleSelectPrevBtn" class="icon-arrow-up"></span>
+					<h1 id="scaleName" class="scale-name">xenakis</h1>
+					<span id="scaleSelectNextBtn" class="icon-arrow-down"></span>
+				</section>
+				<div class="fav-scale-controller">
+					<a id="addFavScaleBtn" class="icon-plus"></a>
+				</div>
+			</div>
+			<div class="flex space-between selector-section">
+				<section class="drone-selector">
+					<!--<h5>drone</h5>-->
+					<ul class="flex" id="drone-selector-buttons">
+						<li>i</li>
+						<li>ii</li>
+						<li>iii</li>
+						<li>iv</li>
+						<li class="is-selected">v</li>
+						<li>vi</li>
+						<li>vii</li>
+						<li>i</li>
+					</ul>
+				</section>
+				<section class="fav-scale-selector">
+					<ul class="flex" id="fav-scale-buttons">
+						<!--<li>locrian maj3</li>
                   <li>major triad</li>
                   <li class="is-selected">xenakis</li>
                   <li>burmese</li>-->
-              </ul>
-          </section>
-      </div>
-      <section class="flex harp">
-          <canvas id="harp"></canvas>
-      </section>
-    </div>
+					</ul>
+				</section>
+			</div>
+			<section class="flex harp">
+				<canvas id="harp"></canvas>
+			</section>
+		</div>
 
-    <div class="settings-overlay is-hidden">
-        <nav>
-            <h1>omni</h1>
-            <ul>
-                <li><a href="" id="downloadBtn" class="icon-download btn-record"></a></li>
-                <li><a href="" id="closeBtn" class="icon-close btn-close"></a></li>
-            </ul>
-        </nav>
-        <section class="scaleInfoSelector">
-            <span id="scaleSelectPrevBtn" class="icon-arrow-left"></span>
-            <h1 id="scaleName" class="scale-name js-scale-name">xenakis</h1>
-            <span id="scaleSelectNextBtn" class="icon-arrow-right"></span>
-            <p id="scaleDescription">A Fox who had never seen a Lion one day met one, and was so terrified at the sight of him that he was ready to die with fear.
-</p>
-            <p class="bold">frequencies starting on middle c</p>
-            <ul id="scaleFrequencies">
-                <li>261.6</li>
-                <li>294.3</li>
-                <li>327</li>
-                <li>348.8</li>
-                <li>392.4</li>
-                <li>436</li>
-                <li>490.5</li>
-            </ul>
-        </section>
-        <section class="settings">
-            <div class="voice-selector settings-carousel">
-                <p class="bold">voice</p>
-                <a href="" id="scaleSelectPrevBtn" class="icon-arrow-left"></a>
-                    <p class="scale-name js-scale-name">wind chimes</p>
-                <a href="" id="scaleSelectNextBtn" class="icon-arrow-right"></a>
-            </div>
-            <div class="octaves-selector settings-carousel">
-                <p class="bold">octaves</p>
-                <a href="" id="octavesSelectMinusBtn" class="icon-minus"></a>
-                    <p id="" class="scale-name">4</p>
-                <a href="" id="octavesSelectPlusBtn" class="icon-plus"></a>
-            </div>
-        </section>
-        <footer>
-            <div class="get-the-app">
-                <h2>Get the app</h2>
-                <ul>
-                    <li><a href="">iOS</a></li>
-                    <li><a href="">android</a></li>
-                    <li><a href="">desktop</a></li>
-                </ul>
-            </div>
-            <div class="rate-the-app">
-                <h2>Rate the app</h2>
-                <ul>
-                    <li><a href="" class="icon-smile"></a></li>
-                    <li><a href="" class="icon-sad"></a></li>
-                </ul>
-            </div>
-            <div class="website"><a href="https://femurdesign.com">femurdesign.com</a></div>
-            <div class="share">
-                <h2>Share:</h2>
-                <a href="" class="icon-facebook"></a>
-                <a href="" class="icon-twitter"></a>
-            </div>
-        </footer>
-    </div>
+		<div class="settings-overlay is-hidden">
+			<nav>
+				<h1>omni</h1>
+				<ul>
+					<li>
+						<a href="" id="downloadBtn" class="icon-download btn-record"></a>
+					</li>
+					<li>
+						<a href="" id="closeBtn" class="icon-close btn-close"></a>
+					</li>
+				</ul>
+			</nav>
+			<section class="scaleInfoSelector">
+				<span id="scaleSelectPrevBtn" class="icon-arrow-left"></span>
+				<h1 id="scaleName" class="scale-name js-scale-name">xenakis</h1>
+				<span id="scaleSelectNextBtn" class="icon-arrow-right"></span>
+				<p id="scaleDescription">A Fox who had never seen a Lion one day met one, and was so terrified at the sight of him that he was ready to die with
+					fear.
+				</p>
+				<p class="bold">frequencies starting on middle c</p>
+				<ul id="scaleFrequencies">
+					<li>261.6</li>
+					<li>294.3</li>
+					<li>327</li>
+					<li>348.8</li>
+					<li>392.4</li>
+					<li>436</li>
+					<li>490.5</li>
+				</ul>
+			</section>
+			<section class="settings">
+				<div class="voice-selector settings-carousel">
+					<p class="bold">voice</p>
+					<a href="" id="scaleSelectPrevBtn" class="icon-arrow-left"></a>
+					<p class="scale-name js-scale-name">wind chimes</p>
+					<a href="" id="scaleSelectNextBtn" class="icon-arrow-right"></a>
+				</div>
+				<div class="octaves-selector settings-carousel">
+					<p class="bold">octaves</p>
+					<a href="" id="octavesSelectMinusBtn" class="icon-minus"></a>
+					<p id="" class="scale-name">4</p>
+					<a href="" id="octavesSelectPlusBtn" class="icon-plus"></a>
+				</div>
+			</section>
+			<footer>
+				<div class="get-the-app">
+					<h2>Get the app</h2>
+					<ul>
+						<li><a href="">iOS</a></li>
+						<li><a href="">android</a></li>
+						<li><a href="">desktop</a></li>
+					</ul>
+				</div>
+				<div class="rate-the-app">
+					<h2>Rate the app</h2>
+					<ul>
+						<li>
+							<a href="" class="icon-smile"></a>
+						</li>
+						<li>
+							<a href="" class="icon-sad"></a>
+						</li>
+					</ul>
+				</div>
+				<div class="website"><a href="https://femurdesign.com">femurdesign.com</a></div>
+				<div class="share">
+					<h2>Share:</h2>
+					<a href="" class="icon-facebook"></a>
+					<a href="" class="icon-twitter"></a>
+				</div>
+			</footer>
+		</div>
 
-</div>
+	</div>
 
-<!--<script src="cordova.js"></script>-->
+  <div id="startOverlay" class="overlay startOverlay">
+    <div class="loading-spinner"></div>
+  </div>
+
+	<!--<script src="cordova.js"></script>-->
 
 
 
 </body>
+
 </html>

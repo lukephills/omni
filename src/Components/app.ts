@@ -206,7 +206,7 @@ class App {
 
 
     if (keyType === 'harp') {
-      this.harp.onKeyDown(key)
+      this.harp.onKeyDown(key - 10)
     } else if (keyType === 'rootNote') {
       this.rootNoteSelector.setKey(key - 40);
     } else if (keyType === 'control') {

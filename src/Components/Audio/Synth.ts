@@ -40,6 +40,7 @@ class Synth {
 
 	public scale: Scale;
   rootNoteIdx = 0;
+  octaveOffset = 0
 
 	// Gains
 	public masterVolume: GainNode;
@@ -135,11 +136,10 @@ class Synth {
     return this.context;
 	}
 
-	public NoteOn(noteIndex: number, volume: number = 100, index: number): void {
+	public NoteOn(noteIndex: number, volume: number = 100, index: number, octaveOffset = this.octaveOffset): void {
 
     const rootNoteIdx = this.rootNoteIdx;
-    console.log(rootNoteIdx);
-    const frequency = getFrequencyFromNoteIndexInScale(noteIndex, this.scale, -1);
+    const frequency = getFrequencyFromNoteIndexInScale(noteIndex, this.scale, octaveOffset);
 
     for (let [key, value] of this.oscillators.entries()) {
       // find an inactive osc

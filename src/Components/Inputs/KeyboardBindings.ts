@@ -2,7 +2,8 @@
  * Keyboard note values
  * Organised into rows of alphanumeric keys and computer control keys at the bottom
  *
- * Rows 2 - 4 are harp notes
+ * Rows 3 & 4 are harp notes
+ * Row 2 is bass notes
  * Row 1 is root key changes (1 to '=')
  */
 export const keyboardCodeMap: KeyboardCodes = {
@@ -106,21 +107,22 @@ export function getKeyBinding(e: KeyboardEventLatest): number {
 }
 
 
-export type KeyType = 'harp' | 'rootNote' | 'control';
+export type KeyType = 'bass' | 'harp' | 'rootNote' | 'control';
 /**
  * Returns the type of key control using the key binding number
  */
 export function getKeyType(key: number): KeyType {
   let type: KeyType;
 
-  if (key >= 0 && key <= 39) {
+  if (key >= 0 && key < 10) {
+    type = 'bass';
+  } else if (key >= 10 && key < 40) {
     type = 'harp';
-  } else if (key >= 40 && key <= 52) {
+  } else if (key >= 40 && key < 52) {
     type = 'rootNote';
   } else {
     type = 'control';
   }
-
   return type;
 }
 

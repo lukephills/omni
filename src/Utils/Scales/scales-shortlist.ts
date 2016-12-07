@@ -59,11 +59,12 @@ const _scales: IScale[] = [
     intervals: [0, 2, 4, 6, 7, 9],
     description: `Also known as the 'Acoustic' or 'Overtone' scale, differs from the major scale in having a raised fourth and lowered seventh. Traditionally, the scale persists in the music of peoples of South Siberia, especially in Tuvan music.`
   },
-  {
-    name: 'Adonai Malakh',
-    intervals: [0, 2, 4, 5, 7, 8, 10],
-    description: 'The Adonai malakh scale is a musical mode used in Jewish music. \'Adonai malakh\' (\'God is King\'), a line from Psalm 93, is set using the Adonai malakh scale at the close of the introduction to the Kabalat Shabat (Friday evening synagogue service).'
-  },
+  // {
+  //   name: 'Adonai Malakh',
+  //   // intervals: [0, 2, 4, 5, 7, 8, 10],
+  //   intervals: [0, 1, 2, 3, 5, 7, 9, 10],
+  //   description: 'The Adonai malakh scale is a musical mode used in Jewish music. \'Adonai malakh\' (\'God is King\'), a line from Psalm 93, is set using the Adonai malakh scale at the close of the introduction to the Kabalat Shabat (Friday evening synagogue service).'
+  // },
   {
     name: 'Aeolian',
     intervals: [0, 2, 3, 5, 7, 8, 10],
@@ -104,28 +105,28 @@ const _scales: IScale[] = [
     intervals: [0, 2, 3, 5, 7, 9, 10],
     description: ''
   },
-  {
-    //maybe
-    name: 'Double Harmonic',
-    intervals: [0, 1, 4, 5, 7, 8, 11],
-    description: ''
-  },
+  // {
+  //   //maybe
+  //   name: 'Double Harmonic',
+  //   intervals: [0, 1, 4, 5, 7, 8, 11],
+  //   description: ''
+  // },
   // {
   //   name: 'Enigmatic',
   //   intervals: [0, 1, 4, 6, 8, 10, 11],
   //   description: ''
   // },
-  {
-    name: 'Flamenco',
-    intervals: [0, 1, 4, 5, 7, 8, 11],
-    description: ''
-  },
-  {
-    //maybe
-    name: 'Gypsy',
-    intervals: [0, 2, 3, 6, 7, 8, 10],
-    description: ''
-  },
+  // {
+  //   name: 'Flamenco',
+  //   intervals: [0, 1, 4, 5, 7, 8, 11],
+  //   description: ''
+  // },
+  // {
+  //   //maybe
+  //   name: 'Gypsy',
+  //   intervals: [0, 2, 3, 6, 7, 8, 10],
+  //   description: ''
+  // },
   // {
   //   name: 'Half Diminished',
   //   intervals: [0, 2, 3, 5, 6, 8, 10],
@@ -142,9 +143,9 @@ const _scales: IScale[] = [
     description: ''
   },
   {
-    name: 'Hirajoshi',
+    name: 'Hirajōshi',
     intervals: [0, 2, 3, 7, 8],
-    description: ''
+    description: 'Containing 5 notes from the minor scale, Hirajōshi was adapted from shamisen music for the koto, a japanese stringed instrument'
   },
   {
     // maybe
@@ -155,19 +156,19 @@ const _scales: IScale[] = [
   {
     name: 'Insen',
     intervals: [0, 1, 5, 7, 10],
-    description: ''
+    description: 'A pentatonic scale adapted from shamisen music for the koto, a japanese stringed instrument'
   },
   {
     name: 'Major',
     intervals: [0, 2, 4, 5, 7, 9, 11],
     description: ''
   },
-  {
-    // maybe
-    name: 'Istrian',
-    intervals: [0, 1, 3, 4, 6, 7],
-    description: ''
-  },
+  // {
+  //   // maybe
+  //   name: 'Istrian',
+  //   intervals: [0, 1, 3, 4, 6, 7],
+  //   description: ''
+  // },
   {
     name: 'Iwato',
     intervals: [0, 1, 5, 6, 10],
@@ -209,14 +210,14 @@ const _scales: IScale[] = [
     intervals: [0, 2, 4, 7, 9],
     description: ''
   },
-  // {
-  //   name: 'Melodic Minor',
-  //   intervals: [0, 2, 3, 5, 7, 8, 9, 10, 11],
-  //   description: ''
-  // },
+  {
+    name: 'Melodic Minor Desc',
+    intervals: [0, 2, 3, 5, 6, 9, 10],
+    description: ''
+  },
   {
     //maybe
-    name: 'Melodic Minor Ascending',
+    name: 'Melodic Minor Asc',
     intervals: [0, 2, 3, 5, 7, 9, 11],
     description: ''
   },
@@ -229,7 +230,7 @@ const _scales: IScale[] = [
     //maybe
     name: 'Minyō',
     intervals: [0, 2, 5, 7, 9],
-    description: ''
+    description: 'A pentatonic scale containing only major notes and is used in traditional Japanese folk music.'
   },
   {
     //maybe
@@ -281,9 +282,9 @@ const _scales: IScale[] = [
   // },
   {
     //maybe
-    name: 'Ukranian Dorian',
+    name: 'Romanian',
     intervals: [0, 2, 3, 6, 7, 9, 10],
-    description: ''
+    description: 'Romanian minor or Ukranian Dorian scale'
   },
   {
     name: 'Whole Tone',
@@ -307,7 +308,7 @@ const _scales: IScale[] = [
   //   description: '5 out of 19-tET',
   // },
   {
-    name: 'olympos',
+    name: 'Olympos',
     frequencies: [
       261.6255653006,
       279.06726965397,
@@ -319,7 +320,7 @@ const _scales: IScale[] = [
   },
   {
     //maybe
-    name: 'badings1',
+    name: 'Microtonal Mixolydian',
     frequencies: [
       261.6255653006,
       294.32876096318,
@@ -333,7 +334,7 @@ const _scales: IScale[] = [
   },
   {
     //maybe
-    name: 'bolivia',
+    name: 'Bolivia',
     frequencies: [
       261.6255653006,
       315.83481057014,
@@ -346,19 +347,19 @@ const _scales: IScale[] = [
     ],
     description: 'Observed scale from pan-pipe from La Paz. 1/1=171 Hz.'
   },
-  {
-    name: 'breed-blues1',
-    frequencies: [
-      261.6255653006,
-      296.76515515861,
-      326.18384711731,
-      336.62443200122,
-      394.05926325844,
-      433.12283887627,
-      446.9863572706
-    ],
-    description: `Graham Breed's blues scale in 22-tET`
-  },
+  // {
+  //   name: 'breed-blues1',
+  //   frequencies: [
+  //     261.6255653006,
+  //     296.76515515861,
+  //     326.18384711731,
+  //     336.62443200122,
+  //     394.05926325844,
+  //     433.12283887627,
+  //     446.9863572706
+  //   ],
+  //   description: `Graham Breed's blues scale in 22-tET`
+  // },
   // {
   //   name: 'breed-kleismic',
   //   frequencies: [
@@ -404,7 +405,7 @@ const _scales: IScale[] = [
   //   description: `W. Burt's 19enhharm #11`
   // },
   {
-    name: 'burt3',
+    name: 'Burt', //burt3
     frequencies: [
       261.6255653006,
       281.75060878526,
@@ -419,7 +420,7 @@ const _scales: IScale[] = [
       513.18860885887,
       518.21986973003
     ],
-    description: `W. Burt's 13enhharm #3`
+    description: `Warren Burt's 13enhharm #3, February 19, 1996`
   },
   // {
   //   name: 'burt primes',
@@ -502,18 +503,18 @@ const _scales: IScale[] = [
     ],
     description: 'Gamelan Degung, Kabupaten Sukabumi. 1/1=363 Hz'
   },
-  {
-    //maybe
-    name: 'degung6',
-    frequencies: [
-      261.6255653006,
-      273.29426590363,
-      298.47415715355,
-      379.54129348313,
-      409.02013274169
-    ],
-    description: 'Gamelan Degung, Kacherbonan Cheribon. 1/1=426 Hz'
-  },
+  // {
+  //   //maybe
+  //   name: 'degung6',
+  //   frequencies: [
+  //     261.6255653006,
+  //     273.29426590363,
+  //     298.47415715355,
+  //     379.54129348313,
+  //     409.02013274169
+  //   ],
+  //   description: 'Gamelan Degung, Kacherbonan Cheribon. 1/1=426 Hz'
+  // },
   // {
   //   name: 'diablack',
   //   frequencies: [
@@ -544,17 +545,18 @@ const _scales: IScale[] = [
   //   ],
   //   description: `Tetrachord Modular Diamond based on Archytas's Enharmonic`
   // },
-  {
-    name: 'diaphonic 5',
-    frequencies: [
-      261.6255653006,
-      299.00064605783,
-      348.83408706747,
-      392.4383479509,
-      448.50096908674
-    ],
-    description: 'D5-tone Diaphonic Cycle'
-  },
+  // {
+  //   // too similar to minyo
+  //   name: 'diaphonic 5',
+  //   frequencies: [
+  //     261.6255653006,
+  //     299.00064605783,
+  //     348.83408706747,
+  //     392.4383479509,
+  //     448.50096908674
+  //   ],
+  //   description: 'D5-tone Diaphonic Cycle'
+  // },
   // {
   //   name: 'diaphonic 7',
   //   frequencies: [
@@ -622,23 +624,23 @@ const _scales: IScale[] = [
   //   ],
   //   description: 'Diat. + Hem. Chrom. Diesis, Another genus of Aristoxenos, Dorian Mode'
   // },
-  {
-    //maybe
-    name: 'didy enh',
-    frequencies: [
-      261.6255653006,
-      270.06509966514,
-      279.06726965397,
-      348.83408706747,
-      392.4383479509,
-      405.0976494977,
-      418.60090448096
-    ],
-    description: `Dorian mode of Didymos's Enharmonic`
-  },
+  // {
+  //   // too similar to Gunkali
+  //   name: 'didy enh',
+  //   frequencies: [
+  //     261.6255653006,
+  //     270.06509966514,
+  //     279.06726965397,
+  //     348.83408706747,
+  //     392.4383479509,
+  //     405.0976494977,
+  //     418.60090448096
+  //   ],
+  //   description: `Dorian mode of Didymos's Enharmonic`
+  // },
   {
     // maybe - this might be too similar to major pent
-    name: 'chin huang',
+    name: 'Chin Huang (Maj Pent)',
     frequencies: [
       261.6255653006,
       331.11985608357,
@@ -808,7 +810,7 @@ const _scales: IScale[] = [
   // },
   {
     //MAYBE
-    name: 'tranh3',
+    name: 'Đàn Tranh',
     frequencies: [
       261.6255653006,
       317.68818643644,
@@ -817,7 +819,7 @@ const _scales: IScale[] = [
       473.41768959156,
       476.53227965466
     ],
-    description: 'Sa Mac Dan Tranh scale'
+    description: 'An observed tuning from a vietnamese plucked zither, Đàn tranh'
   },
   // {
   //   name: 'tranh2',
@@ -900,18 +902,18 @@ const _scales: IScale[] = [
   //   ],
   //   description: 'Six-Tone Triadic Cluster 5:6:7'
   // },
+  // {
+  //   name: 'cons8',
+  //   frequencies: [
+  //     261.6255653006,
+  //     348.83408706747,
+  //     392.4383479509,
+  //     436.04260883433
+  //   ],
+  //   description: 'Set of intervals with num + den <= 8 not exceeding 2/1'
+  // },
   {
-    name: 'cons8',
-    frequencies: [
-      261.6255653006,
-      348.83408706747,
-      392.4383479509,
-      436.04260883433
-    ],
-    description: 'Set of intervals with num + den <= 8 not exceeding 2/1'
-  },
-  {
-    name: 'cons9',
+    name: 'Cons9',
     frequencies: [
       261.6255653006,
       327.03195662575,
@@ -919,7 +921,7 @@ const _scales: IScale[] = [
       392.4383479509,
       436.04260883433
     ],
-    description: 'Set of intervals with num + den <= 9 not exceeding 2/1'
+    description: 'Set of just innotation ratios where numerator + denominator <= 9. (5/4(E), 4/3(F), 3/2(G), 5/3(A), 2/1(C))'
   },
   {
     name: 'Gunkali',
@@ -947,8 +949,7 @@ const _scales: IScale[] = [
     description: 'Scale of gumbeng ensemble, Java. 1/1=440 Hz.'
   },
   {
-    //maybe
-    name: 'farey3 ??',
+    name: 'Farey',
     frequencies: [
       261.6255653006,
       313.95067836072,
@@ -956,7 +957,7 @@ const _scales: IScale[] = [
       392.4383479509,
       418.60090448096
     ],
-    description: 'Farey fractions between 0 and 1 until 3rd level, normalised by 2/1'
+    description: 'Created from the Farey sequence, a mathematical construct' //(fractions between 0 and 1 until 3rd level, normalised by 2/1'
   },
   // {
   //   name: 'finnamore',
