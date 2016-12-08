@@ -40,6 +40,14 @@ abstract class AudioNodeBase {
     this.output.disconnect.apply(this.output, arguments)
   }
 
+  get volume() {
+    return this.output.gain.value;
+  }
+
+  set volume(level: number) {
+    this.output.gain.value = level;
+  }
+
 }
 
 export default AudioNodeBase;

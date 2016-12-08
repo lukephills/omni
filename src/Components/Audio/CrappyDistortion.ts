@@ -17,14 +17,6 @@ class CrappyDistortion extends AudioNodeBase {
     connectSeries(this.input, this.distortion, this.output);
   }
 
-  get volume() {
-    return this.output.gain.value;
-  }
-
-  set volume(level: number) {
-    this.output.gain.value = level;
-  }
-
   set oversample(val: oversampleType) {
     this.distortion.oversample = val;
   }
