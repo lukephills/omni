@@ -1,3 +1,4 @@
+import './helpers/webAudioDefinitionOverrides';
 
 // TODO: make sure
 // extend the connect function to include custom AudioNodes (instances of AudioNodeBase)

@@ -1,4 +1,4 @@
-import {createIOSSafeAudioContext} from '../../Utils/Audio/iOS';
+
 import '../../Utils/audio-shim';
 import { DEFAULTS } from '../../Constants/Defaults';
 import * as CanvasUtils from '../../Utils/CanvasUtils';
@@ -33,7 +33,6 @@ interface IOsc {
 
 class Synth {
 
-	public context: AudioContext;
 	public voiceCount: number = DEFAULTS.VoiceCount;
 	public recording: AudioBufferSourceNode;
 	public looper: Looper;
@@ -67,9 +66,8 @@ class Synth {
 	private _defaultCoordinates: CanvasUtils.Coordinate = {x: 0, y: 0};
 	private _minFrequency = 0.8;
 
-	constructor() {
+	constructor(public context: AudioContext) {
 
-		this.initAudioContext();
 		this.createNodes();
 		this.routeSounds();
 		this.setupAnalysers();
@@ -131,14 +129,11 @@ class Synth {
    *
    *
    */
-	initAudioContext(): AudioContext {
-		this.context = createIOSSafeAudioContext(44100);
-    return this.context;
-	}
+
 
 	public NoteOn(noteIndex: number, volume: number = 100, index: number, octaveOffset = this.octaveOffset): void {
 
-    const rootNoteIdx = this.rootNoteIdx;
+    // const rootNoteIdx = this.rootNoteIdx;
     const frequency = getFrequencyFromNoteIndexInScale(noteIndex, this.scale, octaveOffset);
 
     for (let [key, value] of this.oscillators.entries()) {

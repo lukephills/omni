@@ -1,4 +1,5 @@
 import Harp from './Harp';
+import BassController from './Bass';
 import PitchConstellation from './PitchConstellation';
 import ScaleSelector from './ScaleSelector';
 import DroneSelector from './DroneSelector';
@@ -7,6 +8,7 @@ import FavScaleSelector from './FavScaleSelector';
 import LoopController from './LoopController';
 import {scales, IScale} from '../Utils/Scales/scales-shortlist';
 import {scaleFromRoot12Idx} from '../Utils/Audio/scales';
+import {createIOSSafeAudioContext} from '../Utils/Audio/iOS';
 
 // import {log} from '../Utils/logger'
 
@@ -29,8 +31,10 @@ interface IState {
 
 class App {
 
+  actx: AudioContext;
   state: IState;
   harp: Harp;
+  bass: BassController;
   pitchConstellation: PitchConstellation;
   scaleSelector: ScaleSelector;
   rootNoteSelector: RootNoteSelector;
@@ -88,8 +92,13 @@ class App {
 		// on resize event listener
 		window.addEventListener('resize', this.onResize.bind(this));
 
+    this.actx = createIOSSafeAudioContext(44100);
+
     // harp controller
-    this.harp = new Harp(document.getElementById('harp'));
+    this.harp = new Harp(document.getElementById('harp'), this.actx);
+
+    // bass controller
+    this.bass = new BassController(this.actx);
 
     // pitch constellation
     this.pitchConstellation = new PitchConstellation(document.getElementById('pitchConstellation'))
@@ -207,6 +216,8 @@ class App {
 
     if (keyType === 'harp') {
       this.harp.onKeyDown(key - 10)
+    } else if (keyType === 'bass') {
+      this.bass.onKeyDown(key)
     } else if (keyType === 'rootNote') {
       this.rootNoteSelector.setKey(key - 40);
     } else if (keyType === 'control') {
@@ -218,7 +229,9 @@ class App {
   onKeyUp(e: KeyboardEventLatest) {
     const key = getKeyBinding(e);
     const keyType: KeyType = getKeyType(key);
-
+    if (keyType === 'bass') {
+      this.bass.onKeyUp(key)
+    }
     console.log('stop ', key, keyType)
   }
 

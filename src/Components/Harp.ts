@@ -17,11 +17,11 @@ class Harp {
 
   private colors: any[] = [];
 
-  constructor(private canvas) {
+  constructor(private canvas, public actx: AudioContext) {
 
     canvasRenderAtPixelRatio(this.canvas);
 
-    this.audio = new Synth();
+    this.audio = new Synth(actx);
 
 
     // Initialize touch and pointer listeners

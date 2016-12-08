@@ -29,6 +29,7 @@ class ADSR extends AudioNodeBase {
   triggerRelease(time = this.ctx.currentTime, release = this.release) {
     this.input.gain.cancelScheduledValues(time);
     this.input.gain.setValueAtTime(this.input.gain.value, time);
+    console.log('stop???')
     this.input.gain.exponentialRampToValueAtTime(0.001, time + release);
   }
 
