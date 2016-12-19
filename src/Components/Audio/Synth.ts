@@ -45,13 +45,13 @@ class Synth {
 	public masterVolume: GainNode;
 	public synthOut: GainNode;
 	// public oscillatorGains: GainNode[];
-	public scuzzGain: GainNode;
+	// public scuzzGain: GainNode;
 	public recordingGain: GainNode;
 
 	// Effects
 	public compressor: DynamicsCompressorNode;
-	public delay: DelayNode;
-	public feedback: GainNode;
+	public delay: FeedbackDelay;
+	// public feedback: GainNode;
 	// public filters: BiquadFilterNode[];
 
 	// Analysers
@@ -59,7 +59,7 @@ class Synth {
 
 	// Oscillators
   public oscillators: Map<number, IOsc> = new Map();
-	public scuzz: OscillatorNode;
+	// public scuzz: OscillatorNode;
   public voicesAmount: number = 50;
 
 	private _frequencyMultiplier = 15;
@@ -82,13 +82,13 @@ class Synth {
 		this.masterVolume = this.context.createGain();
 		this.synthOut = this.context.createGain();
 		// this.oscillatorGains = [];
-		this.scuzzGain = this.context.createGain();
+		// this.scuzzGain = this.context.createGain();
 		this.recordingGain = this.context.createGain();
 
 		// Effects
 		this.compressor = this.context.createDynamicsCompressor();
-		this.delay = this.context.createDelay();
-		this.feedback = this.context.createGain();
+		this.delay = new FeedbackDelay(this.context, 0.1, 0.6, 0.5);
+		// this.feedback = this.context.createGain();
 		// this.filters = [];
 
 
@@ -99,7 +99,7 @@ class Synth {
 		}
 
 		// Oscillators
-		this.scuzz = this.context.createOscillator();
+		// this.scuzz = this.context.createOscillator();
 
     // Create a pool of oscillators
     for (let i = 0; i < this.voicesAmount; i++) {
@@ -131,7 +131,7 @@ class Synth {
    */
 
 
-	public NoteOn(noteIndex: number, volume: number = 100, index: number, octaveOffset = this.octaveOffset): void {
+	public NoteOn(noteIndex: number, volume: number = 1, index: number, octaveOffset = this.octaveOffset): void {
 
     // const rootNoteIdx = this.rootNoteIdx;
     const frequency = getFrequencyFromNoteIndexInScale(noteIndex, this.scale, octaveOffset);
@@ -145,7 +145,8 @@ class Synth {
         // osc is inactive, set it's frequency, trigger it & set it to active.
         console.log(key, value);
         value.osc.frequency = frequency;
-        value.osc.noteOn(volume / 100);
+        value.osc.noteOn(volume);
+        console.log(volume)
         value.index = index;
         value.active = true;
         break;
@@ -224,35 +225,35 @@ class Synth {
 
 	private routeSounds(): void {
 		// Set slider values
-		this.delay.delayTime.value = DEFAULTS.Sliders.delay.value;
-		this.feedback.gain.value = DEFAULTS.Sliders.feedback.value;
-		this.scuzzGain.gain.value = DEFAULTS.Sliders.scuzz.value;
+		// this.delay.delayTime.value = DEFAULTS.Sliders.delay.value;
+		// this.feedback.gain.value = DEFAULTS.Sliders.feedback.value;
+		// this.scuzzGain.gain.value = DEFAULTS.Sliders.scuzz.value;
 
 		// this.oscillatorGains.forEach((oscGain: GainNode) => {
 		// 	oscGain.gain.value = 0;
 		// });
 		this.masterVolume.gain.value = 0.5;
 
-		this.scuzz.frequency.value = 400;
-		this.scuzz.type = DEFAULTS.Sliders.scuzz.waveform;
+		// this.scuzz.frequency.value = 400;
+		// this.scuzz.type = DEFAULTS.Sliders.scuzz.waveform;
 
 		// Connect the Scuzz
-		this.scuzz.connect(this.scuzzGain);
+		// this.scuzz.connect(this.scuzzGain);
 
     var distortion = new CrappyDistortion(this.context, 5, 'none');
-    var delay = new FeedbackDelay(this.context, 0.1, 0.6, 0.5);
+
 
     // connect all the oscillators in the pool
     for (let {osc} of this.oscillators.values()) {
       // osc is inactive, set it's frequency, trigger it & set it to active.
-      osc.connect(delay);
+      osc.connect(this.delay);
     }
 
-    delay.connect(this.compressor)
+    this.delay.connect(this.compressor)
 
 		// this.delay.connect(this.feedback);
 		// this.delay.connect(this.compressor);
-		this.feedback.connect(this.delay);
+		// this.feedback.connect(this.delay);
 		this.compressor.connect(this.synthOut);
 
 		// THEREMIN ROUTE
@@ -266,7 +267,7 @@ class Synth {
 		this.masterVolume.connect(this.context.destination);
 
 		//Start oscillators
-		this.scuzz.start(0);
+		// this.scuzz.start(0);
 		// this.oscillators.forEach((osc: OscillatorNode) => {
 		// 	osc.start(0);
 		// });

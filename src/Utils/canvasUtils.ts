@@ -111,11 +111,12 @@ export function coordinateWithinArea(coordinate: Coordinate, area: Area):  Coord
  * @returns {{x: number, y: number, width: number, height: number}}: Area
  */
 export function getElementArea(el: HTMLElement): Area {
+  const boundingClientRect = el.getBoundingClientRect();
 	return {
-		x: el.offsetLeft,
-		y: el.offsetTop,
-		width: el.offsetWidth,
-		height: el.offsetHeight,
+		x: boundingClientRect.left,
+		y: boundingClientRect.top,
+		width: boundingClientRect.width,
+		height: boundingClientRect.height,
 	}
 }
 
@@ -128,8 +129,8 @@ export function getCoordinateFromPointerEvent(e: MouseEvent | Touch): Coordinate
 
 export function getPositionAsPercentageInArea(coordinate: Coordinate, area: Area): Coordinate {
 	return {
-		x: (coordinate.x - area.x) / area.width * 100,
-		y: 100 - ((coordinate.y - area.y) / area.height * 100),
+		x: (coordinate.x - area.x) / area.width,
+		y: 1 - ((coordinate.y - area.y) / area.height),
 	}
 }
 
@@ -138,6 +139,7 @@ export function getCoordinateFromEventAsPercentageWithinElement(e: MouseEvent | 
 	const area = getElementArea(el);
 	return getPositionAsPercentageInArea(coordinateWithinArea(getCoordinateFromPointerEvent(e),area),area);
 }
+
 
 //This was used previously to getCoordinateFromEventAsPercentageWithinElement
 // export function getPercentagePosition(e: any): Coordinate {

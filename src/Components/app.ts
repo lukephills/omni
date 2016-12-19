@@ -1,4 +1,5 @@
 import Harp from './Harp';
+import XYPad from './XYPad';
 import BassController from './Bass';
 import PitchConstellation from './PitchConstellation';
 import ScaleSelector from './ScaleSelector';
@@ -9,6 +10,7 @@ import LoopController from './LoopController';
 import {scales, IScale} from '../Utils/Scales/scales-shortlist';
 import {scaleFromRoot12Idx} from '../Utils/Audio/scales';
 import {createIOSSafeAudioContext} from '../Utils/Audio/iOS';
+import {initViewController} from './ViewController'
 
 // import {log} from '../Utils/logger'
 
@@ -29,11 +31,13 @@ interface IState {
 //   description: string;
 // }
 
+
 class App {
 
   actx: AudioContext;
   state: IState;
   harp: Harp;
+  xyPad: XYPad;
   bass: BassController;
   pitchConstellation: PitchConstellation;
   scaleSelector: ScaleSelector;
@@ -94,34 +98,36 @@ class App {
 
     this.actx = createIOSSafeAudioContext(44100);
 
-    // harp controller
-    this.harp = new Harp(document.getElementById('harp'), this.actx);
+    this.harp = new Harp(<HTMLCanvasElement>document.getElementById('harp'), this.actx);
 
-    // bass controller
+    this.xyPad = new XYPad(<HTMLCanvasElement>document.getElementById('xyPad'));
+    this.xyPad.onChange = (x,y) => {
+      console.log(x,y)
+      this.harp.audio.delay.feedback = x;
+      this.harp.audio.delay.delay = y;
+    }
+
     this.bass = new BassController(this.actx);
 
-    // pitch constellation
     this.pitchConstellation = new PitchConstellation(document.getElementById('pitchConstellation'))
 
-    // initialise favourite scale selector
     this.favScaleSelector = new FavScaleSelector()
 
-    // initialise scale selector
     this.scaleSelector = new ScaleSelector()
 
-    // initialise root note selector
     this.rootNoteSelector = new RootNoteSelector()
 
-    // initialise drone selector
     this.droneSelector = new DroneSelector()
 
 
-    // initialise loop controller
+    // todo: do these if checks inside loop controller instead
     const recBtnEl = document.getElementById('recordBtn');
     const playBtnEl = document.getElementById('playBtn');
     if (recBtnEl && playBtnEl) {
       this.loopController = new LoopController(recBtnEl, playBtnEl);
     }
+
+    initViewController();
 
 
     // draw everything
@@ -187,6 +193,7 @@ class App {
 
 	onResize() {
     this.harp.onResize();
+    this.xyPad.onResize();
 		this.draw();
 	}
 
@@ -202,6 +209,7 @@ class App {
   draw() {
     if (this.state.scale.frequencies) {
       this.harp.draw(this.state.scale.frequencies);
+      this.xyPad.draw();
       this.pitchConstellation.drawLines(this.state.scale.frequencies);
     }
   }

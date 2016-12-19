@@ -17,7 +17,7 @@ class Harp {
 
   private colors: any[] = [];
 
-  constructor(private canvas, public actx: AudioContext) {
+  constructor(private canvas: HTMLCanvasElement, public actx: AudioContext) {
 
     canvasRenderAtPixelRatio(this.canvas);
 
@@ -40,7 +40,9 @@ class Harp {
 		// this._DrawAnimationFrame = requestAnimationFrame(this.draw.bind(this));
 		console.log('DRAW');
 
-		const ctx: CanvasRenderingContext2D = this.canvas.getContext('2d');
+		const ctx = this.canvas.getContext('2d');
+    if (!ctx) return;
+
 		const w: number = this.canvas.width / this.pixelRatio;
 		const h: number = this.canvas.height / this.pixelRatio;
 		const {lines} = this;
@@ -49,46 +51,25 @@ class Harp {
     // some of this doesn't need to be called every draw loop
     const borderWidth = 3;
 
-
 		ctx.clearRect(0, 0, w, h);
 
     const p5 = getPerfectFifthIndex(scale);
 		const color1 = '#FF6969';
-		const color2 = '#FFC3C3';
-
-
-
+		const color2 = '#FFA3A3';
 
 		// DRAW THE LINES
 		for (let i = 0; i < lines; i++) {
-
-      // Root note
       if (i % scale.length === 0) {
+        // Root note string
         ctx.fillStyle = color1;
-        ctx.fillRect(i * lineWidth, 0, lineWidth + 1, h);
-      }
-
-      // Perfect 5th note
-      if (i % scale.length === p5) {
+      } else if (i % scale.length === p5) {
+        // Perfect 5th string
         ctx.fillStyle = color2;
-        ctx.fillRect(i * lineWidth, 0, lineWidth + 1, h); // +1 is for overlap to avoid nasty small gaps
+      } else {
+        // All other strings
+        ctx.fillStyle = 'white';
       }
-
-      // All line borders
-
-      ctx.fillStyle = 'white';
-      ctx.fillRect(i * lineWidth, 0,   borderWidth, h);
-
-      // // Only show line borders inbetween root and perfect 5 notes
-      // if (!(
-      //   i % (scale.length) === 0 ||
-      //   i % (scale.length) === 1 ||
-      //   i % (scale.length) === p5 ||
-      //   i % (scale.length) === p5 + 1
-      // )) {
-      //   ctx.fillStyle = 'white';
-      //   ctx.fillRect(i * lineWidth, 0,   borderWidth, h);
-      // }
+      ctx.fillRect(i * lineWidth + (lineWidth*0.5), 0,   borderWidth, h);
 		}
 	}
 
@@ -100,6 +81,7 @@ class Harp {
 		// store the current noteIndex in activeTouches
 		this.activeTouches[id] = noteIndex;
 		// Play the note
+    console.log(pos)
 		this.audio.NoteOn(noteIndex, pos.y, index);
 	}
 
@@ -170,7 +152,7 @@ class Harp {
 	}
 
 	private _getNoteIndexFromPosition(x: number): number {
-		return Math.floor(x / (100 / this.lines));
+    return Math.floor(x * this.lines);
 	}
 
 }

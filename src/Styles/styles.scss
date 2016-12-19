@@ -94,7 +94,7 @@ body {
   font-size: 15px;
   font-style: italic;
   background: $color-bg;
-  color: $color-mid-grey;
+  color: $color-white;
 
   @include sm {
     font-size: 17px;
@@ -107,7 +107,8 @@ body {
 // TYPOGRAPHY //
 
 h1,
-h2 {
+h2,
+h3 {
   font-family: $font-primary;
   font-weight: 300;
 }
@@ -131,7 +132,6 @@ h2 {
 
 h3 {
   font-size: 17px;
-  font-weight: 700;
 }
 
 h4 {
@@ -152,6 +152,9 @@ ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
+  &.list-inline li {
+    display: inline-block;
+  }
 }
 
 li {
@@ -183,6 +186,13 @@ li {
   cursor: pointer;
 }
 
+.left {
+  float: left;
+}
+
+.text-center {
+  text-align: center;
+}
 
 
 // ICONS //
@@ -223,6 +233,10 @@ li {
 
 .icon-menu {
   background: url(../assets/icons/icon-menu.svg) center center no-repeat;
+}
+
+.icon-close {
+  background: url(../assets/icons/icon-close.svg) center center no-repeat;
 }
 
 .icon-plus {
@@ -282,14 +296,10 @@ li {
 }
 
 .nav {
-  flex: 1;
+  // flex: 1;
   h1 {
     margin-left: 20px;
-    margin-top: 2px;
-    display: none;
-    @include sm {
-      display: block;
-    }
+    margin-top: 32px;
   }
   ul {
     width: 284px;
@@ -299,10 +309,10 @@ li {
       margin-right: 8px;
     }
   }
-  order: 2;
-  @include sm {
-    order: 1;
-  }
+  // order: 2;
+  // @include sm {
+  //   order: 1;
+  // }
   @include sm-down {
     position: absolute;
     right: 0;
@@ -311,21 +321,22 @@ li {
 }
 
 .middle-section {
-  flex: 6;
+  // flex: 6;
   flex-direction: column-reverse;
-  height: 374px;
-  order: 1;
+  padding-bottom: 40px;
+  // height: 374px;
+  // order: 1;
   @include sm {
     flex-wrap: wrap-reverse;
     flex-direction: row;
   }
-  @include md {
-    order: 2;
-  }
+  // @include md {
+  //   order: 2;
+  // }
 }
 .xy-pad-section {
   display: flex;
-  flex: 3;
+  // flex: 3;
   .xy-pad {
     width: 100%;
     height: 100%;
@@ -356,15 +367,13 @@ li {
   margin: auto;
   text-align: center;
 }
-.pitch-constellation-section {
+.pitch-constellation-section, .xy-pad-section {
   display: flex;
   justify-content: center;
-  .middle-section & {
-    flex: 4;
-  }
+  flex: 1;
 
-  $d: 340px;
-  .pitch-constellation {
+  $d: 300px;
+  .pitch-constellation, .xy-pad {
     width: $d;
     height: $d;
   }
@@ -393,55 +402,7 @@ li {
   }
   span {
     position: absolute;
-    font-size: 12px;
-    padding: 30px;
-    transform-origin: center;
-    cursor: pointer;
-    color: $color-dark-grey;
-
-    -moz-user-select: none; /* Firefox */
-    -webkit-user-select: none; /* Chrome, Safari, and Opera */
-    -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
-    user-select: none;
-
-    // numbers on a clock face
-    &.n0 {
-      transform: translate(0, -183px);
-    }
-    &.n1 {
-      transform: translate(93px, -157px);
-    }
-    &.n2 {
-      transform: translate(159px, -89px);
-    }
-    &.n3 {
-      transform: translate(183px, 2px);
-    }
-    &.n4 {
-      transform: translate(156px, 92px);
-    }
-    &.n5 {
-      transform: translate(91px, 159px);
-    }
-    &.n6 {
-      transform: translate(2px, 183px);
-    }
-    &.n7 {
-      transform: translate(-91px, 159px);
-    }
-    &.n8 {
-      transform: translate(-156px, 92px);
-    }
-    &.n9 {
-      transform: translate(-183px, 2px);
-    }
-    &.n10 {
-      transform: translate(-159px, -89px);
-    }
-    &.n11 {
-      transform: translate(-93px, -157px);
-    }
-
+    font-size: 15px;
   }
   min-width: auto;
   @include sm {
@@ -451,36 +412,95 @@ li {
     min-width: auto;
   }
 }
+.pitch-constellation span {
+  &.is-selected {
+    font-size: 28px;
+  }
+  padding: 30px;
+  transform-origin: center;
+  cursor: pointer;
+  color: $color-dark-grey;
+
+  -moz-user-select: none; /* Firefox */
+  -webkit-user-select: none; /* Chrome, Safari, and Opera */
+  -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
+  user-select: none;
+
+  // numbers on a clock face
+  &.n0 {
+    transform: translate(0, -183px);
+  }
+  &.n1 {
+    transform: translate(93px, -157px);
+  }
+  &.n2 {
+    transform: translate(159px, -89px);
+  }
+  &.n3 {
+    transform: translate(183px, 2px);
+  }
+  &.n4 {
+    transform: translate(156px, 92px);
+  }
+  &.n5 {
+    transform: translate(91px, 159px);
+  }
+  &.n6 {
+    transform: translate(2px, 183px);
+  }
+  &.n7 {
+    transform: translate(-91px, 159px);
+  }
+  &.n8 {
+    transform: translate(-156px, 92px);
+  }
+  &.n9 {
+    transform: translate(-183px, 2px);
+  }
+  &.n10 {
+    transform: translate(-159px, -89px);
+  }
+  &.n11 {
+    transform: translate(-93px, -157px);
+  }
+
+}
+
+.xy-pad {
+  border-bottom: 2px solid $color-primary;
+  border-left: 2px solid $color-primary;
+  .x-name {
+    bottom: -30px;
+  }
+  .y-name {
+    bottom: 0;
+    left: -12px;
+    transform-origin: left bottom;
+    transform: rotate(270deg);
+  }
+}
+
+.mode-btn {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  /* transform: scale(0.2); */
+  top: 0;
+  left: 0px;
+  overflow: hidden;
+}
+
 .scale-selector {
   display: flex;
-  flex: 1;
   align-items: center;
   justify-content: space-between;
-  flex-direction: row;
-  min-width: auto;
-  @include sm {
-    align-self: flex-end;
-    min-width: 50%;
-  }
-  @include md {
-    justify-content: center;
-    flex-direction: column;
-    flex: 3;
-    align-self: center;
-    min-width: auto;
-  }
-  .icon-arrow-up {
-    transform: rotate(-90deg) scale(0.8);
-    @include md {
-       transform: rotate(0deg);
-     }
-  }
-  .icon-arrow-down {
-    transform: rotate(90deg) scale(0.8);
-     @include md {
-       transform: rotate(180deg);
-     }
-  }
+  max-width: 600px;
+  margin: auto;
+}
+.scale-info {
+  text-align: center;
+  max-width: 500px;
+  margin: auto;
 }
 .scale-name {
   margin: 30px;
@@ -499,13 +519,13 @@ li {
 }
 
 .selector-section {
-  flex: 1;
+  // flex: 1;
   flex-flow: row wrap;
   align-content: flex-end;
-  order: 3;
-  @include md {
-    flex: 2;
-  }
+  // order: 3;
+  // @include md {
+  //   flex: 2;
+  // }
 }
 .drone-selector, .fav-scale-selector {
   display: flex;
@@ -583,7 +603,34 @@ li {
     width: 100%;
   }
 
-  order: 4;
+  // order: 4;
+}
+
+
+// SETTINGS PANE
+.settings-overlay {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  background: rgba(0, 0, 0, 0.85);
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+  &.is-active {
+    transform: translateY(100%);
+  }
+}
+
+.freqs li {
+  font-size: 12px;
+}
+
+.settings-carousel {
+  max-width: 500px;
+  margin: auto;
+  align-items: center;
 }
 
 

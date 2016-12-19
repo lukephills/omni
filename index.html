@@ -56,20 +56,30 @@
 	<div id="app" class="container fixed-window">
 		<div class="flex main-view">
 			<nav class="flex space-between nav">
-				<h1>omni</h1>
+        <div class="1scale-selector">
+          <div class="left">
+            <span id="scaleSelectPrevBtn" class="icon-arrow-up"></span>
+            <span id="scaleSelectNextBtn" class="icon-arrow-down"></span>
+          </div>
+          <div class="left">
+            <h1 id="scaleName" class="scale-name">xenakis</h1>
+          </div>
+        </div>
 				<ul class="flex space-between">
 					<li><span id="recordBtn" class="btn icon-record btn-record"></span></li>
 					<li><span id="playBtn" class="btn icon-play btn-play"></span></li>
 					<li><span id="menuBtn" class="btn icon-menu"></span></li>
 				</ul>
 			</nav>
-			<div class="flex middle-section">
-				<section class="xy-pad-section rel">
+			<div class="flex middle-section rel">
+				<section class="xy-pad-section">
 					<div class="xy-pad">
-						<canvas id="xyPad" class="abs"></canvas>
+						<canvas id="xyPad"></canvas>
+            <span class="x-name">distorion</span>
+            <span class="y-name">reverb</span>
 					</div>
 				</section>
-				<section class="pitch-constellation-section">
+				<section class="pitch-constellation-section  is-hidden">
 					<div class="pitch-constellation">
 						<div class="circle" id="pitchConstellation"></div>
 						<div class="letters" id="pitch-constellation-letters">
@@ -91,11 +101,11 @@
 					</div>
 
 				</section>
-				<section class="scale-selector">
+				<!--<section class="scale-selector">
 					<span id="scaleSelectPrevBtn" class="icon-arrow-up"></span>
 					<h1 id="scaleName" class="scale-name">xenakis</h1>
 					<span id="scaleSelectNextBtn" class="icon-arrow-down"></span>
-				</section>
+				</section>-->
 				<div class="fav-scale-controller">
 					<a id="addFavScaleBtn" class="icon-plus"></a>
 				</div>
@@ -128,27 +138,25 @@
 			</section>
 		</div>
 
-		<div class="settings-overlay is-hidden">
-			<nav>
+		<div class="container settings-overlay" id="settingsOverlay">
+			<nav class="flex space-between nav">
 				<h1>omni</h1>
-				<ul>
+				<ul class="flex space-between">
 					<li>
-						<a href="" id="downloadBtn" class="icon-download btn-record"></a>
+						<span id="downloadBtn" class="icon-download btn-record"></span>
 					</li>
 					<li>
-						<a href="" id="closeBtn" class="icon-close btn-close"></a>
+						<span id="closeBtn" class="icon-close btn-close"></span>
 					</li>
 				</ul>
 			</nav>
-			<section class="scaleInfoSelector">
-				<span id="scaleSelectPrevBtn" class="icon-arrow-left"></span>
-				<h1 id="scaleName" class="scale-name js-scale-name">xenakis</h1>
-				<span id="scaleSelectNextBtn" class="icon-arrow-right"></span>
-				<p id="scaleDescription">A Fox who had never seen a Lion one day met one, and was so terrified at the sight of him that he was ready to die with
-					fear.
-				</p>
-				<p class="bold">frequencies starting on middle c</p>
-				<ul id="scaleFrequencies">
+      <section class="scale-selector">
+					<span id="scaleSelectPrevBtn" class="icon-arrow-left"></span>
+					<h1 id="scaleName" class="scale-name">xenakis</h1>
+					<span id="scaleSelectNextBtn" class="icon-arrow-right"></span>
+			</section>
+      <section class="scale-info">
+				<ul id="scaleFrequencies" class="freqs list-inline">
 					<li>261.6</li>
 					<li>294.3</li>
 					<li>327</li>
@@ -157,19 +165,22 @@
 					<li>436</li>
 					<li>490.5</li>
 				</ul>
-			</section>
-			<section class="settings">
-				<div class="voice-selector settings-carousel">
-					<p class="bold">voice</p>
-					<a href="" id="scaleSelectPrevBtn" class="icon-arrow-left"></a>
-					<p class="scale-name js-scale-name">wind chimes</p>
-					<a href="" id="scaleSelectNextBtn" class="icon-arrow-right"></a>
+				<p id="scaleDescription" class="scale-descrip">A Fox who had never seen a Lion one day met one, and was so terrified at the sight of him that he was ready to die with
+					fear.
+				</p>
+      </section>
+			<section class="settings text-center">
+        <h4>voice</h4>
+				<div class="flex space-between voice-selector settings-carousel">
+          <span id="scaleSelectPrevBtn" class="icon-arrow-left js-prev"></span>
+          <span id="voiceSetting">wind chimes</span>
+          <span id="scaleSelectNextBtn" class="icon-arrow-right js-next"></span>
 				</div>
-				<div class="octaves-selector settings-carousel">
-					<p class="bold">octaves</p>
-					<a href="" id="octavesSelectMinusBtn" class="icon-minus"></a>
-					<p id="" class="scale-name">4</p>
-					<a href="" id="octavesSelectPlusBtn" class="icon-plus"></a>
+        <h4>octaves</h4>
+				<div class="flex space-between octaves-selector settings-carousel">
+					<span class="icon-minus js-prev"></span>
+					<span id="octaveSetting">4</span>
+					<span class="icon-plus js-next"></span>
 				</div>
 			</section>
 			<footer>

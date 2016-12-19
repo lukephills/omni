@@ -1,5 +1,5 @@
 import MonoSynth from './Audio/MonoSynth';
-import {getFrequencyFromNoteIndexInScale, Scale} from './../Utils/Audio/scales';
+import {getFrequencyFromNoteIndexInScale} from './../Utils/Audio/scales';
 import {Omni} from '../index';
 
 class BassController {
