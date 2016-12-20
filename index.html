@@ -58,11 +58,11 @@
 			<nav class="flex space-between nav">
         <div class="1scale-selector">
           <div class="left">
-            <span id="scaleSelectPrevBtn" class="icon-arrow-up"></span>
-            <span id="scaleSelectNextBtn" class="icon-arrow-down"></span>
+            <span id="scaleSelectPrevBtn" class="icon-arrow-up js-scaleSelectPrevBtn"></span>
+            <span id="scaleSelectNextBtn" class="icon-arrow-down js-scaleSelectNextBtn"></span>
           </div>
           <div class="left">
-            <h1 id="scaleName" class="scale-name">xenakis</h1>
+            <h1 class="scale-name js-scale-name">xenakis</h1>
           </div>
         </div>
 				<ul class="flex space-between">
@@ -75,8 +75,8 @@
 				<section class="xy-pad-section">
 					<div class="xy-pad">
 						<canvas id="xyPad"></canvas>
-            <span class="x-name">distorion</span>
-            <span class="y-name">reverb</span>
+            <span id="xAxisName" class="x-name">distorion</span>
+            <span id="yAxisName"  class="y-name">reverb</span>
 					</div>
 				</section>
 				<section class="pitch-constellation-section  is-hidden">
@@ -99,13 +99,7 @@
 
 						</div>
 					</div>
-
 				</section>
-				<!--<section class="scale-selector">
-					<span id="scaleSelectPrevBtn" class="icon-arrow-up"></span>
-					<h1 id="scaleName" class="scale-name">xenakis</h1>
-					<span id="scaleSelectNextBtn" class="icon-arrow-down"></span>
-				</section>-->
 				<div class="fav-scale-controller">
 					<a id="addFavScaleBtn" class="icon-plus"></a>
 				</div>
@@ -125,12 +119,7 @@
 					</ul>
 				</section>
 				<section class="fav-scale-selector">
-					<ul class="flex" id="fav-scale-buttons">
-						<!--<li>locrian maj3</li>
-                  <li>major triad</li>
-                  <li class="is-selected">xenakis</li>
-                  <li>burmese</li>-->
-					</ul>
+					<ul class="flex" id="fav-scale-buttons"></ul>
 				</section>
 			</div>
 			<section class="flex harp">
@@ -151,36 +140,47 @@
 				</ul>
 			</nav>
       <section class="scale-selector">
-					<span id="scaleSelectPrevBtn" class="icon-arrow-left"></span>
-					<h1 id="scaleName" class="scale-name">xenakis</h1>
-					<span id="scaleSelectNextBtn" class="icon-arrow-right"></span>
+					<span id="scaleSelectPrevBtn" class="icon-arrow-left js-scaleSelectPrevBtn"></span>
+					<h1 class="scale-name js-scale-name"></h1>
+					<span id="scaleSelectNextBtn" class="icon-arrow-right js-scaleSelectNextBtn"></span>
 			</section>
       <section class="scale-info">
-				<ul id="scaleFrequencies" class="freqs list-inline">
-					<li>261.6</li>
-					<li>294.3</li>
-					<li>327</li>
-					<li>348.8</li>
-					<li>392.4</li>
-					<li>436</li>
-					<li>490.5</li>
-				</ul>
-				<p id="scaleDescription" class="scale-descrip">A Fox who had never seen a Lion one day met one, and was so terrified at the sight of him that he was ready to die with
-					fear.
-				</p>
+				<ul id="scaleFrequencies" class="freqs list-inline"></ul>
+				<p id="scaleDescription" class="scale-descrip"></p>
       </section>
 			<section class="settings text-center">
-        <h4>voice</h4>
-				<div class="flex space-between voice-selector settings-carousel">
-          <span id="scaleSelectPrevBtn" class="icon-arrow-left js-prev"></span>
-          <span id="voiceSetting">wind chimes</span>
-          <span id="scaleSelectNextBtn" class="icon-arrow-right js-next"></span>
+        <h4>x axis effect</h4>
+				<div class="flex space-between settings-carousel" data-carousel='xEffect'>
+          <span data-carousel-prev id="scaleSelectPrevBtn" class="icon-arrow-left"></span>
+          <ul>
+            <li data-val="0" class="is-selected">Feedback</li>
+            <li data-val="1">Distorion</li>
+            <li data-val="2">Delay Time</li>
+            <li data-val="3">Volume</li>
+          </ul>
+          <span data-carousel-next id="scaleSelectNextBtn" class="icon-arrow-right"></span>
+				</div>
+        <h4>y axis effect</h4>
+				<div class="flex space-between settings-carousel" data-carousel='yEffect'>
+          <span data-carousel-prev id="scaleSelectPrevBtn" class="icon-arrow-left"></span>
+          <ul>
+            <li data-val="0">Feedback</li>
+            <li data-val="1" class="is-selected">Distorion</li>
+            <li data-val="2">Delay Time</li>
+            <li data-val="3">Volume</li>
+          </ul>
+          <span data-carousel-next id="scaleSelectNextBtn" class="icon-arrow-right"></span>
 				</div>
         <h4>octaves</h4>
-				<div class="flex space-between octaves-selector settings-carousel">
-					<span class="icon-minus js-prev"></span>
-					<span id="octaveSetting">4</span>
-					<span class="icon-plus js-next"></span>
+				<div class="flex space-between settings-carousel" data-carousel='octave'>
+					<span data-carousel-prev class="icon-minus"></span>
+					<ul>
+            <li data-val="1">1</li>
+            <li data-val="2" class="is-selected">2</li>
+            <li data-val="3">3</li>
+            <li data-val="4">4</li>
+          </ul>
+					<span data-carousel-next class="icon-plus"></span>
 				</div>
 			</section>
 			<footer>

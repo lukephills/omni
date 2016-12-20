@@ -23,14 +23,14 @@ class RootNoteSelector {
   }
 
   setKey(idx: number) {
-    // Omni.state.droneIdx = idx;
     this.keyIdx = idx;
 
     if (idx >= 0 && idx < this.rootNoteLetters.length) {
       // Set harp key
-      console.log('set key', this.rootNoteLetters[idx])
-
       Omni.setRootNote(idx);
+
+      // Render the list of frequencies on the settings page
+      Omni.scaleSelector.renderScaleFrequencyList();
 
       // add 'is-selected' class
       this.addActiveClass(idx);

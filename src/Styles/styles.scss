@@ -95,6 +95,8 @@ body {
   font-style: italic;
   background: $color-bg;
   color: $color-white;
+  letter-spacing: 0.5px;
+  line-height: 1.5;
 
   @include sm {
     font-size: 17px;
@@ -467,8 +469,8 @@ li {
 }
 
 .xy-pad {
-  border-bottom: 2px solid $color-primary;
-  border-left: 2px solid $color-primary;
+  border-bottom: 3px solid $color-primary;
+  border-left: 3px solid $color-primary;
   .x-name {
     bottom: -30px;
   }
@@ -615,7 +617,7 @@ li {
   background: rgba(0, 0, 0, 0.85);
   height: 100%;
   width: 100%;
-  overflow: hidden;
+  overflow: auto;
   transform: translateY(0);
   transition: transform 0.3s ease;
   &.is-active {
@@ -625,12 +627,26 @@ li {
 
 .freqs li {
   font-size: 12px;
+  height: auto;
 }
 
 .settings-carousel {
   max-width: 500px;
   margin: auto;
   align-items: center;
+  ul {
+    @extend .flex;
+    justify-content: center;
+    line-height: 60px;
+    width: 100%;
+    li {
+      width: 100%;
+      display: none;
+      &.is-selected {
+        display: block;
+      }
+    }
+  }
 }
 
 

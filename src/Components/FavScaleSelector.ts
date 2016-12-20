@@ -128,7 +128,7 @@ class FavScaleSelector {
     let buttonList = '';
     const favsLength = this.favourites.length;
     for (let i = 0; i < favsLength; i++) {
-      buttonList += `<li id="${this.favScaleBtnId}-${this.favourites[i]}">${Omni.scaleSelector.scaleNameList[this.favourites[i]]}</li>`
+      buttonList += `<li id="${this.favScaleBtnId}-${this.favourites[i]}">${Omni.scaleSelector.scaleNames[this.favourites[i]]}</li>`
     }
 
     return buttonList;

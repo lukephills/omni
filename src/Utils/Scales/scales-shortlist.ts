@@ -294,7 +294,7 @@ const _scales: IScale[] = [
   {
     name: 'Major Triad',
     intervals: [0, 4, 7],
-    description: 'The three notes that make up a major chord include the root note, a major third and a perfect fifth. It is one of the basic building blocks of tonal music, the Western common practice period and Western pop, folk and rock music.'
+    description: 'The three notes that make up a major chord include the root note, a major third and a perfect fifth. It is one of the basic building blocks of tonal music.'
   },
   {
     name: 'Minor Triad',

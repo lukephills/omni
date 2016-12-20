@@ -1,12 +1,13 @@
 import MultiTouch from './MultiTouch';
-import {getPixelRatio, getCoordinateFromEventAsPercentageWithinElement, numberWithinRange} from '../Utils/CanvasUtils';
+import {getPixelRatio, getCoordinateFromEventAsPercentageWithinElement} from '../Utils/CanvasUtils';
+import {numberWithinRange} from '../Utils/number';
 import {canvasRenderAtPixelRatio} from '../Utils/CanvasUtils';
 
 class XYPad {
 
   x = 0.5;
   y = 0.3;
-  buttonSize = 10;
+  buttonSize = 30;
   buttonColor = '#FF6969';
   onChange: (x, y) => void = () => {}
   private pixelRatio: number = getPixelRatio();
@@ -26,8 +27,6 @@ class XYPad {
 
     this.draw();
 
-
-
   }
 
   draw() {
@@ -39,47 +38,45 @@ class XYPad {
     ctx.clearRect(0, 0, w, h);
 
     const buttonSize = this.buttonSize;
-    const x =  numberWithinRange(w * this.x, 0, w - buttonSize)
-    const y =  numberWithinRange(h * (1- this.y), 0, h - buttonSize)
-
-
+    const buttonSizeHalved = buttonSize/2;
+    const x =  numberWithinRange(w * this.x, buttonSizeHalved, w - buttonSizeHalved)
+    const y =  numberWithinRange(h * (1- this.y), buttonSizeHalved, h - buttonSizeHalved)
 
     ctx.fillStyle = this.buttonColor;
+
     ctx.beginPath();
-    ctx.moveTo(x + buttonSize/2, y);
-    ctx.lineTo(x + buttonSize, y + buttonSize/2);
-    ctx.lineTo(x + buttonSize/2, y + buttonSize);
-    ctx.lineTo(x, y + buttonSize/2);
-    // ctx.lineTo(x + buttonSize/2, y);
+    ctx.moveTo(x, y - buttonSizeHalved);
+    ctx.lineTo(x + buttonSizeHalved, y);
+    ctx.lineTo(x, y + buttonSizeHalved);
+    ctx.lineTo(x - buttonSizeHalved, y);
     ctx.closePath();
     ctx.fill();
-
-
-    // ctx.fillRect(x, y, buttonSize, buttonSize);
-
-    this.onChange(this.x, this.y)
   }
 
+  render() {
+    this.draw();
+    this.onChange(this.x, this.y)
+  }
 
   onPointerDown(e, id) {
     const pos = getCoordinateFromEventAsPercentageWithinElement(e, this.canvas);
     this.x = pos.x;
     this.y = pos.y;
-    this.draw()
+    this.render()
   }
 
   onPointerUp(e, id) {
    const pos = getCoordinateFromEventAsPercentageWithinElement(e, this.canvas);
     this.x = pos.x;
     this.y = pos.y;
-    this.draw()
+    this.render()
   }
 
   onPointerMove(e, id) {
     const pos = getCoordinateFromEventAsPercentageWithinElement(e, this.canvas);
     this.x = pos.x;
     this.y = pos.y;
-    this.draw()
+    this.render()
   }
 
   onResize() {
@@ -88,8 +85,4 @@ class XYPad {
 
 }
 
-export default XYPad
-
-const withinBounds = (n: number) => {
-  return n;
-}
+export default XYPad;

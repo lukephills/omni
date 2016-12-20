@@ -6,11 +6,14 @@ import ScaleSelector from './ScaleSelector';
 import DroneSelector from './DroneSelector';
 import RootNoteSelector from './RootNoteSelector';
 import FavScaleSelector from './FavScaleSelector';
+import SettingsCarouselManager from './SettingsCarousels';
 import LoopController from './LoopController';
 import {scales, IScale} from '../Utils/Scales/scales-shortlist';
 import {scaleFromRoot12Idx} from '../Utils/Audio/scales';
 import {createIOSSafeAudioContext} from '../Utils/Audio/iOS';
 import {initViewController} from './ViewController'
+import {$} from '../Utils/selector'
+import {effects} from '../Constants/Effects'
 
 // import {log} from '../Utils/logger'
 
@@ -23,13 +26,16 @@ interface IState {
   scaleIdx: number;
   rootNoteIdx: number;
   octave: number;
+  xEffect: number;
+  yEffect: number;
 }
 
-// interface IScale {
-//   name: string;
-//   frequencies: number[];
-//   description: string;
-// }
+interface IEffect {
+  name: string;
+  setVal: any;
+}
+
+
 
 
 class App {
@@ -43,14 +49,19 @@ class App {
   scaleSelector: ScaleSelector;
   rootNoteSelector: RootNoteSelector;
   droneSelector: DroneSelector;
+  settingsCarouselManager: SettingsCarouselManager;
   favScaleSelector: FavScaleSelector;
   loopController: LoopController;
   scales: IScale[] = scales;
   keyboardManager: KeyboardManager;
 
-  private prevScaleBtn = document.getElementById('scaleSelectPrevBtn');
-  private nextScaleBtn = document.getElementById('scaleSelectNextBtn');
+  effects: IEffect[];
 
+
+  private prevScaleBtns = $('.js-scaleSelectPrevBtn');
+  private nextScaleBtns = $('.js-scaleSelectNextBtn');
+  private xEffectNameEl = $('#xAxisName')[0];
+  private yEffectNameEl = $('#yAxisName')[0];
 
 
   constructor() {
@@ -78,13 +89,17 @@ class App {
       // octave
       octave: -1,
 
+      // XY pad effect choices
+      xEffect: 0,
+      yEffect: 1,
+
     }
 
-    if (this.prevScaleBtn) {
-      this.prevScaleBtn.addEventListener('click', e => this.onScaleChange('prev', e));
+    if (this.prevScaleBtns.length) {
+      this.prevScaleBtns.forEach(el => el.addEventListener('click', e => this.onScaleChange('prev', e)));
     }
-    if (this.nextScaleBtn) {
-      this.nextScaleBtn.addEventListener('click', e => this.onScaleChange('next', e));
+    if (this.nextScaleBtns.length) {
+      this.nextScaleBtns.forEach(el => el.addEventListener('click', e => this.onScaleChange('next', e)));
     }
 
   }
@@ -101,10 +116,10 @@ class App {
     this.harp = new Harp(<HTMLCanvasElement>document.getElementById('harp'), this.actx);
 
     this.xyPad = new XYPad(<HTMLCanvasElement>document.getElementById('xyPad'));
-    this.xyPad.onChange = (x,y) => {
-      console.log(x,y)
-      this.harp.audio.delay.feedback = x;
-      this.harp.audio.delay.delay = y;
+    this.xyPad.onChange = (x, y) => {
+      console.log(x,y, this.state.xEffect, this.state.yEffect)
+      this.effects[this.state.xEffect].setVal(x);
+      this.effects[this.state.yEffect].setVal(y);
     }
 
     this.bass = new BassController(this.actx);
@@ -118,6 +133,29 @@ class App {
     this.rootNoteSelector = new RootNoteSelector()
 
     this.droneSelector = new DroneSelector()
+
+    this.settingsCarouselManager = new SettingsCarouselManager()
+
+    this.effects = [
+      {
+        name: 'Feedback',
+        setVal: (val) => this.harp.audio.delay.feedback = val,
+      },
+      {
+        name: 'Distorion',
+        setVal: (val) => this.harp.audio.delay.feedback = val,
+      },
+      {
+        name: 'Delay Time',
+        setVal: (val) => this.harp.audio.delay.delay = val,
+      },
+      {
+        name: 'Volume',
+        setVal: (val) => this.harp.audio.delay.feedback = val,
+      }
+    ]
+    this.setXEffect(this.state.xEffect)
+    this.setYEffect(this.state.yEffect)
 
 
     // todo: do these if checks inside loop controller instead
@@ -154,6 +192,22 @@ class App {
     this.scaleSelector.next();
   }
 
+  setXEffect(val: number) {
+    this.state.xEffect = val;
+
+    if (this.xEffectNameEl) {
+      this.xEffectNameEl.innerHTML = effects[val].name;
+    }
+  }
+
+  setYEffect(val: number) {
+    this.state.yEffect = val;
+
+    if (this.yEffectNameEl) {
+      this.yEffectNameEl.innerHTML = effects[val].name;
+    }
+  }
+
   setScale(scaleIdx = this.state.scaleIdx, rootNoteIdx = this.state.rootNoteIdx, octave = this.state.octave) {
 
     this.state.scaleIdx = scaleIdx;
@@ -185,10 +239,6 @@ class App {
   setRootNote(rootNoteIdx: number) {
     this.state.rootNoteIdx = rootNoteIdx;
     this.setScale();
-  }
-
-  randomNumberBetween(min, max) {
-    return Math.floor(Math.random()*(max-min+1)+min);
   }
 
 	onResize() {

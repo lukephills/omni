@@ -30,4 +30,3 @@ export function isCordovaIOS(): boolean {
 	return !!window.cordova && cordova.platformId === 'ios';
 }
 
-

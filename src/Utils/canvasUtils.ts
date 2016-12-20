@@ -1,3 +1,4 @@
+import {numberWithinRange} from './number'
 
 /**
  * Gets the devices pixel ratio
@@ -78,18 +79,7 @@ export interface Area {
 }
 
 
-/**
- * Takes a number and puts it within the range
- * @param num
- * @param min
- * @param max
- * @returns {number}
- */
-export function numberWithinRange(num: number, min: number,max: number): number {
-	num = num > max ? max : num;
-	num = num < min ? min : num;
-	return num;
-}
+
 
 
 /**
