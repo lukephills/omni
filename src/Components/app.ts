@@ -9,10 +9,12 @@ import FavScaleSelector from './FavScaleSelector';
 import SettingsCarouselManager from './SettingsCarousels';
 import LoopController from './LoopController';
 import {scales, IScale} from '../Utils/Scales/scales-shortlist';
+import Synth from './Audio/Synth'
 import {scaleFromRoot12Idx} from '../Utils/Audio/scales';
 import {createIOSSafeAudioContext} from '../Utils/Audio/iOS';
 import {initViewController} from './ViewController'
 import {$} from '../Utils/selector'
+import {round} from '../Utils/number'
 import {effects} from '../Constants/Effects'
 
 // import {log} from '../Utils/logger'
@@ -22,10 +24,12 @@ import {getKeyBinding, getKeyType, KeyType, KeyboardEventLatest, keyboardCodeMap
 
 interface IState {
   droneIdx: number;
+  voiceIdx: number;
   scale: IScale;
   scaleIdx: number;
   rootNoteIdx: number;
-  octave: number;
+  octaveOffset: number;
+  octavesToDisplay: number;
   xEffect: number;
   yEffect: number;
 }
@@ -40,6 +44,7 @@ interface IEffect {
 
 class App {
 
+  audio: Synth
   actx: AudioContext;
   state: IState;
   harp: Harp;
@@ -66,7 +71,6 @@ class App {
 
   constructor() {
 
-
     // DEFAULT STATE
     this.state = {
 
@@ -76,18 +80,21 @@ class App {
       // current scale choice index
       scaleIdx: 0,
 
+      voiceIdx: 0,
+
       // current scale choice
       scale: {
-        frequencies: [261.6255653006, 274.52698453615, 329.62755691287, 349.22823143301, 391.99543598175, 411.32572372413, 493.88330125613],
-        name: 'Xenakis',
-        description: 'This is a description for Xenakis'
+        frequencies: [0],
+        name: '',
+        description: ''
       },
 
       // The musical key choice
       rootNoteIdx: 0,
 
-      // octave
-      octave: -1,
+      // start octave
+      octaveOffset: -1,
+      octavesToDisplay: 3,
 
       // XY pad effect choices
       xEffect: 0,
@@ -113,13 +120,29 @@ class App {
 
     this.actx = createIOSSafeAudioContext(44100);
 
-    this.harp = new Harp(<HTMLCanvasElement>document.getElementById('harp'), this.actx);
+    this.harp = new Harp(<HTMLCanvasElement>document.getElementById('harp'));
+
+    this.audio = new Synth(this.actx);
 
     this.xyPad = new XYPad(<HTMLCanvasElement>document.getElementById('xyPad'));
-    this.xyPad.onChange = (x, y) => {
+    const xAxisOutputEl = $('#xAxisVal')[0];
+    const yAxisOutputEl = $('#yAxisVal')[0];
+    this.xyPad.onChange = (x:any, y:any) => {
       console.log(x,y, this.state.xEffect, this.state.yEffect)
       this.effects[this.state.xEffect].setVal(x);
       this.effects[this.state.yEffect].setVal(y);
+      if (xAxisOutputEl && yAxisOutputEl) {
+        // xAxisOutputEl.innerHTML = (round(x, 2) * 100).ttoString();
+        // yAxisOutputEl.innerHTML = (round(y, 2) * 100).toString();
+        xAxisOutputEl.innerHTML = round(x*100, 0).toString();
+        yAxisOutputEl.innerHTML = round(y*100, 0).toString();
+        // xAxisOutputEl.innerHTML = ''+ x.toFixed(2) *100;
+        // yAxisOutputEl.innerHTML = ''+ y.toFixed(2)*100;
+        // xAxisOutputEl.innerHTML = ''+ Math.round(x * 100) / 100 *100;
+        // yAxisOutputEl.innerHTML = ''+  Math.round(y * 100) / 100 *100;
+        // xAxisOutputEl.innerHTML = (+(Math.round(x + "e+2")  + "e-2") *100).toString();
+        // yAxisOutputEl.innerHTML = (+(Math.round(y + "e+2")  + "e-2") *100).toString();
+      }
     }
 
     this.bass = new BassController(this.actx);
@@ -139,19 +162,19 @@ class App {
     this.effects = [
       {
         name: 'Feedback',
-        setVal: (val) => this.harp.audio.delay.feedback = val,
+        setVal: (val) => this.audio.delay.feedback = val,
       },
       {
         name: 'Distorion',
-        setVal: (val) => this.harp.audio.delay.feedback = val,
+        setVal: (val) => this.audio.distortion.drive = val*10,
       },
       {
         name: 'Delay Time',
-        setVal: (val) => this.harp.audio.delay.delay = val,
+        setVal: (val) => this.audio.delay.delay = val,
       },
       {
         name: 'Volume',
-        setVal: (val) => this.harp.audio.delay.feedback = val,
+        setVal: (val) => this.audio.delay.feedback = val,
       }
     ]
     this.setXEffect(this.state.xEffect)
@@ -192,6 +215,10 @@ class App {
     this.scaleSelector.next();
   }
 
+  setVoice(val: number) {
+    this.state.voiceIdx = val;
+  }
+
   setXEffect(val: number) {
     this.state.xEffect = val;
 
@@ -208,7 +235,18 @@ class App {
     }
   }
 
-  setScale(scaleIdx = this.state.scaleIdx, rootNoteIdx = this.state.rootNoteIdx, octave = this.state.octave) {
+  setHarpOctaves(val: number) {
+    this.state.octavesToDisplay = val;
+    this.harp.octavesToDisplay = val;
+    this.scaleDidChange();
+  }
+
+  setHarpOctaveOffset(val: number) {
+    this.state.octaveOffset = val;
+    this.setScale();
+  }
+
+  setScale(scaleIdx = this.state.scaleIdx, rootNoteIdx = this.state.rootNoteIdx, octave = this.state.octaveOffset) {
 
     this.state.scaleIdx = scaleIdx;
 
@@ -216,11 +254,9 @@ class App {
 
     let freqs = this.state.scale.frequencies
 
-
-
     // transform scale frequencies using rootNote idx and lower by 1 octave
     if (freqs) {
-      this.state.scale.frequencies = scaleFromRoot12Idx(freqs, rootNoteIdx, this.state.octave);
+      this.state.scale.frequencies = scaleFromRoot12Idx(freqs, rootNoteIdx, this.state.octaveOffset);
     }
 
     this.onStateChange();

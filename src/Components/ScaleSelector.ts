@@ -54,7 +54,7 @@ class ScaleSelector {
 
   renderScaleName() {
     if (this.scaleNameEls.length) {
-      this.scaleNameEls.forEach(el => el.innerHTML = this.scaleNames[this.scaleIdx]);
+      this.scaleNameEls.forEach(el => el.innerHTML = this.scaleNames[this.scaleIdx].toLowerCase());
     }
   }
 

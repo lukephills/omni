@@ -7,6 +7,7 @@ $color-white: rgba(255,255,255,1);
 $color-cream: rgba(255,255,250, 1);
 $color-black: rgba(0,0,0,1);
 $color-primary: rgba(255,105,105,1);
+$color-primary-alpha1: rgba(255,105,105,0.15);
 $color-bg: $color-black;
 $color-border: $color-light-grey;
 
@@ -23,6 +24,15 @@ $font-secondary: Lora, 'Times New Roman', Times, serif;
 $border: 3px solid $color-border;
 $border: none;
 
+// Z INDEX
+$z1: 100;
+$z2: 200;
+$z3: 300;
+$z4: 400;
+$z5: 500;
+$z6: 600;
+$z7: 700;
+$z8: 800;
 
 
 
@@ -116,15 +126,15 @@ h3 {
 }
 
 h1 {
-  font-size: 30px;
+  font-size: 36px;
   letter-spacing: 1.5px;
   margin: 0;
   @include sm {
-    font-size: 36px;
+    font-size: 44px;
     letter-spacing: 2.2px;
   }
   @include md {
-    font-size: 45px;
+    font-size: 60px;
   }
 }
 
@@ -196,6 +206,15 @@ li {
   text-align: center;
 }
 
+.col-xs-12 {
+  width: 100%;
+}
+.col-md-6 {
+  @include md {
+    float: left;
+    width: 50%;
+  }
+}
 
 // ICONS //
 
@@ -303,24 +322,17 @@ li {
     margin-left: 20px;
     margin-top: 32px;
   }
-  ul {
-    width: 284px;
-    @include sm-down {
-      flex-direction: column;
-      width: auto;
-      margin-right: 8px;
-    }
-  }
-  // order: 2;
-  // @include sm {
-  //   order: 1;
-  // }
-  @include sm-down {
-    position: absolute;
-    right: 0;
-    top: calc(78% - 209px);
-  }
 }
+
+.nav-buttons {
+  position: fixed;
+  top: 0;
+  right: 13px;
+  height: 300px;
+  flex-direction: column-reverse;
+  z-index: $z1;
+}
+
 
 .middle-section {
   // flex: 6;
@@ -347,7 +359,6 @@ li {
   canvas {
     height: 100%;
     width: 100%;
-    right: 0;
   }
   min-width: auto;
   @include sm {
@@ -357,18 +368,7 @@ li {
     min-width: auto;
   }
 }
-.y-effect-name {
-    transform: rotate(-90deg);
-    margin: auto;
-    align-self: center;
-}
-.x-effect-name {
-  bottom: -12px;
-  left: 0;
-  right: 0;
-  margin: auto;
-  text-align: center;
-}
+
 .pitch-constellation-section, .xy-pad-section {
   display: flex;
   justify-content: center;
@@ -383,14 +383,14 @@ li {
     width: $d;
     height: $d;
     border-radius: 50%;
-    background: rgba(255,105,105,1);
+    background: $color-primary-alpha1;
     position: absolute;
     div {
       $lineWidth: 3px;
       width: $lineWidth;
-      height: ($d / 2) + 2;
+      height: ($d / 2);
       position: absolute;
-      background: rgba(0,0,0,1);
+      background: $color-primary;
       left: ($d / 2) - ($lineWidth/2);
       transform-origin: bottom;
       transition: transform 0.2s ease-in-out;
@@ -403,8 +403,7 @@ li {
     height: 100%;
   }
   span {
-    position: absolute;
-    font-size: 15px;
+    font-size: 18px;
   }
   min-width: auto;
   @include sm {
@@ -415,8 +414,9 @@ li {
   }
 }
 .pitch-constellation span {
+  position: absolute;
   &.is-selected {
-    font-size: 28px;
+    font-size: 30px;
   }
   padding: 30px;
   transform-origin: center;
@@ -468,9 +468,37 @@ li {
 
 }
 
+
+
 .xy-pad {
   border-bottom: 3px solid $color-primary;
   border-left: 3px solid $color-primary;
+
+  .overflow-hidden {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+  }
+
+  .triange {
+    width: 460px;
+    height: 460px;
+    position: absolute;
+    transform-origin: top left;
+    transform: rotate(-45deg);
+    background: $color-primary-alpha1;
+  }
+
+  canvas {
+    position: absolute;
+  }
+
+  .x-name, .y-name {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+  }
   .x-name {
     bottom: -30px;
   }
@@ -617,6 +645,7 @@ li {
   background: rgba(0, 0, 0, 0.85);
   height: 100%;
   width: 100%;
+  z-index: $z5;
   overflow: auto;
   transform: translateY(0);
   transition: transform 0.3s ease;

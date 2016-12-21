@@ -1,13 +1,15 @@
 import {IdentifierIndexMap} from '../Utils/utils';
 import {getPixelRatio, getCoordinateFromEventAsPercentageWithinElement} from '../Utils/CanvasUtils';
 import MultiTouch from './MultiTouch';
-import Synth from './Audio/Synth'
+
 import {palette} from '../Constants/Defaults'
 import {canvasRenderAtPixelRatio} from '../Utils/CanvasUtils';
 import {getPerfectFifthIndex} from '../Utils/Audio/scales';
 
+import {Omni} from '../index';
+
 class Harp {
-  public audio: Synth
+  // public audio: Synth
   public lines: number = 32;
   public octavesToDisplay = 3;
   private touches: IdentifierIndexMap;
@@ -16,11 +18,11 @@ class Harp {
 
   private colors: any[] = [];
 
-  constructor(private canvas: HTMLCanvasElement, public actx: AudioContext) {
+  constructor(private canvas: HTMLCanvasElement) {
 
     canvasRenderAtPixelRatio(this.canvas);
 
-    this.audio = new Synth(actx);
+
 
 
     // Initialize touch and pointer listeners
@@ -54,21 +56,44 @@ class Harp {
 
     const p5 = getPerfectFifthIndex(scale);
 		const color1 = '#FF6969';
-		const color2 = '#FFA3A3';
+		// const color2 = '#FFA3A3';
+
 
 		// DRAW THE LINES
+		// for (let i = 0; i < lines; i++) {
+    //   if (i % scale.length === 0) {
+    //     // Root note string
+    //     ctx.fillStyle = color1;
+    //   } else if (i % scale.length === p5) {
+    //     // Perfect 5th string
+    //     ctx.fillStyle = color2;
+    //   } else {
+    //     // All other strings
+    //     ctx.fillStyle = 'white';
+    //   }
+    //   ctx.fillRect(i * lineWidth + (lineWidth*0.5), 0,   borderWidth, h);
+		// }
+
+    const color2 = 'rgba(255, 105, 105, 0.15)';
+    // const color2 = '#FFC3C3';
+		// DRAW THE LINES
 		for (let i = 0; i < lines; i++) {
+
       if (i % scale.length === 0) {
         // Root note string
         ctx.fillStyle = color1;
-      } else if (i % scale.length === p5) {
-        // Perfect 5th string
-        ctx.fillStyle = color2;
-      } else {
-        // All other strings
-        ctx.fillStyle = 'white';
+        ctx.fillRect(i * lineWidth, 0, lineWidth + 1, h);
       }
-      ctx.fillRect(i * lineWidth + (lineWidth*0.5), 0,   borderWidth, h);
+
+      // Perfect 5th note
+      if (i % scale.length === p5) {
+        ctx.fillStyle = color2;
+        ctx.fillRect(i * lineWidth, 0, lineWidth + 1, h); // +1 is for overlap to avoid nasty small gaps
+      }
+
+      // All line borders
+      ctx.fillStyle = 'white';
+      ctx.fillRect(i * lineWidth, 0,   borderWidth, h);
 		}
 	}
 
@@ -81,7 +106,7 @@ class Harp {
 		this.activeTouches[id] = noteIndex;
 		// Play the note
     console.log(pos)
-		this.audio.NoteOn(noteIndex, pos.y, index);
+		Omni.audio.NoteOn(noteIndex, pos.y, index);
 	}
 
 	onPointerUp(e, id: number): void {
@@ -97,7 +122,7 @@ class Harp {
 		// If noteIndex hasn't changed (note is the same)
 		if (this.activeTouches[id] === noteIndex) {
       // Update the notes position on the note
-      this.audio.updateNote(x, y, index);
+      Omni.audio.updateNote(x, y, index);
 
     } else {
       // Changed to a new note
@@ -106,15 +131,15 @@ class Harp {
       this.activeTouches[id] = noteIndex;
 
       // Stop previous note
-      this.audio.NoteOff(index);
+      Omni.audio.NoteOff(index);
 
       // Play the new note
-      this.audio.NoteOn(noteIndex, y, index);
+      Omni.audio.NoteOn(noteIndex, y, index);
     }
 	}
 
   onKeyDown(key: number) {
-    this.audio.NoteOn(key, undefined, -1);
+    Omni.audio.NoteOn(key, undefined, -1);
   }
 
   onResize() {
@@ -145,8 +170,8 @@ class Harp {
 		this.lines = (len * this.octavesToDisplay) + 1; // add 1 to include top octave note
 
 		this.colors = colors;
-		this.audio.scale = scale;
-    this.audio.rootNoteIdx = rootNoteIdx;
+		Omni.audio.scale = scale;
+    Omni.audio.rootNoteIdx = rootNoteIdx;
 		this.draw(scale);
 	}
 

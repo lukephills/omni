@@ -1,4 +1,4 @@
-export const round = (n: number, dp: number) => +n.toFixed(dp);
+export const round = (n: number, dp: number) => +((<any>Math.round)(n + 'e+'+dp)  + 'e-'+dp);
 
 export const multiply = (n: number) => n2 => n * n2;
 
@@ -37,6 +37,16 @@ export const incrementWithinRange = (num: number, min: number, max: number) => {
 
 export const decrementWithinRange = (num: number, min: number, max: number) => {
   return _withinBounds(decrement(num), min, max);
+}
+
+export const incrementIfWithinRange = (num: number, max: number) => {
+  if (num >= max) return max;
+  return increment(num);
+}
+
+export const decrementIfWithinRange = (num: number, min: number) => {
+  if (num <= min) return min;
+  return decrement(num);
 }
 
 export const randomIntBetween = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min)

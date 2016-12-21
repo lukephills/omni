@@ -51,6 +51,7 @@ class Synth {
 	// Effects
 	public compressor: DynamicsCompressorNode;
 	public delay: FeedbackDelay;
+  distortion: CrappyDistortion;
 	// public feedback: GainNode;
 	// public filters: BiquadFilterNode[];
 
@@ -87,6 +88,7 @@ class Synth {
 
 		// Effects
 		this.compressor = this.context.createDynamicsCompressor();
+    this.distortion = new CrappyDistortion(this.context, 5, 'none');
 		this.delay = new FeedbackDelay(this.context, 0.1, 0.6, 0.5);
 		// this.feedback = this.context.createGain();
 		// this.filters = [];
@@ -240,15 +242,17 @@ class Synth {
 		// Connect the Scuzz
 		// this.scuzz.connect(this.scuzzGain);
 
-    var distortion = new CrappyDistortion(this.context, 5, 'none');
+
 
 
     // connect all the oscillators in the pool
     for (let {osc} of this.oscillators.values()) {
       // osc is inactive, set it's frequency, trigger it & set it to active.
-      osc.connect(this.delay);
+      osc.connect(this.distortion);
     }
 
+
+    this.distortion.connect(this.delay)
     this.delay.connect(this.compressor)
 
 		// this.delay.connect(this.feedback);

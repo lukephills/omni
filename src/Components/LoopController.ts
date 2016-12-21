@@ -12,24 +12,13 @@ class LoopController {
     this.render();
   }
 
-
-  // addActiveClass(el) {
-  //   this.removeAllActiveClasses();
-  //   el.classList.add('is-selected');
-  // }
-
-  // removeAllActiveClasses() {
-  //   // find and remove all is-selected classes from buttons
-  //   this.droneSelectorBtnEls.forEach(el => el.classList.remove('is-selected'));
-  // }
-
   onRecordPressed() {
-    Omni.harp.audio.looper.recordBtnPressed();
+    Omni.audio.looper.recordBtnPressed();
     this.render();
   }
 
   onPlayPressed() {
-    Omni.harp.audio.looper.playBtnPressed();
+    Omni.audio.looper.playBtnPressed();
     this.render();
   }
 
@@ -46,7 +35,7 @@ class LoopController {
   }
 
   render() {
-    const state = Omni.harp.audio.looper.state;
+    const state = Omni.audio.looper.state;
     this.resetClasses();
     switch (state) {
       case 'recording':

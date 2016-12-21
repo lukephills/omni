@@ -26,7 +26,6 @@ class XYPad {
 		});
 
     this.draw();
-
   }
 
   draw() {
@@ -60,22 +59,22 @@ class XYPad {
 
   onPointerDown(e, id) {
     const pos = getCoordinateFromEventAsPercentageWithinElement(e, this.canvas);
-    this.x = pos.x;
-    this.y = pos.y;
+    if (!e.shiftKey) this.x = pos.x;
+    if (!e.metaKey) this.y = pos.y;
     this.render()
   }
 
   onPointerUp(e, id) {
    const pos = getCoordinateFromEventAsPercentageWithinElement(e, this.canvas);
-    this.x = pos.x;
-    this.y = pos.y;
+    if (!e.shiftKey) this.x = pos.x;
+    if (!e.metaKey) this.y = pos.y;
     this.render()
   }
 
-  onPointerMove(e, id) {
+  onPointerMove(e: MouseEvent, id) {
     const pos = getCoordinateFromEventAsPercentageWithinElement(e, this.canvas);
-    this.x = pos.x;
-    this.y = pos.y;
+    if (!e.shiftKey) this.x = pos.x;
+    if (!e.metaKey) this.y = pos.y;
     this.render()
   }
 
