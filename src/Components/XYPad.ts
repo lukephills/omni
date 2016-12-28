@@ -28,6 +28,16 @@ class XYPad {
     this.draw();
   }
 
+  set xPos(val) {
+    this.x = val;
+    this.render();
+  }
+
+  set yPos(val) {
+    this.y = val;
+    this.render();
+  }
+
   draw() {
     const ctx = this.canvas.getContext('2d');
     if (!ctx) return;

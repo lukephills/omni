@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="286px" height="279px" viewBox="0 0 286 279" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>PitchConsetellation</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="UI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="intro" transform="translate(-87.000000, -200.000000)">
+            <g id="PitchConsetellation" transform="translate(87.000000, 200.000000)">
+                <polyline id="Pitch-Constellation-Guide" stroke-opacity="0.203634511" stroke="#D2D3D1" stroke-width="2" points="143.04723 134.904477 211.342636 243.80232 143.04723 134.904477 264.647174 197.829288 143.04723 134.904477 285.369105 134.995604 143.04723 134.904477 267.956005 72.137502 143.04723 134.904477 217.0737 26.0977606 143.04723 134.904477 146.356062 9.21269092 143.04723 134.904477 74.7518254 26.0066337 143.04723 134.904477 21.4472872 71.9796655 143.04723 134.904477 0.725355691 134.81335 143.04723 134.904477 18.1384556 197.671451 143.04723 134.904477 69.0207608 243.711193 143.04723 134.904477 139.738399 260.596262 143.04723 134.904477"></polyline>
+                <circle id="Oval" fill="#FF6969" cx="142.5" cy="139.5" r="139.5"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

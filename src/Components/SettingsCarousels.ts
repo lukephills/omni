@@ -1,11 +1,11 @@
 
-import {$} from '../Utils/selector'
-import {nodeListToArray} from '../Utils/array'
-import {incrementWithinRange, decrementWithinRange, incrementIfWithinRange, decrementIfWithinRange} from '../Utils/number'
-import {Omni} from '../index';
+import { $ } from '../Utils/selector'
+import { nodeListToArray } from '../Utils/array'
+import { incrementWithinRange, decrementWithinRange, incrementIfWithinRange, decrementIfWithinRange } from '../Utils/number'
+import { Omni } from '../index';
 
 
-enum direction {prev, next}
+enum direction { prev, next }
 
 class SettingsCarouselManager {
 
@@ -14,12 +14,12 @@ class SettingsCarouselManager {
 
     carousels.forEach(carousel => {
       carousel.children[0].addEventListener('click', this.onChangeBtn.bind(this, carousel, direction.prev))
-      carousel.children[carousel.children.length-1].addEventListener('click', this.onChangeBtn.bind(this, carousel, direction.next))
+      carousel.children[carousel.children.length - 1].addEventListener('click', this.onChangeBtn.bind(this, carousel, direction.next))
     })
   }
 
   onChangeBtn(container, dir: direction) {
-    const carousel = $('[data-carousel='+container.dataset.carousel+']')[0];
+    const carousel = $('[data-carousel=' + container.dataset.carousel + ']')[0];
     const items = nodeListToArray(carousel.children[1].children);
 
     const rotate = (carousel.dataset['carouselRotate'] === 'false') ? false : true;
@@ -44,30 +44,59 @@ class SettingsCarouselManager {
           }
         }
 
+        carousel.dataset['val'] = newIdx.toString();
         items[newIdx].classList.add('is-selected');
-        this.carouselDidUpdate(carousel.dataset['carousel'], items[newIdx].dataset['val'])
-        break;
+
+        if (this.isCorrespondingDuplicate(carousel)) {
+          return this.onChangeBtn(container, dir)
+        }
+
+        return this.carouselDidUpdate(this.getCarouselName(carousel), items[newIdx].dataset['val'])
       }
     }
+  }
+
+  private isCorrespondingDuplicate(carousel) {
+    const correspondingCarousel = this.getCorrespondingCarousel(carousel)
+    if (correspondingCarousel && correspondingCarousel.dataset['val'] === carousel.dataset['val']) {
+      return true;
+    }
+    return false;
+  }
+
+  private getCorrespondingCarousel(carousel) {
+    const carouselGroupID = carousel.dataset['carouselGroup']
+    if (carouselGroupID) {
+      const groupedCarousels = $(`[data-carousel-group="${carouselGroupID}"]`);
+      for (let i = 0; i < groupedCarousels.length; i++) {
+        if (this.getCarouselName(groupedCarousels[i]) !== this.getCarouselName(carousel)) {
+          return groupedCarousels[i];
+        }
+      }
+    }
+  }
+
+  getCarouselName(carousel): string {
+    return carousel.dataset['carousel']
   }
 
   carouselDidUpdate(carousel: string, value: string) {
     switch (carousel) {
       case 'voices':
         Omni.setVoice(parseInt(value, 10))
-      break;
+        break;
       case 'xEffect':
         Omni.setXEffect(parseInt(value, 10))
-      break;
+        break;
       case 'yEffect':
         Omni.setYEffect(parseInt(value, 10))
-      break;
+        break;
       case 'octave':
         Omni.setHarpOctaves(parseInt(value, 10))
-      break;
+        break;
       case 'octaveOffset':
         Omni.setHarpOctaveOffset(parseInt(value, 10) - 1)
-      break;
+        break;
     }
   }
 

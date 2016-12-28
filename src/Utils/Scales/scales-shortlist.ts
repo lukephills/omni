@@ -54,6 +54,11 @@ export interface IScale {
 }
 
 const _scales: IScale[] = [
+  // {
+  //   name: 'Chromatic',
+  //   intervals: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+  //   description: ''
+  // },
   {
     name: 'Tuvan',
     intervals: [0, 2, 4, 6, 7, 9],
@@ -95,11 +100,6 @@ const _scales: IScale[] = [
     intervals: [0, 3, 5, 6, 7, 10],
     description: ''
   },
-  // {
-  //   name: 'Chromatic',
-  //   intervals: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-  //   description: ''
-  // },
   {
     name: 'Dorian',
     intervals: [0, 2, 3, 5, 7, 9, 10],
@@ -186,7 +186,7 @@ const _scales: IScale[] = [
   // },
   {
     //maybe
-    name: 'Lydian Augmented',
+    name: 'Lydian Aug',
     intervals: [0, 2, 4, 6, 8, 9, 11],
     description: ''
   },
@@ -206,7 +206,7 @@ const _scales: IScale[] = [
   //   description: ''
   // },
   {
-    name: 'Major Pentatonic',
+    name: 'Major Pent',
     intervals: [0, 2, 4, 7, 9],
     description: ''
   },
@@ -222,7 +222,7 @@ const _scales: IScale[] = [
     description: ''
   },
   {
-    name: 'Minor Pentatonic',
+    name: 'Minor Pent',
     intervals: [0, 3, 5, 7, 10],
     description: ''
   },
@@ -640,7 +640,7 @@ const _scales: IScale[] = [
   // },
   {
     // maybe - this might be too similar to major pent
-    name: 'Chin Huang (Maj Pent)',
+    name: 'Huang',
     frequencies: [
       261.6255653006,
       331.11985608357,
@@ -649,10 +649,10 @@ const _scales: IScale[] = [
       588.65752192635,
       662.23971216714
     ],
-    description: 'Huang Zhong qin tuning'
+    description: 'Chinese Huang Zhong qin tuning'
   },
   {
-    name: 'Chinese Lusheng',
+    name: 'Lusheng',
     frequencies: [
       261.6255653006,
       316.38258506467,
@@ -661,7 +661,7 @@ const _scales: IScale[] = [
       466.97226207056,
       520.53801357752
     ],
-    description: `Observed tuning of a small Lusheng, 1/1=d, OdC '97'`
+    description: `Chinese Observed tuning of a small Lusheng, 1/1=d, OdC '97'`
   },
   // {
   //   name: 'zalzal2',
@@ -1014,7 +1014,7 @@ const _scales: IScale[] = [
   // },
   {
     //maybe
-    name: 'indian e find a better raja',
+    name: 'Raja',
     frequencies: [
       261.6255653006,
       275.58617649731,
@@ -1236,7 +1236,7 @@ const _scales: IScale[] = [
   // },
   {
     //maybe
-    name: 'hexany15',
+    name: 'Hexany',
     frequencies: [
       261.6255653006,
       327.03195662575,
@@ -1244,7 +1244,7 @@ const _scales: IScale[] = [
       392.4383479509,
       418.60090448096
     ],
-    description: '1.3.5.15 2)4 hexany (1.15 tonic) degenerate, symmetrical pentatonic' // https://en.wikipedia.org/wiki/Hexany
+    description: '1.3.5.15 2)4 hexany (1.15 tonic) degenerate, symmetrical pentatonic' // orig title: hexany15 https://en.wikipedia.org/wiki/Hexany
   },
   // {
   //   name: 'hexany22',

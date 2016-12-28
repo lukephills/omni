@@ -1,12 +1,12 @@
 export const MOUSE_ID = -999;
 
 export interface MultiTouchCallbacks {
-	onMouseDown(event, id): void;
-	onMouseUp(event, id): void;
-	onMouseMove(event, id): void;
-	onTouchStart(event, id): void;
-	onTouchEnd(event, id): void;
-	onTouchMove(event, id): void;
+	onMouseDown?(event, id): void;
+	onMouseUp?(event, id): void;
+	onMouseMove?(event, id): void;
+	onTouchStart?(event, id): void;
+	onTouchEnd?(event, id): void;
+	onTouchMove?(event, id): void;
 }
 
 class MultiTouch {

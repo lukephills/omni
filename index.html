@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-	<!-- Allow everything in development -->
-	<!--meta http-equiv="Content-Security-Policy"
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <!-- Allow everything in development -->
+  <!--meta http-equiv="Content-Security-Policy"
           content="default-src *;
                  style-src 'self' 'unsafe-inline';
                  script-src 'self' 'unsafe-inline' 'unsafe-eval'"-->
@@ -38,122 +38,161 @@
 
   </style>
 
-	<script type="text/javascript">
-        WebFontConfig = {
-            google: { families: [ 'Roboto:300i', 'Lora:400i,700i' ] }
-        };
-        (function() {
-            var wf = document.createElement('script');
-            wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-            wf.type = 'text/javascript';
-            wf.async = 'true';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(wf, s);
-        })(); </script>
+<script type="text/javascript">
+    WebFontConfig = {
+      google: { families: ['Roboto:300i', 'Lora:400i,700i'] }
+    };
+    (function () {
+      var wf = document.createElement('script');
+      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+      wf.type = 'text/javascript';
+      wf.async = 'true';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(wf, s);
+    })(); </script>
 </head>
 
 <body>
-	<div id="app" class="container fixed-window">
-		<div class="flex main-view">
-			<nav class="flex space-between nav">
-        <div class="1scale-selector">
-          <div class="left">
+  <div id="app" class="container fixed-window">
+    <div class="flex main-view">
+      <nav class="nav">
+        <div class="col-xs-5 scale-selector">
+          <div class="arrows">
             <span id="scaleSelectPrevBtn" class="icon-arrow-up js-scaleSelectPrevBtn"></span>
             <span id="scaleSelectNextBtn" class="icon-arrow-down js-scaleSelectNextBtn"></span>
           </div>
-          <div class="left">
+          <div class="scale-text-container">
             <h1 class="scale-name js-scale-name">xenakis</h1>
           </div>
         </div>
-				<ul class="flex space-between nav-buttons">
-					<li><span id="xyPadToggle" class="btn icon-plus btn-plus"></span></li>
-					<li><span id="constellationToggle" class="btn icon-plus btn-plus"></span></li>
-					<li><span id="recordBtn" class="btn icon-record btn-record"></span></li>
-					<li><span id="playBtn" class="btn icon-play btn-play"></span></li>
-					<li><span id="menuBtn" class="btn icon-menu"></span></li>
-				</ul>
-			</nav>
-			<div class="flex middle-section rel">
-				<section id="xyPadView" class="xy-pad-section">
-					<div class="xy-pad">
+        <ul class="col-xs-2 record-play-group">
+          <li><span id="recordBtn" class="btn icon-record btn-record"></span></li>
+          <li><span id="playBtn" class="btn icon-play btn-play"></span></li>
+        </ul>
+        <ul class="col-xs-5 nav-buttons">
+          <!--<li><span id="xyPadToggle" class="btn icon-plus btn-plus"></span></li>
+            <li><span id="constellationToggle" class="btn icon-plus btn-plus"></span></li>-->
+
+          <li><span id="menuBtn" class="btn icon-menu"></span></li>
+        </ul>
+      </nav>
+      <div class="flex middle-section rel">
+        <section id="xyPadView" class="xy-pad-section">
+          <div class="xy-pad">
             <div class="overflow-hidden">
               <div class="triange"></div>
               <canvas id="xyPad"></canvas>
+              <div class="effects-choice-overlay" id="effectsChoiceOverlay">
+                <span id="closeBtnEffects" class="icon-close btn-close"></span>
+
+                <h4>y effect</h4>
+                <div class="flex space-between settings-carousel" data-carousel='yEffect' data-val="2" data-carousel-group=1>
+                  <span data-carousel-prev id="scaleSelectPrevBtn" class="icon-arrow-left"></span>
+                  <ul>
+                    <li data-val="0">feedback</li>
+                    <li data-val="1">distortion</li>
+                    <li data-val="2" class="is-selected">delay time</li>
+                    <li data-val="3">volume</li>
+                  </ul>
+                  <span data-carousel-next id="scaleSelectNextBtn" class="icon-arrow-right"></span>
+                </div>
+
+                <h4>x effect</h4>
+                <div class="flex space-between settings-carousel" data-carousel='xEffect' data-val="0" data-carousel-group=1>
+                  <span data-carousel-prev id="scaleSelectPrevBtn" class="icon-arrow-left"></span>
+                  <ul>
+                    <li data-val="0" class="is-selected">feedback</li>
+                    <li data-val="1">distortion</li>
+                    <li data-val="2">delay time</li>
+                    <li data-val="3">volume</li>
+                  </ul>
+                  <span data-carousel-next id="scaleSelectNextBtn" class="icon-arrow-right"></span>
+                </div>
+
+
+              </div>
             </div>
-            <div class="x-name"><span id="xAxisName">distorion</span> <output id="xAxisVal">1</output></div>
-            <div class="y-name"><span id="yAxisName">reverb</span> <output id="yAxisVal">1</output></div>
-					</div>
-				</section>
-				<section id="pitchConstellationView" class="pitch-constellation-section is-hidden">
-					<div class="pitch-constellation">
-						<div class="circle" id="pitchConstellation"></div>
-						<div class="letters" id="pitch-constellation-letters">
+            <div class="x-name">
+              <span class="fx-name js-fx-name" id="xAxisName">distortion</span>
+              <output id="xAxisVal">1</output>
+            </div>
+            <div class="y-name">
+              <span class="fx-name js-fx-name" id="yAxisName">reverb</span>
+              <output id="yAxisVal">1</output>
+            </div>
+          </div>
+        </section>
+        <section id="pitchConstellationView" class="pitch-constellation-section">
+          <div class="pitch-constellation">
+            <div class="circle" id="pitchConstellation"></div>
+            <div class="letters" id="pitch-constellation-letters">
 
-							<span id="n0" class="n0 is-selected">C</span>
-							<span id="n1" class="n1">C#</span>
-							<span id="n2" class="n2">D</span>
-							<span id="n3" class="n3">D#</span>
-							<span id="n4" class="n4">E</span>
-							<span id="n5" class="n5">F</span>
-							<span id="n6" class="n6">F#</span>
-							<span id="n7" class="n7">G</span>
-							<span id="n8" class="n8">G#</span>
-							<span id="n9" class="n9">A</span>
-							<span id="n10" class="n10">A#</span>
-							<span id="n11" class="n11">B</span>
+              <span id="n0" class="n0 is-selected">C</span>
+              <span id="n1" class="n1">C#</span>
+              <span id="n2" class="n2">D</span>
+              <span id="n3" class="n3">D#</span>
+              <span id="n4" class="n4">E</span>
+              <span id="n5" class="n5">F</span>
+              <span id="n6" class="n6">F#</span>
+              <span id="n7" class="n7">G</span>
+              <span id="n8" class="n8">G#</span>
+              <span id="n9" class="n9">A</span>
+              <span id="n10" class="n10">A#</span>
+              <span id="n11" class="n11">B</span>
 
-						</div>
-					</div>
-				</section>
-				<div class="fav-scale-controller">
-					<a id="addFavScaleBtn" class="icon-plus"></a>
-				</div>
-			</div>
-			<div class="flex space-between selector-section">
-				<section class="drone-selector">
-					<!--<h5>drone</h5>-->
-					<ul class="flex" id="drone-selector-buttons">
-						<li>i</li>
-						<li>ii</li>
-						<li>iii</li>
-						<li>iv</li>
-						<li class="is-selected">v</li>
-						<li>vi</li>
-						<li>vii</li>
-						<li>i</li>
-					</ul>
-				</section>
-				<section class="fav-scale-selector">
-					<ul class="flex" id="fav-scale-buttons"></ul>
-				</section>
-			</div>
-			<section class="flex harp">
-				<canvas id="harp"></canvas>
-			</section>
-		</div>
-
-		<div class="container settings-overlay" id="settingsOverlay">
-			<nav class="flex space-between nav">
-				<h1>omni</h1>
-				<ul class="flex space-between">
-					<li>
-						<span id="downloadBtn" class="icon-download btn-record">Download</span>
-					</li>
-					<li>
-						<span id="closeBtn" class="icon-close btn-close"></span>
-					</li>
-				</ul>
-			</nav>
-      <section class="scale-selector">
-					<span id="scaleSelectPrevBtn" class="icon-arrow-left js-scaleSelectPrevBtn"></span>
-					<h1 class="scale-name js-scale-name"></h1>
-					<span id="scaleSelectNextBtn" class="icon-arrow-right js-scaleSelectNextBtn"></span>
-			</section>
-      <section class="scale-info">
-				<ul id="scaleFrequencies" class="freqs list-inline"></ul>
-				<p id="scaleDescription" class="scale-descrip"></p>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="flex space-between selector-section">
+        <section class="drone-selector">
+          <ul class="flex" id="drone-selector-buttons">
+            <li>i</li>
+            <li>ii</li>
+            <li>iii</li>
+            <li>iv</li>
+            <li class="is-selected">v</li>
+            <li>vi</li>
+            <li>vii</li>
+            <li>i</li>
+          </ul>
+        </section>
+        <section class="fav-scale-selector">
+          <div class="fav-scale-controller">
+            <a id="addFavScaleBtn" class="icon-plus"></a>
+          </div>
+          <ul class="flex" id="fav-scale-buttons"></ul>
+        </section>
+      </div>
+      <section class="flex harp">
+        <canvas id="harp"></canvas>
       </section>
-			<section class="settings text-center">
+    </div>
+
+
+
+    <div class="container settings-overlay" id="settingsOverlay">
+      <nav class="flex space-between nav">
+        <h1>omni</h1>
+        <ul class="flex space-between">
+          <li>
+            <span id="downloadBtn" class="icon-download btn-record">Download</span>
+          </li>
+          <li>
+            <span id="closeBtnSettings" class="icon-close btn-close"></span>
+          </li>
+        </ul>
+      </nav>
+      <section class="scale-selector inline">
+        <span id="scaleSelectPrevBtn" class="icon-arrow-left js-scaleSelectPrevBtn"></span>
+        <h1 class="scale-name js-scale-name"></h1>
+        <span id="scaleSelectNextBtn" class="icon-arrow-right js-scaleSelectNextBtn"></span>
+      </section>
+      <section class="scale-info">
+        <ul id="scaleFrequencies" class="freqs list-inline"></ul>
+        <p id="scaleDescription" class="scale-descrip"></p>
+      </section>
+      <section class="settings text-center">
         <div class="col-xs-12 col-md-6">
           <h4>voices</h4>
           <div class="flex space-between settings-carousel" data-carousel='voices'>
@@ -163,32 +202,6 @@
               <li data-val="1">Sound2</li>
               <li data-val="2">Sound3</li>
               <li data-val="3">Sound4</li>
-            </ul>
-            <span data-carousel-next id="scaleSelectNextBtn" class="icon-arrow-right"></span>
-          </div>
-        </div>
-        <div class="col-xs-12 col-md-6">
-          <h4>x axis effect</h4>
-          <div class="flex space-between settings-carousel" data-carousel='xEffect'>
-            <span data-carousel-prev id="scaleSelectPrevBtn" class="icon-arrow-left"></span>
-            <ul>
-              <li data-val="0" class="is-selected">Feedback</li>
-              <li data-val="1">Distorion</li>
-              <li data-val="2">Delay Time</li>
-              <li data-val="3">Volume</li>
-            </ul>
-            <span data-carousel-next id="scaleSelectNextBtn" class="icon-arrow-right"></span>
-          </div>
-        </div>
-        <div class="col-xs-12 col-md-6">
-          <h4>y axis effect</h4>
-          <div class="flex space-between settings-carousel" data-carousel='yEffect'>
-            <span data-carousel-prev id="scaleSelectPrevBtn" class="icon-arrow-left"></span>
-            <ul>
-              <li data-val="0">Feedback</li>
-              <li data-val="1" class="is-selected">Distorion</li>
-              <li data-val="2">Delay Time</li>
-              <li data-val="3">Volume</li>
             </ul>
             <span data-carousel-next id="scaleSelectNextBtn" class="icon-arrow-right"></span>
           </div>
@@ -222,43 +235,47 @@
             <span data-carousel-next class="icon-plus"></span>
           </div>
         </div>
-			</section>
-			<footer>
-				<div class="get-the-app">
-					<h2>Get the app</h2>
-					<ul>
-						<li><a href="">iOS</a></li>
-						<li><a href="">android</a></li>
-						<li><a href="">desktop</a></li>
-					</ul>
-				</div>
-				<div class="rate-the-app">
-					<h2>Rate the app</h2>
-					<ul>
-						<li>
-							<a href="" class="icon-smile"></a>
-						</li>
-						<li>
-							<a href="" class="icon-sad"></a>
-						</li>
-					</ul>
-				</div>
-				<div class="website"><a href="https://femurdesign.com">femurdesign.com</a></div>
-				<div class="share">
-					<h2>Share:</h2>
-					<a href="" class="icon-facebook"></a>
-					<a href="" class="icon-twitter"></a>
-				</div>
-			</footer>
-		</div>
+      </section>
+      <footer>
+        <div class="get-the-app">
+          <h2>Get the app</h2>
+          <ul>
+            <li><a href="">iOS</a></li>
+            <li><a href="">android</a></li>
+            <li><a href="">desktop</a></li>
+          </ul>
+        </div>
+        <div class="rate-the-app">
+          <h2>Rate the app</h2>
+          <ul>
+            <li>
+              <a href="" class="icon-smile"></a>
+            </li>
+            <li>
+              <a href="" class="icon-sad"></a>
+            </li>
+          </ul>
+        </div>
+        <div class="website"><a href="https://femurdesign.com">femurdesign.com</a></div>
+        <div class="share">
+          <h2>Share:</h2>
+          <a href="" class="icon-facebook"></a>
+          <a href="" class="icon-twitter"></a>
+        </div>
+      </footer>
+    </div>
 
-	</div>
+  </div>
+
+  <div id="splashOverlay" class="overlay splash-overlay">
+    <img src="./src/assets/splash.svg" />
+  </div>
 
   <div id="startOverlay" class="overlay startOverlay">
     <div class="loading-spinner"></div>
   </div>
 
-	<!--<script src="cordova.js"></script>-->
+  <!--<script src="cordova.js"></script>-->
 
 
 

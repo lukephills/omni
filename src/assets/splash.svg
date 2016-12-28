@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="977px" height="280px" viewBox="0 0 977 280" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>splash</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="UI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="intro" transform="translate(-90.000000, -199.000000)">
+            <g id="splash" transform="translate(90.000000, 199.000000)">
+                <path d="M582.194,275 L582.194,20.241 L580.702,20.241 L463.953,275 L457.239,275 L340.863,20.241 L339.744,20.241 L339.744,275 L331.538,275 L331.538,10.916 L346.085,10.916 L460.969,263.064 L575.853,10.916 L590.4,10.916 L590.4,275 L582.194,275 Z M872.725475,275 L683.241475,21.36 L682.122475,21.36 L682.122475,275 L673.916475,275 L673.916475,10.916 L685.479475,10.916 L875.336475,264.183 L876.455475,264.183 L876.455475,10.916 L884.661475,10.916 L884.661475,275 L872.725475,275 Z M968.17795,275 L968.17795,10.916 L976.38395,10.916 L976.38395,275 L968.17795,275 Z" id="title-avenir" fill="#555"></path>
+                <circle id="Oval-2" fill="rgb(255,105,105)" cx="140" cy="140" r="140"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

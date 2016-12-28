@@ -56,6 +56,7 @@ class Harp {
 
     const p5 = getPerfectFifthIndex(scale);
 		const color1 = '#FF6969';
+    const colorWhite = 'white';
 		// const color2 = '#FFA3A3';
 
 
@@ -81,7 +82,7 @@ class Harp {
 
       if (i % scale.length === 0) {
         // Root note string
-        ctx.fillStyle = color1;
+        ctx.fillStyle = 'rgba(255, 105, 105, 0.7)';
         ctx.fillRect(i * lineWidth, 0, lineWidth + 1, h);
       }
 
@@ -92,7 +93,7 @@ class Harp {
       }
 
       // All line borders
-      ctx.fillStyle = 'white';
+      ctx.fillStyle = color1;
       ctx.fillRect(i * lineWidth, 0,   borderWidth, h);
 		}
 	}

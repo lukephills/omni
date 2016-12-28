@@ -1,6 +1,10 @@
+import MultiTouch from './MultiTouch';
+import {Omni} from '../index';
 import Synth from './Audio/Synth';
+import {getCoordinateFromEventAsPercentageWithinElement} from '../Utils/CanvasUtils';
 import {getDegreeWithin12} from '../Utils/Audio/scales';
 import {nodeListToArray} from '../Utils/array'
+
 
 class PitchConstellation {
 
@@ -8,7 +12,73 @@ class PitchConstellation {
   public lines: number = 32;
   public octavesToDisplay = 5;
 
-  constructor(private el: HTMLElement | null) {}
+  constructor(private el: HTMLElement) {
+    if (!this.el) return;
+
+    new MultiTouch(this.el, {
+			onMouseDown: this.onPointerDown.bind(this),
+			onTouchStart: this.onPointerDown.bind(this),
+		});
+  }
+
+  distanceFromCenter(pos) {
+    const x = (pos.x - 0.5) * 2
+    const y = (pos.y - 0.5) * 2
+    return {x, y}
+  }
+
+  getQuadrant({x,y}) {
+    if (x >= 0 && y >= 0) {
+      return 1;
+    } else if (x >= 0 && y < 0) {
+       return 2;
+    } else if (x < 0 && y < 0) {
+      return 3;
+    } else {
+      return 4
+    }
+  }
+
+  //TODO: could simplify this
+  /**
+   * Takes a position and returns closest hour make on clock face
+   */
+  getDodrant({x,y}) {
+    const quadrant = this.getQuadrant({x,y});
+    let dodtrant = 0;
+    let dxy = x/y
+    if (quadrant === 1 || quadrant === 3) {
+      // quadrant = 1
+       if (dxy > 4) {
+        dodtrant = 3
+      } else if (dxy > 1) {
+        dodtrant = 2
+      } else if (dxy > 0.25) {
+        dodtrant = 1
+      } else {
+        dodtrant = 0
+      }
+    } else if (quadrant === 2 || quadrant === 4) {
+      if (dxy > -0.25) {
+        dodtrant = 6
+      } else if (dxy > -1) {
+        dodtrant = 5
+      } else if (dxy > -4) {
+        dodtrant = 4
+      } else {
+        dodtrant = 3
+      }
+    }
+
+    return ((quadrant > 2) ? dodtrant + 6 : dodtrant) % 12
+  }
+
+  onPointerDown(e: MouseEvent, id) {
+    const pos = this.distanceFromCenter(getCoordinateFromEventAsPercentageWithinElement(e, this.el));
+    // console.log(this.getDodrant(pos))
+    Omni.rootNoteSelector.setKey(this.getDodrant(pos))
+  }
+
 
   /**
    * Takes an array of frequencies and draws the resulting lines

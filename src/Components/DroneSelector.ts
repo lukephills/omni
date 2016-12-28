@@ -5,7 +5,7 @@ class DroneSelector {
 
   private droneBtnElId = 'drone-selector-btn';
   private droneSelectorEl = document.getElementById('drone-selector-buttons');
-  private droneLabels = ['i', 'v'];
+  private droneLabels = ['1', '5'];
   private droneSelectorBtnEls: Element[] = [];
   // drone: Drone;
   droneIdx = -1;

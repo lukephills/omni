@@ -15,7 +15,7 @@ import {createIOSSafeAudioContext} from '../Utils/Audio/iOS';
 import {initViewController} from './ViewController'
 import {$} from '../Utils/selector'
 import {round} from '../Utils/number'
-import {effects} from '../Constants/Effects'
+// import {effects} from '../Constants/Effects'
 
 // import {log} from '../Utils/logger'
 
@@ -37,6 +37,7 @@ interface IState {
 interface IEffect {
   name: string;
   setVal: any;
+  getVal: any;
 }
 
 
@@ -128,26 +129,17 @@ class App {
     const xAxisOutputEl = $('#xAxisVal')[0];
     const yAxisOutputEl = $('#yAxisVal')[0];
     this.xyPad.onChange = (x:any, y:any) => {
-      console.log(x,y, this.state.xEffect, this.state.yEffect)
       this.effects[this.state.xEffect].setVal(x);
       this.effects[this.state.yEffect].setVal(y);
       if (xAxisOutputEl && yAxisOutputEl) {
-        // xAxisOutputEl.innerHTML = (round(x, 2) * 100).ttoString();
-        // yAxisOutputEl.innerHTML = (round(y, 2) * 100).toString();
         xAxisOutputEl.innerHTML = round(x*100, 0).toString();
         yAxisOutputEl.innerHTML = round(y*100, 0).toString();
-        // xAxisOutputEl.innerHTML = ''+ x.toFixed(2) *100;
-        // yAxisOutputEl.innerHTML = ''+ y.toFixed(2)*100;
-        // xAxisOutputEl.innerHTML = ''+ Math.round(x * 100) / 100 *100;
-        // yAxisOutputEl.innerHTML = ''+  Math.round(y * 100) / 100 *100;
-        // xAxisOutputEl.innerHTML = (+(Math.round(x + "e+2")  + "e-2") *100).toString();
-        // yAxisOutputEl.innerHTML = (+(Math.round(y + "e+2")  + "e-2") *100).toString();
       }
     }
 
     this.bass = new BassController(this.actx);
 
-    this.pitchConstellation = new PitchConstellation(document.getElementById('pitchConstellation'))
+    this.pitchConstellation = new PitchConstellation(<HTMLElement>document.getElementById('pitchConstellation'))
 
     this.favScaleSelector = new FavScaleSelector()
 
@@ -161,20 +153,24 @@ class App {
 
     this.effects = [
       {
-        name: 'Feedback',
+        name: 'feedback',
         setVal: (val) => this.audio.delay.feedback = val,
+        getVal: () => this.audio.delay.feedback,
       },
       {
-        name: 'Distorion',
+        name: 'distortion',
         setVal: (val) => this.audio.distortion.drive = val*10,
+        getVal: () => this.audio.distortion.drive/10,
       },
       {
-        name: 'Delay Time',
+        name: 'delay time',
         setVal: (val) => this.audio.delay.delay = val,
+        getVal: () => this.audio.delay.delay,
       },
       {
-        name: 'Volume',
+        name: 'volume',
         setVal: (val) => this.audio.delay.feedback = val,
+        getVal: () => this.audio.delay.feedback,
       }
     ]
     this.setXEffect(this.state.xEffect)
@@ -222,17 +218,28 @@ class App {
   setXEffect(val: number) {
     this.state.xEffect = val;
 
+    // update the xyPad button position
+    this.xyPad.xPos = this.effects[val].getVal()
+
     if (this.xEffectNameEl) {
-      this.xEffectNameEl.innerHTML = effects[val].name;
+      this.xEffectNameEl.innerHTML = this.effects[val].name;
     }
   }
+
 
   setYEffect(val: number) {
     this.state.yEffect = val;
 
+    // update the xyPad button position
+    this.xyPad.yPos = this.effects[val].getVal()
+
     if (this.yEffectNameEl) {
-      this.yEffectNameEl.innerHTML = effects[val].name;
+      this.yEffectNameEl.innerHTML = this.effects[val].name;
     }
+  }
+
+  private isDuplicateXYPadChoice() {
+     return this.state.yEffect === this.state.xEffect ? true : false;
   }
 
   setHarpOctaves(val: number) {
@@ -259,7 +266,7 @@ class App {
       this.state.scale.frequencies = scaleFromRoot12Idx(freqs, rootNoteIdx, this.state.octaveOffset);
     }
 
-    this.onStateChange();
+    // this.onStateChange();
     this.scaleDidChange();
 
     this.favScaleSelector.setActiveClass(scaleIdx);
@@ -283,9 +290,9 @@ class App {
 		this.draw();
 	}
 
-  onStateChange() {
-    console.log('new state =', this.state);
-  }
+  // onStateChange() {
+  //   // console.log('new state =', this.state);
+  // }
 
 
 
