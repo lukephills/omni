@@ -33,7 +33,6 @@ fastboot-dist
 .*.un~
 *.iml
 ehthumbs.db
-Icon?
 Thumbs.db
 npm-debug.log
 coverage
