@@ -337,7 +337,7 @@ class App {
     if (keyType === 'harp') {
       this.harp.onKeyDown(key - 10)
     } else if (keyType === 'bass') {
-      this.audio.bass.onKeyDown(key)
+      this.audio.bassNoteOn(key)
     } else if (keyType === 'rootNote') {
       this.rootNoteSelector.setKey(key - 40);
     } else if (keyType === 'control') {
@@ -350,7 +350,7 @@ class App {
     const key = getKeyBinding(e);
     const keyType: KeyType = getKeyType(key);
     if (keyType === 'bass') {
-      this.audio.bass.onKeyUp(key)
+      this.audio.bassNoteOff(key)
     }
     console.log('stop ', key, keyType)
   }

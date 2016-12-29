@@ -1,10 +1,11 @@
 import Synth from './Audio/Synth'
 import {createIOSSafeAudioContext} from '../Utils/Audio/iOS';
-import BassController from './Bass';
+import BassSynth from './Bass';
 import CrappyDistortion from './Audio/CrappyDistortion';
 import FeedbackDelay from './Audio/FeedbackDelay';
 import Looper from './../Utils/Looper/Looper';
 import {getFrequencyFromNoteIndexInScale, Scale} from './../Utils/Audio/scales';
+import {Omni} from '../index';
 
 interface IAnalysers {
 	live: AnalyserNode;
@@ -19,7 +20,7 @@ class AudioController {
 
   // Sources
   harp: Synth
-  bass: BassController;
+  bass: BassSynth;
 
   // Effects
 	compressor: DynamicsCompressorNode;
@@ -41,7 +42,7 @@ class AudioController {
   constructor(public context = createIOSSafeAudioContext(44100)) {
 
     this.harp = new Synth(this.context);
-    this.bass = new BassController(this.context);
+    this.bass = new BassSynth(this.context);
 
     // Effects
 		this.compressor = this.context.createDynamicsCompressor();
@@ -74,6 +75,7 @@ class AudioController {
 		this.masterVolume.gain.value = 0.5;
 
     this.harp.connect(this.distortion)
+    this.bass.connect(this.synthOut)
 
 
     this.distortion.connect(this.delay)
@@ -103,6 +105,15 @@ class AudioController {
 
   harpNoteOff(index: number) {
     this.harp.NoteOff(index)
+  }
+
+  bassNoteOn(key: number) {
+    const frequency = getFrequencyFromNoteIndexInScale(key, <number[]>Omni.state.scale.frequencies, -1);
+    this.bass.noteOn(frequency, key)
+  }
+
+  bassNoteOff(key: number) {
+    this.bass.noteOff(key)
   }
 
 

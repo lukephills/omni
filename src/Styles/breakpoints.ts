@@ -14,7 +14,7 @@ export const getZoom = () => {
   const {xs, sm, md, lg, xlg} = breakpoints;
   let zoom = 1;
   if (w < sm) {
-    zoom = 0.5
+    zoom = 0.65
   } else if (w < md) {
     zoom = 0.8
   } else if (w < lg) {

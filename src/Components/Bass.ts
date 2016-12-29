@@ -1,44 +1,43 @@
 import MonoSynth from './Audio/MonoSynth';
-import {getFrequencyFromNoteIndexInScale} from './../Utils/Audio/scales';
-import {Omni} from '../index';
+import {connectManyToOne} from './Audio/helpers/routing';
 
-class BassController {
+class BassSynth {
+
+  private _activeKeys = new Set<number>();
 
   bassSynth1: MonoSynth;
   bassSynth2: MonoSynth;
   bassSynth3: MonoSynth;
-  private _activeKeys = new Set<number>();
-  private _activeKey = -1;
+  output = this.context.createGain();
+  private _compressor = this.context.createDynamicsCompressor();
 
-  constructor(actx: AudioContext) {
-    this.bassSynth1 = new MonoSynth(actx);
-    this.bassSynth2 = new MonoSynth(actx);
-    this.bassSynth3 = new MonoSynth(actx);
+  constructor(public context: AudioContext) {
+    this.bassSynth1 = new MonoSynth(context);
+    this.bassSynth2 = new MonoSynth(context);
+    this.bassSynth3 = new MonoSynth(context);
     this.bassSynth1.waveform = 'triangle';
     this.bassSynth2.waveform = 'sine';
-    this.bassSynth3.waveform = 'sawtooth';
-    this.bassSynth1.volume = 0.1;
-    this.bassSynth2.volume = 0.01;
-    this.bassSynth3.volume = 0.003;
-    this.bassSynth1.connect(actx.destination)
-    this.bassSynth2.connect(actx.destination)
-    this.bassSynth3.connect(actx.destination)
+    this.bassSynth3.waveform = 'square';
+    this.bassSynth1.volume = 0.2;
+    this.bassSynth2.volume = 0.21;
+    this.bassSynth3.volume = 0.013;
 
+    connectManyToOne(this._compressor, this.bassSynth1, this.bassSynth2, this.bassSynth3)
+    this._compressor.connect(this.output);
   }
 
-  onKeyDown(key: number) {
-    const frequency = getFrequencyFromNoteIndexInScale(key, <number[]>Omni.state.scale.frequencies, -1);
+  noteOn(frequency, id = -1) {
     this.bassSynth1.frequency = frequency;
-    this.bassSynth2.frequency = frequency*1.5;
+    this.bassSynth2.frequency = frequency/2;
     this.bassSynth3.frequency = frequency/2;
     this.bassSynth1.noteOn(frequency, undefined, undefined, 0.1);
-    this.bassSynth2.noteOn(frequency*1.5, undefined, undefined, 0.8);
-    this.bassSynth3.noteOn(frequency/2, undefined, undefined, 0.2);
-    this._activeKeys.add(key);
+    this.bassSynth2.noteOn(frequency/2, undefined, undefined, 0.1);
+    this.bassSynth3.noteOn(frequency/2, undefined, undefined, 0.1);
+    this._activeKeys.add(id);
   }
 
-  onKeyUp(key: number) {
-    this._activeKeys.delete(key);
+  noteOff(id = -1) {
+    this._activeKeys.delete(id);
 
     if (this._activeKeys.size === 0) {
       this.bassSynth1.noteOff(undefined, 0.5)
@@ -47,5 +46,9 @@ class BassController {
     }
   }
 
+  connect(destination: AudioNode | AudioNodeBase, output?: number, input?: number) {
+    this.output.connect.apply(this.output, arguments)
+  }
+
 }
-export default BassController;
+export default BassSynth;

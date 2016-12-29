@@ -418,6 +418,12 @@ li {
   li {
     margin: 27px 15px;
   }
+
+  @include xxs {
+    position: absolute;
+    right: 0;
+    flex-direction: column;
+  }
 }
 
 .middle-section {
@@ -880,7 +886,7 @@ li {
 }
 
 .middle-section {
-  zoom: 0.5;
+  zoom: 0.65;
   @include sm {
     zoom: 0.8;
   }

@@ -4,7 +4,6 @@ import { DEFAULTS } from '../../Constants/Defaults';
 import * as CanvasUtils from '../../Utils/CanvasUtils';
 import {WaveformStringType} from '../../Constants/AppTypings';
 
-import {getFrequencyFromNoteIndexInScale} from '../../Utils/Audio/scales';
 import Sine from './Sine';
 
 
@@ -30,7 +29,7 @@ interface IOsc {
 class Synth {
 
 	public voiceCount: number = DEFAULTS.VoiceCount;
-	output: GainNode;
+	output = this.context.createGain();
 
 
 	// Oscillators
@@ -39,9 +38,6 @@ class Synth {
 
 
 	constructor(public context: AudioContext) {
-
-		// Gains
-		this.output = this.context.createGain();
 
     // Create a pool of oscillators
     for (let i = 0; i < this.voicesAmount; i++) {
