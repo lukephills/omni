@@ -60,7 +60,7 @@
     "@types/mocha": "^2.2.21-alpha",
     "@types/sinon": "^1.16.20-alpha",
     "@types/sinon-chai": "^2.7.20-alpha",
-    "awesome-typescript-loader": "^2.0.0-rc.14",
+    "awesome-typescript-loader": "^2.2.4",
     "babel-cli": "^6.10.1",
     "babel-core": "^6.10.4",
     "babel-loader": "^6.2.4",
@@ -115,7 +115,7 @@
     "ts-node": "^0.9.3",
     "tslint": "3.12.1",
     "tslint-loader": "^2.1.5",
-    "typescript": "^2.0.7",
+    "typescript": "^2.1.1",
     "webpack": "^2.1.0-beta.14",
     "webpack-dev-server": "^2.1.0-beta.0",
     "webpack-merge": "^0.14.0",
@@ -130,6 +130,7 @@
     "inline-worker": "^1.1.0",
     "merge-audio-buffers": "^1.0.0",
     "normalize.css": "^3.0.3",
+    "svg-injector": "^1.1.3",
     "worker-timer": "^1.0.0"
   }
 }

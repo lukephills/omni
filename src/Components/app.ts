@@ -1,6 +1,7 @@
+import AudioController from './AudioController';
 import Harp from './Harp';
 import XYPad from './XYPad';
-import BassController from './Bass';
+
 import PitchConstellation from './PitchConstellation';
 import ScaleSelector from './ScaleSelector';
 import DroneSelector from './DroneSelector';
@@ -9,12 +10,14 @@ import FavScaleSelector from './FavScaleSelector';
 import SettingsCarouselManager from './SettingsCarousels';
 import LoopController from './LoopController';
 import {scales, IScale} from '../Utils/Scales/scales-shortlist';
-import Synth from './Audio/Synth'
+
 import {scaleFromRoot12Idx} from '../Utils/Audio/scales';
-import {createIOSSafeAudioContext} from '../Utils/Audio/iOS';
+
 import {initViewController} from './ViewController'
 import {$} from '../Utils/selector'
 import {round} from '../Utils/number'
+import {getZoom} from '../Styles/breakpoints'
+const SVGInjector = require('svg-injector')
 // import {effects} from '../Constants/Effects'
 
 // import {log} from '../Utils/logger'
@@ -45,12 +48,12 @@ interface IEffect {
 
 class App {
 
-  audio: Synth
-  actx: AudioContext;
+  audio: AudioController;
+  // actx: AudioContext;
   state: IState;
   harp: Harp;
   xyPad: XYPad;
-  bass: BassController;
+  // bass: BassController;
   pitchConstellation: PitchConstellation;
   scaleSelector: ScaleSelector;
   rootNoteSelector: RootNoteSelector;
@@ -116,18 +119,21 @@ class App {
 	init() {
 		console.log('INITIALIZED APP');
 
+    const zoom = getZoom()
+
 		// on resize event listener
 		window.addEventListener('resize', this.onResize.bind(this));
 
-    this.actx = createIOSSafeAudioContext(44100);
+    // this.actx = createIOSSafeAudioContext(44100);
 
     this.harp = new Harp(<HTMLCanvasElement>document.getElementById('harp'));
 
-    this.audio = new Synth(this.actx);
+    this.audio = new AudioController();
 
     this.xyPad = new XYPad(<HTMLCanvasElement>document.getElementById('xyPad'));
     const xAxisOutputEl = $('#xAxisVal')[0];
     const yAxisOutputEl = $('#yAxisVal')[0];
+    this.xyPad.zoom = zoom;
     this.xyPad.onChange = (x:any, y:any) => {
       this.effects[this.state.xEffect].setVal(x);
       this.effects[this.state.yEffect].setVal(y);
@@ -137,9 +143,9 @@ class App {
       }
     }
 
-    this.bass = new BassController(this.actx);
 
     this.pitchConstellation = new PitchConstellation(<HTMLElement>document.getElementById('pitchConstellation'))
+    this.pitchConstellation.zoom = zoom;
 
     this.favScaleSelector = new FavScaleSelector()
 
@@ -183,6 +189,11 @@ class App {
     if (recBtnEl && playBtnEl) {
       this.loopController = new LoopController(recBtnEl, playBtnEl);
     }
+
+
+    // Inject all svgs
+    // SVGInjector(document.querySelectorAll('img.inject-me'));
+
 
     initViewController();
 
@@ -285,8 +296,16 @@ class App {
   }
 
 	onResize() {
+
+    // Get the updated css zoom attributes
+    const zoom = getZoom();
+    this.xyPad.zoom = zoom
+    this.pitchConstellation.zoom = zoom
+
+    // Resize canvas components
     this.harp.onResize();
     this.xyPad.onResize();
+
 		this.draw();
 	}
 
@@ -318,7 +337,7 @@ class App {
     if (keyType === 'harp') {
       this.harp.onKeyDown(key - 10)
     } else if (keyType === 'bass') {
-      this.bass.onKeyDown(key)
+      this.audio.bass.onKeyDown(key)
     } else if (keyType === 'rootNote') {
       this.rootNoteSelector.setKey(key - 40);
     } else if (keyType === 'control') {
@@ -331,7 +350,7 @@ class App {
     const key = getKeyBinding(e);
     const keyType: KeyType = getKeyType(key);
     if (keyType === 'bass') {
-      this.bass.onKeyUp(key)
+      this.audio.bass.onKeyUp(key)
     }
     console.log('stop ', key, keyType)
   }

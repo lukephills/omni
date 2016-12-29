@@ -8,9 +8,12 @@ import {nodeListToArray} from '../Utils/array'
 
 class PitchConstellation {
 
-  public audio: Synth;
-  public lines: number = 32;
-  public octavesToDisplay = 5;
+  audio: Synth;
+  lines: number = 32;
+  octavesToDisplay = 5;
+
+  // The value that element has been zoom by using css
+  zoom = 1;
 
   constructor(private el: HTMLElement) {
     if (!this.el) return;
@@ -74,7 +77,7 @@ class PitchConstellation {
   }
 
   onPointerDown(e: MouseEvent, id) {
-    const pos = this.distanceFromCenter(getCoordinateFromEventAsPercentageWithinElement(e, this.el));
+    const pos = this.distanceFromCenter(getCoordinateFromEventAsPercentageWithinElement(e, this.el, this.zoom));
     // console.log(this.getDodrant(pos))
     Omni.rootNoteSelector.setKey(this.getDodrant(pos))
   }

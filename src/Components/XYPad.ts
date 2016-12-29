@@ -9,6 +9,10 @@ class XYPad {
   y = 0.3;
   buttonSize = 30;
   buttonColor = '#FF6969';
+
+  // The value that element has been zoom by using css
+  zoom = 1;
+
   onChange: (x, y) => void = () => {}
   private pixelRatio: number = getPixelRatio();
 
@@ -68,21 +72,23 @@ class XYPad {
   }
 
   onPointerDown(e, id) {
-    const pos = getCoordinateFromEventAsPercentageWithinElement(e, this.canvas);
+    const pos = getCoordinateFromEventAsPercentageWithinElement(e, this.canvas, this.zoom);
+    console.log(pos, e)
     if (!e.shiftKey) this.x = pos.x;
     if (!e.metaKey) this.y = pos.y;
     this.render()
   }
 
   onPointerUp(e, id) {
-   const pos = getCoordinateFromEventAsPercentageWithinElement(e, this.canvas);
+    console.log(e.pageX, e.pageY)
+   const pos = getCoordinateFromEventAsPercentageWithinElement(e, this.canvas, this.zoom);
     if (!e.shiftKey) this.x = pos.x;
     if (!e.metaKey) this.y = pos.y;
     this.render()
   }
 
   onPointerMove(e: MouseEvent, id) {
-    const pos = getCoordinateFromEventAsPercentageWithinElement(e, this.canvas);
+    const pos = getCoordinateFromEventAsPercentageWithinElement(e, this.canvas, this.zoom);
     if (!e.shiftKey) this.x = pos.x;
     if (!e.metaKey) this.y = pos.y;
     this.render()

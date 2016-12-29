@@ -100,13 +100,13 @@ export function coordinateWithinArea(coordinate: Coordinate, area: Area):  Coord
  * @param el: Element
  * @returns {{x: number, y: number, width: number, height: number}}: Area
  */
-export function getElementArea(el: HTMLElement): Area {
+export function getElementArea(el: HTMLElement, zoom = 1): Area {
   const boundingClientRect = el.getBoundingClientRect();
 	return {
-		x: boundingClientRect.left,
-		y: boundingClientRect.top,
-		width: boundingClientRect.width,
-		height: boundingClientRect.height,
+		x: boundingClientRect.left * zoom,
+		y: boundingClientRect.top * zoom,
+		width: boundingClientRect.width * zoom,
+		height: boundingClientRect.height * zoom,
 	}
 }
 
@@ -125,8 +125,8 @@ export function getPositionAsPercentageInArea(coordinate: Coordinate, area: Area
 }
 
 //TODO: does this need rounding?
-export function getCoordinateFromEventAsPercentageWithinElement(e: MouseEvent | Touch, el: HTMLElement): Coordinate {
-	const area = getElementArea(el);
+export function getCoordinateFromEventAsPercentageWithinElement(e: MouseEvent | Touch, el: HTMLElement, zoom = 1): Coordinate {
+	const area = getElementArea(el, zoom);
 	return getPositionAsPercentageInArea(coordinateWithinArea(getCoordinateFromPointerEvent(e),area),area);
 }
 

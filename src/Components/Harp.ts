@@ -107,7 +107,7 @@ class Harp {
 		this.activeTouches[id] = noteIndex;
 		// Play the note
     console.log(pos)
-		Omni.audio.NoteOn(noteIndex, pos.y, index);
+		Omni.audio.harpNoteOn(noteIndex, pos.y, index);
 	}
 
 	onPointerUp(e, id: number): void {
@@ -123,7 +123,7 @@ class Harp {
 		// If noteIndex hasn't changed (note is the same)
 		if (this.activeTouches[id] === noteIndex) {
       // Update the notes position on the note
-      Omni.audio.updateNote(x, y, index);
+      // Omni.audio.harp.updateNote(x, y, index); //TODO: do we need this
 
     } else {
       // Changed to a new note
@@ -132,15 +132,15 @@ class Harp {
       this.activeTouches[id] = noteIndex;
 
       // Stop previous note
-      Omni.audio.NoteOff(index);
+      Omni.audio.harpNoteOff(index);
 
       // Play the new note
-      Omni.audio.NoteOn(noteIndex, y, index);
+      Omni.audio.harpNoteOn(noteIndex, y, index);
     }
 	}
 
   onKeyDown(key: number) {
-    Omni.audio.NoteOn(key, undefined, -1);
+    Omni.audio.harpNoteOn(key, undefined, -1);
   }
 
   onResize() {

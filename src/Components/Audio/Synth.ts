@@ -3,16 +3,12 @@ import '../../Utils/audio-shim';
 import { DEFAULTS } from '../../Constants/Defaults';
 import * as CanvasUtils from '../../Utils/CanvasUtils';
 import {WaveformStringType} from '../../Constants/AppTypings';
-import Looper from '../../Utils/Looper/Looper';
-import {getFrequencyFromNoteIndexInScale, Scale} from '../../Utils/Audio/scales';
-import Sine from './Sine';
-import CrappyDistortion from './CrappyDistortion';
-import FeedbackDelay from './FeedbackDelay';
 
-interface IAnalysers {
-	live: AnalyserNode;
-	recording: AnalyserNode;
-}
+import {getFrequencyFromNoteIndexInScale} from '../../Utils/Audio/scales';
+import Sine from './Sine';
+
+
+
 
 interface IOsc {
   /**
@@ -34,74 +30,18 @@ interface IOsc {
 class Synth {
 
 	public voiceCount: number = DEFAULTS.VoiceCount;
-	public recording: AudioBufferSourceNode;
-	public looper: Looper;
+	output: GainNode;
 
-	public scale: Scale;
-  rootNoteIdx = 0;
-  octaveOffset = 0
-
-	// Gains
-	public masterVolume: GainNode;
-	public synthOut: GainNode;
-	// public oscillatorGains: GainNode[];
-	// public scuzzGain: GainNode;
-	public recordingGain: GainNode;
-
-	// Effects
-	public compressor: DynamicsCompressorNode;
-	public delay: FeedbackDelay;
-  distortion: CrappyDistortion;
-	// public feedback: GainNode;
-	// public filters: BiquadFilterNode[];
-
-	// Analysers
-	public analysers: IAnalysers;
 
 	// Oscillators
   public oscillators: Map<number, IOsc> = new Map();
-	// public scuzz: OscillatorNode;
   public voicesAmount: number = 50;
 
-	private _frequencyMultiplier = 15;
-	private _defaultCoordinates: CanvasUtils.Coordinate = {x: 0, y: 0};
-	private _minFrequency = 0.8;
 
 	constructor(public context: AudioContext) {
 
-		this.createNodes();
-		this.routeSounds();
-		this.setupAnalysers();
-
-		this.looper = new Looper(this.synthOut, this.recordingGain);
-
-		this.scale = [261.6255653006, 274.52698453615, 329.62755691287, 349.22823143301, 391.99543598175, 411.32572372413, 493.88330125613];
-	}
-
-	public createNodes(): void {
 		// Gains
-		this.masterVolume = this.context.createGain();
-		this.synthOut = this.context.createGain();
-		// this.oscillatorGains = [];
-		// this.scuzzGain = this.context.createGain();
-		this.recordingGain = this.context.createGain();
-
-		// Effects
-		this.compressor = this.context.createDynamicsCompressor();
-    this.distortion = new CrappyDistortion(this.context, 5, 'none');
-		this.delay = new FeedbackDelay(this.context, 0.1, 0.6, 0.5);
-		// this.feedback = this.context.createGain();
-		// this.filters = [];
-
-
-		// Analysers
-		this.analysers = {
-			live: this.context.createAnalyser(),
-			recording: this.context.createAnalyser(),
-		}
-
-		// Oscillators
-		// this.scuzz = this.context.createOscillator();
+		this.output = this.context.createGain();
 
     // Create a pool of oscillators
     for (let i = 0; i < this.voicesAmount; i++) {
@@ -111,32 +51,20 @@ class Synth {
         index: -1,
       });
     }
+
+    // connect all the oscillators in the pool
+    for (let {osc} of this.oscillators.values()) {
+      // osc is inactive, set it's frequency, trigger it & set it to active.
+      osc.connect(this.output);
+    }
 	}
 
-  /**
-   * Create a pool of 50 oscillators
-   *
-   * oscillators is an object contanining 50 oscillatorNodes
-   *
-   * oscillators = {id: {osc: SINE, active: boolean} * 50}
-   *
-   * When a note is triggered:
-   * loop through oscillators
-   * find one that is not active (active === false)
-   * play it
-   * set active to true
-   *
-   * When a note is released:
-   * set active to false
-   *
-   *
-   */
+  connect(destination: AudioNode | AudioNodeBase, output?: number, input?: number) {
+    this.output.connect.apply(this.output, arguments)
+  }
 
 
-	public NoteOn(noteIndex: number, volume: number = 1, index: number, octaveOffset = this.octaveOffset): void {
-
-    // const rootNoteIdx = this.rootNoteIdx;
-    const frequency = getFrequencyFromNoteIndexInScale(noteIndex, this.scale, octaveOffset);
+	public NoteOn(frequency: number, volume: number = 1, index: number): void {
 
     for (let [key, value] of this.oscillators.entries()) {
       // find an inactive osc
@@ -169,12 +97,12 @@ class Synth {
     }
 	}
 
-  public updateNote(x: number, y: number, index: number): void {
-    if (this.oscillators.has(index)) {
-      let oscillator = this.oscillators.get(index);
-      // oscillator.osc.();
-    }
-  }
+  // public updateNote(x: number, y: number, index: number): void {
+  //   if (this.oscillators.has(index)) {
+  //     let oscillator = this.oscillators.get(index);
+  //     // oscillator.osc.();
+  //   }
+  // }
 
 
 	// public StopAll(): void {
@@ -196,86 +124,11 @@ class Synth {
 	// 	}
 	// }
 
-	onRecordPress() {
-		this.looper.recordBtnPressed();
-	}
-
-	onPlaybackPress() {
-		this.looper.playBtnPressed();
-	}
-
-	public StopPlayback(): void {
-		this.recording.stop(0);
-	}
-
-	public Download(cb: Function): void {
-		this.looper.exportWav((recording: Blob) => {
-			//TODO: create a promise?
-			setTimeout(cb(recording),0);
-		});
-	}
-
-	private setupAnalysers(): void {
-		if (this.analysers) {
-			for (const analyser in this.analysers) {
-				this.analysers[analyser].maxDecibels = DEFAULTS.Analyser.maxDecibels;
-				this.analysers[analyser].minDecibels = DEFAULTS.Analyser.minDecibels;
-				this.analysers[analyser].smoothingTimeConstant = DEFAULTS.Analyser.smoothingTimeConstant;
-			}
-		}
-	}
-
-	private routeSounds(): void {
-		// Set slider values
-		// this.delay.delayTime.value = DEFAULTS.Sliders.delay.value;
-		// this.feedback.gain.value = DEFAULTS.Sliders.feedback.value;
-		// this.scuzzGain.gain.value = DEFAULTS.Sliders.scuzz.value;
-
-		// this.oscillatorGains.forEach((oscGain: GainNode) => {
-		// 	oscGain.gain.value = 0;
-		// });
-		this.masterVolume.gain.value = 0.5;
-
-		// this.scuzz.frequency.value = 400;
-		// this.scuzz.type = DEFAULTS.Sliders.scuzz.waveform;
-
-		// Connect the Scuzz
-		// this.scuzz.connect(this.scuzzGain);
 
 
 
 
-    // connect all the oscillators in the pool
-    for (let {osc} of this.oscillators.values()) {
-      // osc is inactive, set it's frequency, trigger it & set it to active.
-      osc.connect(this.distortion);
-    }
 
-
-    this.distortion.connect(this.delay)
-    this.delay.connect(this.compressor)
-
-		// this.delay.connect(this.feedback);
-		// this.delay.connect(this.compressor);
-		// this.feedback.connect(this.delay);
-		this.compressor.connect(this.synthOut);
-
-		// THEREMIN ROUTE
-		this.synthOut.connect(this.analysers.live);
-		this.analysers.live.connect(this.masterVolume);
-
-		this.recordingGain.connect(this.analysers.recording);
-		this.analysers.recording.connect(this.masterVolume);
-
-		//OUTPUT
-		this.masterVolume.connect(this.context.destination);
-
-		//Start oscillators
-		// this.scuzz.start(0);
-		// this.oscillators.forEach((osc: OscillatorNode) => {
-		// 	osc.start(0);
-		// });
-	}
 
 }
 export default Synth;
