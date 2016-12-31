@@ -1,7 +1,10 @@
 import MultiTouch from './MultiTouch';
-import {getPixelRatio, getCoordinateFromEventAsPercentageWithinElement} from '../Utils/CanvasUtils';
 import {numberWithinRange} from '../Utils/number';
-import {canvasRenderAtPixelRatio} from '../Utils/CanvasUtils';
+import {
+  getPixelRatio,
+  getCoordinateFromEventAsPercentageWithinElement,
+  canvasRenderAtPixelRatio
+} from '../Utils/CanvasUtils';
 
 class XYPad {
 
