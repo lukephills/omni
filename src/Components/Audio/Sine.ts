@@ -15,20 +15,23 @@ class Sine extends AudioNodeBase {
   public ADSR: ADSR;
 
   private osc: OscillatorNode;
-  private attack: number;
+
   private Decay: number;
   private Sustain: number;
-  private release: number;
+
   private overtoneOscs: OscillatorNode[];
   private overtoneGains: GainNode[];
 
-  constructor(ctx) {
+  constructor(ctx, public attack = 0.005, public release = 3) {
     super(ctx);
     this.input = this.ctx.createGain();
     this.output = this.ctx.createGain();
 	}
 
 	public noteOn(volume) {
+    const attack = this.attack;
+		const release = this.release + (Math.random() * 0.1);
+
 		this.setup();
 		let now = this.ctx.currentTime;
 		this.osc.start();
@@ -39,35 +42,12 @@ class Sine extends AudioNodeBase {
 			osc.stop(now + this.attack + this.release);
 		});
 
-		this.ADSR.triggerAttackRelease(now, volume, this.attack, this.release);
+		this.ADSR.triggerAttackRelease(now, volume / 1.3, attack, release);
 	}
 
 
-  // public noteOff(): void {
-  //   // stop the note
-  //   this.ADSR.release();
-  // }
-
-	// private discard() {
-	// 	// this.osc = null;
-	// 	// this.overtoneGains.forEach((o, i) => {
-	// 	// 	o = null;
-	// 	// 	this.overtoneGains[i] = null;
-	// 	// })
-	// 	// this.ADSR = null;
-	// }
-
 
 	private setup() {
-		// this.Attack = 0.01 + (Math.random()*0.06);
-		// this.Decay = 0.3 + (Math.random()*0.8);
-		// this.Sustain = 0.15 + (Math.random()*0.1);
-		// this.Release = 0.1 + (Math.random()*0.1);
-
-		this.attack = 0.005;
-		// this.Decay = 1.5;
-		// this.Sustain = 0;
-		this.release = 3 + (Math.random() * 0.1);
 
 		this.osc = this.ctx.createOscillator();
 		this.ADSR = new ADSR(this.ctx);
@@ -80,21 +60,17 @@ class Sine extends AudioNodeBase {
 			this.overtoneOscs[i] = this.ctx.createOscillator();
 			this.overtoneOscs[i].type = 'sine';
 			this.overtoneOscs[i].frequency.value = tone;
+
 			this.overtoneGains[i] = this.ctx.createGain();
 			this.overtoneGains[i].gain.value = 1 / (i + 4);
+
 			this.overtoneOscs[i].connect(this.overtoneGains[i]);
 			this.overtoneGains[i].connect(this.ADSR);
-
 		});
 
-		// console.log(overtones);
 
 		this.osc.type = 'triangle';
-		// this.osc.type = "sine";
 		this.osc.frequency.value = this.frequency;
-		// this.osc2.frequency.value = [0];
-
-
 
 		this.osc.connect(this.ADSR);
 		this.ADSR.connect(this.output);

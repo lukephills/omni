@@ -11,6 +11,8 @@ import SettingsCarouselManager from './SettingsCarousels';
 import LoopController from './LoopController';
 import {scales, IScale} from '../Utils/Scales/scales-shortlist';
 
+import {populateFXCarousels} from './appSpecific/populateFXCarousels';
+
 import {scaleFromRoot12Idx} from '../Utils/Audio/scales';
 
 import {initViewController} from './ViewController'
@@ -41,6 +43,7 @@ interface IEffect {
   name: string;
   setVal: any;
   getVal: any;
+  isDefault?: string;
 }
 
 
@@ -101,8 +104,8 @@ class App {
       octavesToDisplay: 3,
 
       // XY pad effect choices
-      xEffect: 0,
-      yEffect: 1,
+      yEffect: 2,
+      xEffect: 3,
 
     }
 
@@ -165,8 +168,8 @@ class App {
       },
       {
         name: 'distortion',
-        setVal: (val) => this.audio.distortion.drive = val*10,
-        getVal: () => this.audio.distortion.drive/10,
+        setVal: (val) => this.audio.distortion.mix = val,
+        getVal: () => this.audio.distortion.mix,
       },
       {
         name: 'delay time',
@@ -174,13 +177,20 @@ class App {
         getVal: () => this.audio.delay.delay,
       },
       {
-        name: 'volume',
-        setVal: (val) => this.audio.delay.feedback = val,
-        getVal: () => this.audio.delay.feedback,
+        name: 'reverb',
+        setVal: (val) => this.audio.convolver.mix = val,
+        getVal: () => this.audio.convolver.mix,
+      },
+      {
+        name: 'sustain',
+        setVal: (val) => this.audio.harp.release = val * 3 + 0.1,
+        getVal: () => this.audio.harp.release / 3 - 0.1,
       }
     ]
     this.setXEffect(this.state.xEffect)
     this.setYEffect(this.state.yEffect)
+
+    populateFXCarousels(this.state, this.effects)
 
 
     // todo: do these if checks inside loop controller instead
@@ -232,6 +242,7 @@ class App {
     // update the xyPad button position
     this.xyPad.xPos = this.effects[val].getVal()
 
+    console.log('set', val,  this.effects[val], this.effects[val].name)
     if (this.xEffectNameEl) {
       this.xEffectNameEl.innerHTML = this.effects[val].name;
     }

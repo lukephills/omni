@@ -1,8 +1,9 @@
-import Synth from './Audio/Synth'
+import PluckedSynth from './Audio/PluckedSynth'
 import {createIOSSafeAudioContext} from '../Utils/Audio/iOS';
 import BassSynth from './Bass';
 import CrappyDistortion from './Audio/CrappyDistortion';
 import FeedbackDelay from './Audio/FeedbackDelay';
+import Convolver from './Audio/Convolver';
 import Looper from './../Utils/Looper/Looper';
 import {getFrequencyFromNoteIndexInScale, Scale} from './../Utils/Audio/scales';
 import {Omni} from '../index';
@@ -19,13 +20,14 @@ class AudioController {
   octaveOffset = 0
 
   // Sources
-  harp: Synth
+  harp: PluckedSynth
   bass: BassSynth;
 
   // Effects
 	compressor: DynamicsCompressorNode;
 	delay: FeedbackDelay;
   distortion: CrappyDistortion;
+  convolver: Convolver;
 
   // Recording
   recording: AudioBufferSourceNode;
@@ -41,14 +43,21 @@ class AudioController {
 
   constructor(public context = createIOSSafeAudioContext(44100)) {
 
-    this.harp = new Synth(this.context);
+    // Harp synth
+    this.harp = new PluckedSynth(this.context);
+    this.harp.attack = 0.005
+    this.harp.release = 3
+
+    // Bass synth
     this.bass = new BassSynth(this.context);
 
     // Effects
 		this.compressor = this.context.createDynamicsCompressor();
-    this.distortion = new CrappyDistortion(this.context, 5, 'none');
-		this.delay = new FeedbackDelay(this.context, 0.1, 0.6, 0.5);
+    this.distortion = new CrappyDistortion(this.context, 20, 'none');
+    this.distortion.mix = 0;
 
+		this.delay = new FeedbackDelay(this.context, 0.1, 0.6, 0.5);
+		this.convolver = new Convolver(this.context, 0.25);
 
     //Gains
     this.recordingGain = this.context.createGain();
@@ -79,21 +88,18 @@ class AudioController {
 
 
     this.distortion.connect(this.delay)
-    this.delay.connect(this.compressor)
+    this.delay.connect(this.convolver)
+    this.convolver.connect(this.compressor)
 
-		// this.delay.connect(this.feedback);
-		// this.delay.connect(this.compressor);
-		// this.feedback.connect(this.delay);
 		this.compressor.connect(this.synthOut);
 
-		// THEREMIN ROUTE
+
 		this.synthOut.connect(this.analysers.live);
 		this.analysers.live.connect(this.masterVolume);
 
 		this.recordingGain.connect(this.analysers.recording);
 		this.analysers.recording.connect(this.masterVolume);
 
-		//OUTPUT
 		this.masterVolume.connect(this.context.destination);
 
 	}

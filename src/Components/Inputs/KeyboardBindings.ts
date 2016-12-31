@@ -100,9 +100,9 @@ export const keyboardCodeMap: KeyboardCodes = {
  */
 export function getKeyBinding(e: KeyboardEventLatest): number {
   if (e.code) {
-    return keyboardCodeMap[e.code] || 0;
+    return keyboardCodeMap[e.code] !== undefined ? keyboardCodeMap[e.code] : -1;
   } else {
-    return _keyboardCodeMapFallback[e.keyCode] || 0;
+    return _keyboardCodeMapFallback[e.keyCode] !== undefined ? _keyboardCodeMapFallback[e.code] : -1;
   }
 }
 

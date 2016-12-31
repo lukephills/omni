@@ -1,7 +1,7 @@
 import {connectOneToMany} from './helpers/routing';
-import AudioNodeBase from './AudioNodeBase';
+import AudioEffect from './AudioEffect';
 
-class FeedbackDelay extends AudioNodeBase {
+class FeedbackDelay extends AudioEffect {
 
   private _delay: DelayNode;
   private _feedback: GainNode;
@@ -18,10 +18,10 @@ class FeedbackDelay extends AudioNodeBase {
     this._feedback.gain.value = feedback;
     this._wetLevel.gain.value = wetLevel;
 
-    connectOneToMany(this.input, this._delay, this.output)
+    connectOneToMany(this.fxIn, this._delay, this.fxOut)
     connectOneToMany(this._delay, this._feedback, this._wetLevel)
     this._feedback.connect(this._delay)
-    this._wetLevel.connect(this.output);
+    this._wetLevel.connect(this.fxOut);
   }
 
   get delay() {
