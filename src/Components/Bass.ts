@@ -18,9 +18,12 @@ class BassSynth {
     this.bassSynth1.waveform = 'triangle';
     this.bassSynth2.waveform = 'sine';
     this.bassSynth3.waveform = 'square';
-    this.bassSynth1.volume = 0.2;
-    this.bassSynth2.volume = 0.21;
-    this.bassSynth3.volume = 0.013;
+
+    const vols = [0.338, 0.355, 0.022]
+    const mult = 1.3;
+    this.bassSynth1.volume = vols[0]*mult;
+    this.bassSynth2.volume = vols[1]*mult;
+    this.bassSynth3.volume = vols[2]*mult;
 
     connectManyToOne(this._compressor, this.bassSynth1, this.bassSynth2, this.bassSynth3)
     this._compressor.connect(this.output);
