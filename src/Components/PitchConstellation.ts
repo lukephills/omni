@@ -1,6 +1,5 @@
 import MultiTouch from './MultiTouch';
 import {Omni} from '../index';
-import Synth from './Audio/Synth';
 import {getCoordinateFromEventAsPercentageWithinElement} from '../Utils/CanvasUtils';
 import {getDegreeWithin12} from '../Utils/Audio/scales';
 import {nodeListToArray} from '../Utils/array'
@@ -8,7 +7,6 @@ import {nodeListToArray} from '../Utils/array'
 
 class PitchConstellation {
 
-  audio: Synth;
   lines: number = 32;
   octavesToDisplay = 5;
 
