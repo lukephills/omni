@@ -387,6 +387,7 @@ li {
 
   &.inline {
     @extend .flex;
+    height: auto;
     align-items: center;
     justify-content: space-between;
     max-width: 600px;
@@ -816,6 +817,11 @@ li {
       }
     }
   }
+}
+
+.slider {
+  max-width: 500px;
+  height: 50px;
 }
 
 
