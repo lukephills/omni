@@ -28,7 +28,7 @@
   ],
   "scripts": {
     "browser": "webpack-dev-server --inline --config ./config/webpack/browser.config.js",
-    "build": "npm-run-all build:dev build:prod",
+
     "build:dev": "cross-env NODE_ENV=development webpack --config config/webpack/dev.config.js --progress --profile --display-error-details --display-cached",
     "build:prod": "cross-env NODE_ENV=production webpack --config config/webpack/prod.config.js --progress --profile --display-error-details --display-cached",
     "build:finale": "npm run lint:src && npm run transpile && npm run build:finale:dev && npm run build:finale:prod",
@@ -44,7 +44,7 @@
     "remove:dist": "rimraf ./dist",
     "remove:build": "rimraf ./build",
     "start": "webpack-dev-server --config ./config/webpack/dev.config.js --hot --inline --watch --port 3000",
-    "test": "npm-run-all test:browser test:node",
+
     "test:browser": "cross-env NODE_ENV=test karma start config/karma.config.js --no-auto-watch",
     "test:node": "cross-env NODE_ENV=test npm run lint:tests && mocha -R spec --bail",
     "transpile": "rimraf build && tsc -p .",
@@ -53,14 +53,30 @@
     "watch:build": "cross-env NODE_ENV=tdd tsc  -p . -w",
     "watch:browser": "cross-env NODE_ENV=tdd karma start config/karma.config.js -auto-watch --no-single-run",
     "watch:node": "cross-env NODE_ENV=tdd npm run lint:tests && mocha -R spec --bail --watch",
-    "tdd": "npm-run-all --parallel watch:build watch:node watch:browser"
+    "tdd": "npm-run-all --parallel watch:build watch:node watch:browser",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start2": "webpack-dev-server --debug --devtool cheap-module-source-map --output-pathinfo --history-api-fallback --hot --inline --progress --colors --port 3000 --open",
+    "build": "webpack -p --progress --colors"
   },
   "devDependencies": {
+    "@types/classnames": "2.2.3",
+    "@types/history": "4.6.2",
+    "@types/node": "^4.0.22-alpha",
+    "@types/react": "^16.0.25",
+    "@types/react-dom": "16.0.3",
+    "@types/react-redux": "5.0.13",
+    "@types/react-router": "4.0.18",
+    "@types/redux-actions": "2.2.2",
+    "@types/webpack": "3.8.1",
+    "@types/webpack-env": "1.13.2",
+
     "@types/chai": "^3.4.22-alpha",
     "@types/mocha": "^2.2.21-alpha",
     "@types/sinon": "^1.16.20-alpha",
     "@types/sinon-chai": "^2.7.20-alpha",
-    "awesome-typescript-loader": "^2.2.4",
+    "awesome-typescript-loader": "^3.4.0",
+
+
     "babel-cli": "^6.10.1",
     "babel-core": "^6.10.4",
     "babel-loader": "^6.2.4",
@@ -71,59 +87,55 @@
     "chai": "^3.5.0",
     "core-js": "^2.4.0",
     "cross-env": "^1.0.8",
-    "css-loader": "^0.23.1",
+
+    "css-loader": "^0.28.7",
+    "extract-text-webpack-plugin": "^3.0.2",
+
     "es6-promise": "^3.2.1",
-    "file-loader": "^0.8.5",
+    "file-loader": "^1.1.5",
+
     "glob": "^7.0.5",
-    "html-webpack-plugin": "^2.21.0",
-    "ignore-styles": "^4.0.0",
-    "install": "^0.8.1",
-    "istanbul-instrumenter-loader": "^0.2.0",
-    "jsdom": "^9.3.0",
-    "karma": "^1.1.0",
-    "karma-chai": "0.1.0",
-    "karma-chrome-launcher": "^1.0.1",
-    "karma-cli": "1.0.1",
-    "karma-coverage": "^1.0.0",
-    "karma-coveralls": "^1.1.2",
-    "karma-mocha": "1.1.1",
-    "karma-mocha-reporter": "^2.0.4",
-    "karma-sinon": "1.0.5",
-    "karma-source-map-support": "^1.1.0",
-    "karma-sourcemap-loader": "^0.3.7",
-    "karma-webpack": "1.7.0",
-    "mocha": "^2.5.3",
-    "mocha-lcov-reporter": "^1.2.0",
-    "node-sass": "^3.10.0",
+    "html-loader": "^0.5.1",
+
+    "html-webpack-plugin": "^2.30.1",
+
+    "postcss": "^6.0.14",
+    "postcss-browser-reporter": "^0.5.0",
+    "postcss-cssnext": "^3.0.2",
+    "postcss-import": "^11.0.0",
+    "postcss-loader": "^2.0.8",
+    "postcss-reporter": "^5.0.0",
+    "postcss-url": "^7.2.1",
+    "react-hot-loader": "^3.1.3",
+    "redux-devtools-extension": "^2.13.2",
+    "style-loader": "^0.19.0",
+    "typescript": "^2.6.1",
+    "url-loader": "^0.6.2",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.4",
+
+
     "npm": "^3.10.8",
     "npm-check-updates": "2.6.7",
     "npm-run-all": "^2.2.2",
     "rimraf": "^2.5.2",
-    "rollup": "^0.33.0",
-    "rollup-plugin-buble": "^0.12.1",
-    "rollup-plugin-commonjs": "^3.1.0",
-    "rollup-plugin-replace": "^1.1.1",
-    "rollup-plugin-strip": "^1.1.1",
-    "rollup-plugin-uglify": "^1.0.1",
-    "sass-loader": "^4.0.2",
-    "sinon": "^1.17.4",
-    "sinon-chai": "^2.8.0",
+
+
+
     "source-map-loader": "^0.1.5",
     "source-map-support": "^0.4.0",
-    "style-loader": "^0.13.0",
+
     "svg-url-loader": "^1.1.0",
     "ts-node": "^0.9.3",
     "tslint": "3.12.1",
     "tslint-loader": "^2.1.5",
-    "typescript": "^2.1.1",
-    "webpack": "^2.1.0-beta.14",
-    "webpack-dev-server": "^2.1.0-beta.0",
-    "webpack-merge": "^0.14.0",
-    "whatwg-fetch": "^1.0.0",
+
+
+
     "worker-loader": "^0.7.0"
   },
   "dependencies": {
-    "@types/node": "^4.0.22-alpha",
+
     "audio-buffer-utils": "^2.0.1",
     "document-visibility": "^1.0.1",
     "es6-map": "^0.1.4",
@@ -131,6 +143,14 @@
     "merge-audio-buffers": "^1.0.0",
     "normalize.css": "^3.0.3",
     "svg-injector": "^1.1.3",
-    "worker-timer": "^1.0.0"
+    "worker-timer": "^1.0.0",
+
+    "classnames": "^2.2.5",
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
+    "redux": "^3.7.2",
+    "redux-actions": "^2.2.1"
   }
 }

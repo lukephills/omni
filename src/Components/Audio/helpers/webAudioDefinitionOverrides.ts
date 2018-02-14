@@ -12,8 +12,8 @@ interface AudioNodeBase {
 
 interface AudioNode extends EventTarget {
     channelCount: number;
-    channelCountMode: string;
-    channelInterpretation: string;
+    // channelCountMode: string;
+    // channelInterpretation: string;
     readonly context: AudioContext;
     readonly numberOfInputs: number;
     readonly numberOfOutputs: number;

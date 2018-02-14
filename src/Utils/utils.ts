@@ -9,7 +9,7 @@ export class IdentifierIndexMap {
 	}
 
 	public Remove(identifier: number): void {
-		delete this.identifiers.delete(identifier);
+		this.identifiers.delete(identifier);
 	}
 
 	public Add(identifier: number): number {
@@ -27,6 +27,6 @@ export class IdentifierIndexMap {
 
 
 export function isCordovaIOS(): boolean {
-	return !!window.cordova && cordova.platformId === 'ios';
+	return !!(window as any).cordova && (window as any).cordova.platformId === 'ios';
 }
 

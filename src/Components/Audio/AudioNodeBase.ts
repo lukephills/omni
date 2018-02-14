@@ -3,7 +3,7 @@ import './helpers/webAudioDefinitionOverrides';
 // TODO: make sure
 // extend the connect function to include custom AudioNodes (instances of AudioNodeBase)
 (<any>AudioNode).prototype._nativeConnect = AudioNode.prototype.connect;
-AudioNode.prototype.connect = function(B: any, outNum: number, inNum: number){
+(<any>AudioNode).prototype.connect = function(B: any, outNum: number, inNum: number) {
 	if (B.input) {
 		this.connect(B.input, outNum, inNum);
 	} else {

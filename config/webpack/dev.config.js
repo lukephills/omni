@@ -7,7 +7,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const environment = process.env.NODE_ENV = 'development';
 
 module.exports = webpackMerge(commonConfig, {
-	debug: true,
 	devtool: 'inline-source-map',
 	output: {
 		path: path.resolve('dist'),
@@ -24,10 +23,5 @@ module.exports = webpackMerge(commonConfig, {
 		new webpack.DefinePlugin({
 			NODE_ENV: JSON.stringify(environment),
 		})
-	],
-	tslint: {
-		emitErrors: true,
-		failOnHint: false,
-		resourcePath: 'src'
-	}
+	]
 });

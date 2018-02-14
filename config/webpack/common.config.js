@@ -41,16 +41,16 @@ module.exports = {
           loader: "worker-loader"
         },
 		],
-		plugins: [
-      // add all common plugins here
-			new ForkCheckerPlugin(),
-      // Promise and fetch polyfills
-      new webpack.ProvidePlugin({
-        Promise: 'imports?this=>global!exports?global.Promise!es6-promise',
-        fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch',
-      })
-		]
 	},
+  plugins: [
+    // add all common plugins here
+    new ForkCheckerPlugin(),
+    // Promise and fetch polyfills
+    new webpack.ProvidePlugin({
+      Promise: 'imports?this=>global!exports?global.Promise!es6-promise',
+      fetch: 'imports?this=>global!exports?global.fetch!whatwg-fetch',
+    })
+  ],
 	node: {
 		global: 'window',
 		crypto: 'empty',

@@ -1,41 +1,27 @@
 {
-	"compilerOptions": {
-    "allowJs": false,
-    "allowUnreachableCode": false,
-    "declaration": false,
-    "experimentalDecorators": true,
-    "jsx": "preserve",
-    "moduleResolution": "node",
-    "noEmitHelpers": true,
-    "newLine": "LF",
-    "noImplicitAny": false,
-    "noLib": false,
-    "outDir": "build",
-    "removeComments": false,
-    "strictNullChecks": true,
-    "sourceMap": false,
-    "inlineSourceMap": false,
-    "suppressImplicitAnyIndexErrors": false,
+  "compilerOptions": {
+    "sourceMap": true,
     "target": "es6",
-    "types": ["mocha", "chai", "sinon"]
+    "jsx": "react",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "declaration": false,
+    "noImplicitAny": false,
+    "noImplicitReturns": false,
+    "removeComments": true,
+    "strictNullChecks": false,
+    "outDir": "build",
+    "lib": [
+      "es6",
+      "es7",
+      "dom"
+    ]
   },
-  "filesGlob": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "typings/main.d.ts",
-    "!./node_modules/**"
-  ],
   "exclude": [
-    "build",
     "dist",
-    "config",
+    "build",
     "node_modules"
-  ],
-  "awesomeTypescriptLoaderOptions": {
-    "forkChecker": true,
-    "resolveGlobs": true
-  },
-  "compileOnSave": false,
-  "buildOnSave": false,
-  "atom": { "rewriteTsconfig": false }
+  ]
 }

@@ -35,7 +35,7 @@ class MonoSynth extends AudioNodeBase {
     return this.osc1.frequency.value;
   }
 
-  set waveform(type: string) {
+  set waveform(type: OscillatorType) {
     this.osc1.type = type;
   }
 
