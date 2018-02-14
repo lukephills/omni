@@ -1,6 +1,6 @@
 import AudioNodeBase from './AudioNodeBase';
 import ADSR from './ADSR';
-import {getOvertones} from '../../Utils/Audio/scales';
+// import {getOvertones} from '../../Utils/Audio/scales';
 
 
 // var c = new AudioContext();
@@ -19,8 +19,8 @@ class Sine extends AudioNodeBase {
   private Decay: number;
   private Sustain: number;
 
-  private overtoneOscs: OscillatorNode[];
-  private overtoneGains: GainNode[];
+  // private overtoneOscs: OscillatorNode[];
+  // private overtoneGains: GainNode[];
 
   constructor(ctx, public attack = 0.005, public release = 3) {
     super(ctx);
@@ -37,10 +37,11 @@ class Sine extends AudioNodeBase {
 		this.osc.start();
 		this.osc.stop(now + this.attack + this.release);
 
-		this.overtoneOscs.forEach((osc) => {
-			osc.start(now);
-			osc.stop(now + this.attack + this.release);
-		});
+    // TODO: Overtones are causing performance issues
+		// this.overtoneOscs.forEach((osc) => {
+		// 	osc.start(now);
+		// 	osc.stop(now + this.attack + this.release);
+    // });
 
 		this.ADSR.triggerAttackRelease(now, volume / 1.3, attack, release);
 	}
@@ -52,21 +53,23 @@ class Sine extends AudioNodeBase {
 		this.osc = this.ctx.createOscillator();
 		this.ADSR = new ADSR(this.ctx);
 
-		this.overtoneOscs = [];
-		this.overtoneGains = [];
-		const overtones: number[] = getOvertones(this.frequency, 2);
+    // TODO: Overtones are causing performance issues
+		// this.overtoneOscs = [];
+    // this.overtoneGains = [];
 
-		overtones.forEach((tone, i) => {
-			this.overtoneOscs[i] = this.ctx.createOscillator();
-			this.overtoneOscs[i].type = 'sine';
-			this.overtoneOscs[i].frequency.value = tone;
+		// const overtones: number[] = getOvertones(this.frequency, 2);
 
-			this.overtoneGains[i] = this.ctx.createGain();
-			this.overtoneGains[i].gain.value = 1 / (i + 4);
+		// overtones.forEach((tone, i) => {
+		// 	this.overtoneOscs[i] = this.ctx.createOscillator();
+		// 	this.overtoneOscs[i].type = 'sine';
+		// 	this.overtoneOscs[i].frequency.value = tone;
 
-			this.overtoneOscs[i].connect(this.overtoneGains[i]);
-			this.overtoneGains[i].connect(this.ADSR);
-		});
+		// 	this.overtoneGains[i] = this.ctx.createGain();
+		// 	this.overtoneGains[i].gain.value = 1 / (i + 4);
+
+		// 	this.overtoneOscs[i].connect(this.overtoneGains[i]);
+		// 	this.overtoneGains[i].connect(this.ADSR);
+		// });
 
 
 		this.osc.type = 'triangle';
