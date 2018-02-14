@@ -37,21 +37,24 @@ class Slider {
 	}
 
 
-	private draw() {
+	draw() {
 	  const ctx = this.canvas.getContext('2d');
     if (!ctx) return;
 
 		const w: number = this.canvas.width / this.pixelRatio;
 		const h: number = this.canvas.height / this.pixelRatio;
+    console.log(w)
 		const cy = h/2;
-		const sliderLength = (w/100) * this._value;
+		const sliderLength = (w/100) * (this._value * 100);
 
 		// Clear everything
 		ctx.clearRect(0, 0, w, h);
 
+
 		// Slider bar
 		ctx.fillStyle = this.sliderColor;
 		ctx.fillRect(0, 0, sliderLength, h);
+		// ctx.fillRect(0, 0, w, h);
 
 		// Diamond
 		const diamondSize = 4;
@@ -91,16 +94,19 @@ class Slider {
 	onPointerDown(e, id) {
     const pos = getCoordinateFromEventAsPercentageWithinElement(e, this.canvas, this.zoom);
 		this.value = (e.shiftKey)? pos.x / 2 : pos.x;
+    console.log(pos, this.value)
 	}
 
 	onPointerUp(e, id) {
 		const pos = getCoordinateFromEventAsPercentageWithinElement(e, this.canvas, this.zoom);
 		this.value = (e.shiftKey)? pos.x / 2 : pos.x;
+    console.log(pos)
 	}
 
 	onPointerMove(e, id) {
 		const pos = getCoordinateFromEventAsPercentageWithinElement(e, this.canvas, this.zoom);
 		this.value = (e.shiftKey)? pos.x / 2 : pos.x;
+    console.log(pos)
 	}
 
 

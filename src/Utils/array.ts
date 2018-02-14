@@ -38,7 +38,7 @@ export function getIteration(index: number, length: number): number {
  * @param array
  * @returns {number}
  */
-export function getIndexFromArray(position: number, array: any[]): number {
+export function getIndexFromArray(position: number, array: any[]) {
 	return position % array.length;
 }
 

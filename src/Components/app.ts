@@ -1,6 +1,7 @@
 import AudioController from './AudioController';
 import Harp from './Harp';
 import XYPad from './XYPad';
+import Slider from './Slider';
 
 import PitchConstellation from './PitchConstellation';
 import ScaleSelector from './ScaleSelector';
@@ -56,6 +57,7 @@ class App {
   state: IState;
   harp: Harp;
   xyPad: XYPad;
+  sliders: Slider[] = []
   // bass: BassController;
   pitchConstellation: PitchConstellation;
   scaleSelector: ScaleSelector;
@@ -147,6 +149,8 @@ class App {
     }
 
 
+
+
     this.pitchConstellation = new PitchConstellation(<HTMLElement>document.getElementById('pitchConstellation'))
     this.pitchConstellation.zoom = zoom;
 
@@ -192,12 +196,33 @@ class App {
 
     populateFXCarousels(this.state, this.effects)
 
+    // this.xyPad = new XYPad(<HTMLCanvasElement>document.getElementById('xyPad'));
+    // const xAxisOutputEl = $('#xAxisVal')[0];
+    // const yAxisOutputEl = $('#yAxisVal')[0];
+    // this.xyPad.zoom = zoom;
+    // this.xyPad.onChange = (x:any, y:any) => {
+    //   this.effects[this.state.xEffect].setVal(x);
+    //   this.effects[this.state.yEffect].setVal(y);
+    //   if (xAxisOutputEl && yAxisOutputEl) {
+    //     xAxisOutputEl.innerHTML = round(x*100, 0).toString();
+    //     yAxisOutputEl.innerHTML = round(y*100, 0).toString();
+    //   }
+    // }
+
+    // set sliders
+    for (let i = 1; i <= 1; i++) {
+    // for (let i = 1; i <= this.effects.length; i++) {
+      const slider = <HTMLCanvasElement>document.getElementById(`slider-${i}`);
+      this.sliders.push(new Slider(slider));
+    }
+
 
     // todo: do these if checks inside loop controller instead
     const recBtnEl = document.getElementById('recordBtn');
     const playBtnEl = document.getElementById('playBtn');
+    const downloadBtnEl = document.getElementById('downloadBtn');
     if (recBtnEl && playBtnEl) {
-      this.loopController = new LoopController(recBtnEl, playBtnEl);
+      this.loopController = new LoopController(recBtnEl, playBtnEl, downloadBtnEl);
     }
 
 
@@ -334,6 +359,7 @@ class App {
       this.harp.draw(this.state.scale.frequencies);
       this.xyPad.draw();
       this.pitchConstellation.drawLines(this.state.scale.frequencies);
+      this.sliders.forEach(s => s.draw());
     }
   }
 
