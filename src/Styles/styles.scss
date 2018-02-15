@@ -293,6 +293,14 @@ li {
   background: url(../assets/icons/icon-minus.svg) center/90% no-repeat;
 }
 
+.icon-fb {
+  background: url(../assets/icons/icon-fb.svg) center/60% no-repeat;
+}
+
+.icon-tw {
+  background: url(../assets/icons/icon-tw.svg) center/60% no-repeat;
+}
+
 .btn-record {
   @extend .icon-record;
   &.is-overdubbing {
@@ -804,6 +812,10 @@ li {
   height: auto;
 }
 
+.settings {
+  display: flex;
+}
+
 .settings-carousel {
   max-width: 500px;
   margin: auto;
@@ -879,3 +891,47 @@ li {
     opacity: 0;
   }
 }
+
+
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+
+.share {
+  display: flex;
+  align-items: center;
+  padding-right: 20px;
+}
+
+
+.get-the-app {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  padding: 0 20px 0 0;
+  cursor: pointer;
+  max-width: 225px;
+
+  h2 {
+    margin-left: 20px;
+  }
+
+  .app-store-links {
+    display: none;
+  }
+
+  &.is-open .app-store-links {
+    display: block;
+    position: absolute;
+    background: #ffffffba;
+    height: 300px;
+    bottom: 80px;
+    width: 100%;
+  }
+}
+

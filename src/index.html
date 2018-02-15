@@ -17,7 +17,7 @@
       height: 100%;
       top: 0;
       left: 0;
-      background: rgba(0,0,0,1);
+      background: rgba(0, 0, 0, 1);
     }
 
     .loading-spinner {
@@ -29,16 +29,23 @@
       margin: auto;
       width: 40px;
       height: 40px;
-      background: rgba(255,105,105,1);
+      background: rgba(255, 105, 105, 1);
       opacity: 0.3;
       border-radius: 50%;
       animation: glow 0.8s ease-in infinite alternate;
     }
-    @keyframes glow { from { opacity: 0.3 } to { opacity: 1 } }
 
+    @keyframes glow {
+      from {
+        opacity: 0.3
+      }
+      to {
+        opacity: 1
+      }
+    }
   </style>
 
-<script type="text/javascript">
+  <script type="text/javascript">
     WebFontConfig = {
       google: { families: ['Roboto:100,100i'] }
     };
@@ -66,14 +73,20 @@
           </div>
         </div>
         <ul class="col-xs-2 record-play-group">
-          <li><span id="recordBtn" class="btn icon-record btn-record"></span></li>
-          <li><span id="playBtn" class="btn icon-play btn-play"></span></li>
+          <li>
+            <span id="recordBtn" class="btn icon-record btn-record"></span>
+          </li>
+          <li>
+            <span id="playBtn" class="btn icon-play btn-play"></span>
+          </li>
         </ul>
         <ul class="col-xs-5 nav-buttons">
           <!--<li><span id="xyPadToggle" class="btn icon-plus btn-plus"></span></li>
             <li><span id="constellationToggle" class="btn icon-plus btn-plus"></span></li>-->
 
-          <li><span id="menuBtn" class="btn icon-menu"></span></li>
+          <li>
+            <span id="menuBtn" class="btn icon-menu"></span>
+          </li>
         </ul>
       </nav>
       <div class="flex middle-section rel">
@@ -185,40 +198,7 @@
 
 
       <section class="settings text-center">
-
         <div class="col-xs-12">
-          <h4>slider-1</h4>
-          <div class="flex space-between slider">
-            <canvas id="slider-1"></canvas>
-          </div>
-        </div>
-        <!--<div class="col-xs-12 col-md-6">
-          <h4>slider-2</h4>
-          <div class="flex space-between settings-carousel">
-            <canvas id="slider-2"></canvas>
-          </div>
-        </div>
-        <div class="col-xs-12 col-md-6">
-          <h4>slider-3</h4>
-          <div class="flex space-between settings-carousel">
-            <canvas id="slider-3"></canvas>
-          </div>
-        </div>
-        <div class="col-xs-12 col-md-6">
-          <h4>slider-4</h4>
-          <div class="flex space-between settings-carousel">
-            <canvas id="slider-4"></canvas>
-          </div>
-        </div>
-        <div class="col-xs-12 col-md-6">
-          <h4>slider-5</h4>
-          <div class="flex space-between settings-carousel">
-            <canvas id="slider-5"></canvas>
-          </div>
-        </div>-->
-
-
-        <div class="col-xs-12 col-md-6">
           <h4>voices</h4>
           <div class="flex space-between settings-carousel" data-carousel='voices'>
             <span data-carousel-prev id="scaleSelectPrevBtn" class="icon-arrow-left"></span>
@@ -231,7 +211,7 @@
             <span data-carousel-next id="scaleSelectNextBtn" class="icon-arrow-right"></span>
           </div>
         </div>
-        <div class="col-xs-12 col-md-6">
+        <div class="col-xs-12">
           <h4>octaves</h4>
           <div class="flex space-between settings-carousel" data-carousel='octave' data-carousel-rotate=false>
             <span data-carousel-prev class="icon-minus"></span>
@@ -245,7 +225,7 @@
             <span data-carousel-next class="icon-plus"></span>
           </div>
         </div>
-        <div class="col-xs-12 col-md-6">
+        <div class="col-xs-12">
           <h4>octave offset</h4>
           <div class="flex space-between settings-carousel" data-carousel='octaveOffset' data-carousel-rotate=false>
             <span data-carousel-prev class="icon-minus"></span>
@@ -263,29 +243,30 @@
       </section>
       <footer>
         <div class="get-the-app">
-          <h2>Get the app</h2>
-          <ul>
-            <li><a href="">iOS</a></li>
-            <li><a href="">android</a></li>
-            <li><a href="">desktop</a></li>
-          </ul>
+          <h2>Get the app
+            <span class="chevron chevron-up">⌃</span>
+          </h2>
+          <div class="app-store-links">
+            <ul>
+              <li>
+                <a href="#">iOS</a>
+              </li>
+              <li>
+                <a href="#">android</a>
+              </li>
+              <li>
+                <a href="#">desktop</a>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div class="rate-the-app">
-          <h2>Rate the app</h2>
-          <ul>
-            <li>
-              <a href="" class="icon-smile"></a>
-            </li>
-            <li>
-              <a href="" class="icon-sad"></a>
-            </li>
-          </ul>
+        <div class="website">
+          <a href="https://femurdesign.com">femurdesign.com</a>
         </div>
-        <div class="website"><a href="https://femurdesign.com">femurdesign.com</a></div>
         <div class="share">
           <h2>Share:</h2>
-          <a href="" class="icon-facebook"></a>
-          <a href="" class="icon-twitter"></a>
+          <a href="" class="icon-fb"></a>
+          <a href="" class="icon-tw"></a>
         </div>
       </footer>
     </div>
