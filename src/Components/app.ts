@@ -18,7 +18,7 @@ import {scaleFromRoot12Idx} from '../Utils/Audio/scales';
 import {initViewController} from './ViewController'
 import {$} from '../Utils/selector'
 import {round} from '../Utils/number'
-import {getZoom} from '../Styles/breakpoints'
+
 const SVGInjector = require('svg-injector')
 // import {effects} from '../Constants/Effects'
 
@@ -122,8 +122,6 @@ class App {
 	init() {
 		console.log('INITIALIZED APP');
 
-    const zoom = getZoom()
-
 		// on resize event listener
 		window.addEventListener('resize', this.onResize.bind(this));
 
@@ -136,7 +134,7 @@ class App {
     this.xyPad = new XYPad(<HTMLCanvasElement>document.getElementById('xyPad'));
     const xAxisOutputEl = $('#xAxisVal')[0];
     const yAxisOutputEl = $('#yAxisVal')[0];
-    this.xyPad.zoom = zoom;
+
     this.xyPad.onChange = (x:any, y:any) => {
       this.effects[this.state.xEffect].setVal(x);
       this.effects[this.state.yEffect].setVal(y);
@@ -147,7 +145,6 @@ class App {
     }
 
     this.pitchConstellation = new PitchConstellation(<HTMLElement>document.getElementById('pitchConstellation'))
-    this.pitchConstellation.zoom = zoom;
 
     this.favScaleSelector = new FavScaleSelector()
 
@@ -306,11 +303,6 @@ class App {
   }
 
 	onResize() {
-
-    // Get the updated css zoom attributes
-    const zoom = getZoom();
-    this.xyPad.zoom = zoom
-    this.pitchConstellation.zoom = zoom
 
     // Resize canvas components
     this.harp.onResize();
