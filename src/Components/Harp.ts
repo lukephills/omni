@@ -50,14 +50,14 @@ class Harp {
     // const colors = Object.keys(palette).map(key => palette[key]);
 		const lineWidth = w / lines;
     // some of this doesn't need to be called every draw loop
-    const borderWidth = 3;
+    const borderWidth = 1;
 
 		ctx.clearRect(0, 0, w, h);
 
     const p5 = getPerfectFifthIndex(scale);
-		const color1 = '#FF6969';
-    const colorWhite = 'white';
-		// const color2 = '#FFA3A3';
+    const color1 = 'rgba(255, 105, 105, 0.5)';
+    const color2 = 'rgba(255, 105, 105, 0.15)';
+    const colorBorder = 'rgba(255, 105, 105, 1)';
 
 
 		// DRAW THE LINES
@@ -75,14 +75,12 @@ class Harp {
     //   ctx.fillRect(i * lineWidth + (lineWidth*0.5), 0,   borderWidth, h);
 		// }
 
-    const color2 = 'rgba(255, 105, 105, 0.15)';
-    // const color2 = '#FFC3C3';
 		// DRAW THE LINES
 		for (let i = 0; i < lines; i++) {
 
       if (i % scale.length === 0) {
         // Root note string
-        ctx.fillStyle = 'rgba(255, 105, 105, 0.7)';
+        ctx.fillStyle = color1;
         ctx.fillRect(i * lineWidth, 0, lineWidth + 1, h);
       }
 
@@ -93,7 +91,7 @@ class Harp {
       }
 
       // All line borders
-      ctx.fillStyle = color1;
+      ctx.fillStyle = colorBorder;
       ctx.fillRect(i * lineWidth, 0,   borderWidth, h);
 		}
 	}

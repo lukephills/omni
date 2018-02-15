@@ -12,7 +12,7 @@ $color-primary: rgba(255,105,105,1);
 $color-secondary: cornsilk;
 
 // Other colors are blends of the 2 main
-$color-primary-alpha1: rgba($color-primary, 0.15);
+$color-primary-alpha1: rgba($color-primary, 0.1);
 $color-border: $color-light-grey;
 $color-bg: $color-secondary;
 $color-text: $color-dark-grey;
@@ -22,7 +22,7 @@ $color-primary-alpha1-opaque: mix($color-primary, $color-bg, 15%);
 // FONTS //
 
 $font-primary: Roboto, Arial, Helvetica, sans-serif;
-$font-secondary: Lora, 'Times New Roman', Times, serif;
+$font-secondary: Roboto, 'Times New Roman', Times, serif;
 
 
 
@@ -430,7 +430,8 @@ li {
 .middle-section {
   // flex: 6;
   flex-direction: column-reverse;
-  padding-bottom: 40px;
+  padding-bottom: 200px;
+  padding-top: 100px;
   // height: 374px;
   // order: 1;
   @include sm {
@@ -448,6 +449,8 @@ li {
   @extend .justify-center;
   flex: 1;
 
+  // display: none;
+
   $d: 300px;
   .pitch-constellation, .xy-pad {
     width: $d;
@@ -462,14 +465,14 @@ li {
     position: absolute;
     cursor: pointer;
     div {
-      $lineWidth: 3px;
+      $lineWidth: 1px;
       width: $lineWidth;
       height: 50%;
       position: absolute;
       background: $color-primary;
       left: 50%;
       transform-origin: bottom;
-      transition: transform 0.2s ease-in-out;
+      transition: transform 0.1s ease;
     }
   }
   .letters {
@@ -549,10 +552,12 @@ li {
 .xy-pad-section {
   @extend .flex;
   min-width: auto;
+  display: none;
   @include sm {
     min-width: 50%;
   }
   @include md {
+    display: flex;
     min-width: auto;
   }
 }
@@ -561,8 +566,8 @@ li {
   width: 100%;
   height: 100%;
   position: relative;
-  border-bottom: 3px solid $color-primary;
-  border-left: 3px solid $color-primary;
+  border-bottom: 1px solid $color-primary;
+  border-left: 1px solid $color-primary;
 
   .overflow-hidden {
     width: 100%;
@@ -783,13 +788,12 @@ li {
   position: absolute;
   top: -100%;
   left: 0;
-  background: rgba($color-primary-alpha1-opaque, 0.9);
+  background: $color-primary-alpha1-opaque;
   height: 100%;
   width: 100%;
   z-index: $z5;
   overflow: auto;
   transform: translateY(0);
-  transition: transform 0.3s ease;
   &.is-active {
     transform: translateY(100%);
   }
@@ -873,36 +877,5 @@ li {
   }
   &.anim-ended {
     opacity: 0;
-  }
-}
-
-
-// ZOOM RESIZES
-.nav, .middle-section, .selector-section {
-  zoom: 0.8;
-  @include md {
-    zoom: 0.9;
-  }
-  @include lg {
-    zoom: 1;
-  }
-  @include xlg {
-    zoom: 1.5;
-  }
-}
-
-.middle-section {
-  zoom: 0.65;
-  @include sm {
-    zoom: 0.8;
-  }
-  @include md {
-    zoom: 0.9;
-  }
-  @include lg {
-    zoom: 1;
-  }
-  @include xlg {
-    zoom: 1.5;
   }
 }

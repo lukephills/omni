@@ -103,7 +103,7 @@ class App {
 
       // start octave
       octaveOffset: -1,
-      octavesToDisplay: 3,
+      octavesToDisplay: 2,
 
       // XY pad effect choices
       yEffect: 2,
