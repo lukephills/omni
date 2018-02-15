@@ -1,4 +1,5 @@
 import AudioEffect from './AudioEffect';
+// import impulseResponse from '../../assets/teufelsberg01';
 
 class Convolver extends AudioEffect {
 
@@ -12,7 +13,7 @@ class Convolver extends AudioEffect {
     // grab audio track via XHR for convolver node
 
     const ajaxRequest = new XMLHttpRequest();
-    ajaxRequest.open('GET', './src/assets/teufelsberg01.ogg', true);
+    ajaxRequest.open('GET', '../../assets/teufelsberg01.ogg', true);
     ajaxRequest.responseType = 'arraybuffer';
 
     ajaxRequest.onload = () => {
