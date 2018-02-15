@@ -122,6 +122,10 @@ class AudioController {
     this.bass.noteOff(key)
   }
 
+  bassNotesOff() {
+    this.bass.purge()
+  }
+
 
   onRecordPress() {
 		this.looper.recordBtnPressed();

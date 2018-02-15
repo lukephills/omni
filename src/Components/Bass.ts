@@ -49,6 +49,13 @@ class BassSynth {
     }
   }
 
+  purge() {
+    this.bassSynth1.noteOff(undefined, 0.5)
+    this.bassSynth2.noteOff(undefined, 0.8)
+    this.bassSynth3.noteOff(undefined, 0.2)
+    this._activeKeys.clear();
+  }
+
   connect(destination: AudioNode | AudioNodeBase, output?: number, input?: number) {
     this.output.connect.apply(this.output, arguments)
   }

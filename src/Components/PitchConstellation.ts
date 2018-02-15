@@ -9,16 +9,18 @@ class PitchConstellation {
 
   lines: number = 32;
   octavesToDisplay = 5;
-
-  // The value that element has been zoom by using css
-  zoom = 1;
+  _currentNote = -1;
 
   constructor(private el: HTMLElement) {
     if (!this.el) return;
 
     new MultiTouch(this.el, {
 			onMouseDown: this.onPointerDown.bind(this),
-			onTouchStart: this.onPointerDown.bind(this),
+      onTouchStart: this.onPointerDown.bind(this),
+			onMouseUp: this.onPointerUp.bind(this),
+			onMouseMove: this.onPointerMove.bind(this),
+			onTouchEnd: this.onPointerUp.bind(this),
+			onTouchMove: this.onPointerMove.bind(this),
 		});
   }
 
@@ -75,9 +77,25 @@ class PitchConstellation {
   }
 
   onPointerDown(e: MouseEvent, id) {
-    const pos = this.distanceFromCenter(getCoordinateFromEventAsPercentageWithinElement(e, this.el, this.zoom));
-    // console.log(this.getDodrant(pos))
-    Omni.rootNoteSelector.setKey(this.getDodrant(pos))
+    const pos = this.distanceFromCenter(getCoordinateFromEventAsPercentageWithinElement(e, this.el));
+    const note = this.getDodrant(pos);
+    Omni.audio.bassNoteOn(note)
+    this._currentNote = note;
+  }
+
+  onPointerUp(e, id) {
+    Omni.audio.bassNotesOff()
+    this._currentNote = -1;
+  }
+
+  onPointerMove(e: MouseEvent, id) {
+    const pos = this.distanceFromCenter(getCoordinateFromEventAsPercentageWithinElement(e, this.el));
+    const note = this.getDodrant(pos);
+    if (this._currentNote !== note) {
+      Omni.audio.bassNotesOff()
+      Omni.audio.bassNoteOn(note);
+    }
+    this._currentNote = note;
   }
 
 
