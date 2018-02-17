@@ -163,11 +163,8 @@
 
     <div class="container settings-overlay" id="settingsOverlay">
       <nav class="flex space-between nav">
-        <h1>omni</h1>
+        <h1><span class="omni-first-letter"></span>MNI</h1>
         <ul class="flex space-between">
-          <li>
-            <span id="downloadBtn" class="icon-download btn-record">Download</span>
-          </li>
           <li>
             <span id="closeBtnSettings" class="icon-close btn-close"></span>
           </li>
@@ -185,7 +182,7 @@
 
 
       <section class="settings text-center">
-        <div class="col-xs-12">
+        <div class="setting">
           <h4>voices</h4>
           <div class="flex space-between settings-carousel" data-carousel='voices'>
             <span data-carousel-prev id="scaleSelectPrevBtn" class="icon-arrow-left"></span>
@@ -198,7 +195,7 @@
             <span data-carousel-next id="scaleSelectNextBtn" class="icon-arrow-right"></span>
           </div>
         </div>
-        <div class="col-xs-12">
+        <div class="setting">
           <h4>octaves</h4>
           <div class="flex space-between settings-carousel" data-carousel='octave' data-carousel-rotate=false>
             <span data-carousel-prev class="icon-minus"></span>
@@ -212,7 +209,7 @@
             <span data-carousel-next class="icon-plus"></span>
           </div>
         </div>
-        <div class="col-xs-12">
+        <div class="setting">
           <h4>octave offset</h4>
           <div class="flex space-between settings-carousel" data-carousel='octaveOffset' data-carousel-rotate=false>
             <span data-carousel-prev class="icon-minus"></span>
@@ -227,6 +224,9 @@
             <span data-carousel-next class="icon-plus"></span>
           </div>
         </div>
+      </section>
+      <section class="download">
+        <div id="downloadBtn" class="btn-download">Download Recording</div>
       </section>
       <footer>
         <div class="get-the-app">

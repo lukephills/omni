@@ -470,7 +470,8 @@ li {
     align-items: center;
     justify-content: space-between;
     max-width: 600px;
-    margin: auto;
+    margin: 0 auto 30px;
+    text-align: center;
   }
 }
 
@@ -986,12 +987,34 @@ li {
 
 .settings {
   display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+
+  .setting {
+    margin: 20px 0;
+    h4 {
+      margin: 0;
+    }
+  }
+}
+
+.download {
+  display: flex;
+  justify-content: center;
+  .btn-download {
+    border: 1px solid;
+    padding: 20px;
+  }
 }
 
 .settings-carousel {
-  max-width: 500px;
+  width: 260px;
   margin: auto;
   align-items: center;
+  border-bottom: 1px solid #ffa699;
+  margin: 0 auto 30px;
+  padding: 20px 0 30px;
   ul {
     @extend .flex;
     @extend .justify-center;
@@ -1063,9 +1086,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: absolute;
   width: 100%;
-  bottom: 0;
 }
 
 .share {
