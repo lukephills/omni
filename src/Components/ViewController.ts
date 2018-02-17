@@ -9,7 +9,7 @@ const hide = (el: HTMLElement) => {
 }
 
 const toggle = (el: HTMLElement) => {
-el.classList.toggle('is-hidden');
+  el.classList.toggle('is-hidden');
 }
 
 const playIntroScene = () => {
@@ -44,19 +44,15 @@ const initSettingsMenuControls = () => {
 }
 
 const initEffectPanelSwitcher = () => {
-  const pitchConstellationToggle = document.getElementById('constellationToggle');
-  const xyPadToggle = document.getElementById('xyPadToggle');
-  const pitchConstellationView = document.getElementById('pitchConstellationView');
-  const xyPadView = document.getElementById('xyPadView');
+  const middleSection = document.getElementById('middle-section');
+  const middleSwitch = document.getElementById('middle-switch');
 
-  if (!pitchConstellationToggle || !xyPadToggle || !pitchConstellationView || !xyPadView) return;
+  if (!middleSwitch|| !middleSection) return;
 
-  pitchConstellationToggle.addEventListener('click', function(e) {
-    toggle(pitchConstellationView);
-  });
-
-  xyPadToggle.addEventListener('click', function(e) {
-    toggle(xyPadView);
+  middleSwitch.addEventListener('click', function(e) {
+    middleSection.classList.toggle('middle-section--2');
+    middleSwitch.classList.toggle('icon-arrow-left');
+    middleSwitch.classList.toggle('icon-arrow-right');
   });
 
 }

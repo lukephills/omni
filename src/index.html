@@ -63,34 +63,22 @@
   <div id="app" class="container fixed-window">
     <div class="flex main-view">
       <nav class="nav">
-        <div class="col-xs-5 scale-selector">
-          <div class="arrows">
-            <span id="scaleSelectPrevBtn" class="icon-arrow-up js-scaleSelectPrevBtn"></span>
-            <span id="scaleSelectNextBtn" class="icon-arrow-down js-scaleSelectNextBtn"></span>
-          </div>
-          <div class="scale-text-container">
-            <h1 class="scale-name js-scale-name">xenakis</h1>
-          </div>
+        <h1>omni <span>by femur</span></h1>
+        <div class="nav-buttons">
+          <div id="recordBtn" class="btn icon-record btn-record"></div>
+          <div id="playBtn" class="btn icon-play btn-play"></div>
+          <div id="menuBtn" class="btn icon-menu js-menu-btn"></div>
         </div>
-        <ul class="col-xs-2 record-play-group">
-          <li>
-            <span id="recordBtn" class="btn icon-record btn-record"></span>
-          </li>
-          <li>
-            <span id="playBtn" class="btn icon-play btn-play"></span>
-          </li>
-        </ul>
-        <ul class="col-xs-5 nav-buttons">
-          <!--<li><span id="xyPadToggle" class="btn icon-plus btn-plus"></span></li>
-            <li><span id="constellationToggle" class="btn icon-plus btn-plus"></span></li>-->
-
-          <li>
-            <span id="menuBtn" class="btn icon-menu"></span>
-          </li>
-        </ul>
       </nav>
-      <div class="flex middle-section rel">
-        <section id="xyPadView" class="xy-pad-section">
+      <div class="scale-selector">
+        <div id="scaleSelectPrevBtn" class="icon-arrow-left js-scaleSelectPrevBtn"></div>
+        <div class="scale-text-container">
+          <h1 class="scale-name js-scale-name">xenakis</h1>
+        </div>
+        <div id="scaleSelectNextBtn" class="icon-arrow-right js-scaleSelectNextBtn"></div>
+      </div>
+      <div id="middle-section" class="flex middle-section rel">
+        <section class="xy-pad-section">
           <div class="xy-pad">
             <div class="overflow-hidden">
               <div class="triange"></div>
@@ -101,14 +89,12 @@
                 <h4>y effect</h4>
                 <div class="flex space-between settings-carousel js-fx-carousel" data-carousel='yEffect' data-carousel-group=1>
                   <span data-carousel-prev id="scaleSelectPrevBtn" class="icon-arrow-left"></span>
-                  <ul></ul>
                   <span data-carousel-next id="scaleSelectNextBtn" class="icon-arrow-right"></span>
                 </div>
 
                 <h4>x effect</h4>
                 <div class="flex space-between settings-carousel js-fx-carousel" data-carousel='xEffect' data-carousel-group=1>
                   <span data-carousel-prev id="scaleSelectPrevBtn" class="icon-arrow-left"></span>
-                  <ul></ul>
                   <span data-carousel-next id="scaleSelectNextBtn" class="icon-arrow-right"></span>
                 </div>
 
@@ -125,7 +111,8 @@
             </div>
           </div>
         </section>
-        <section id="pitchConstellationView" class="pitch-constellation-section">
+        <div id="middle-switch" class="icon-arrow-left middle-switch"></div>
+        <section class="pitch-constellation-section">
           <div class="pitch-constellation">
             <div class="circle" id="pitchConstellation"></div>
             <div class="letters" id="pitch-constellation-letters">

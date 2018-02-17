@@ -51,6 +51,18 @@ $screen-md: 992px;
 $screen-lg: 1200px;
 $screen-xlg: 1400px;
 
+@mixin landscape-xs {
+  @media only screen and (max-height : 450px) and (orientation : landscape) {
+    @content;
+  }
+}
+
+@mixin low-height {
+  @media only screen and (max-height : 740px) {
+    @content;
+  }
+}
+
 @mixin xxs {
   @media only screen and ( max-width: $screen-xs ) {
     @content;
@@ -104,7 +116,7 @@ $screen-xlg: 1400px;
 // BASE //
 
 *, *:before, *:after {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 
@@ -142,14 +154,17 @@ h3 {
 
 h1 {
   font-size: 36px;
+  line-height: 34px;
   letter-spacing: 1.5px;
   margin: 0;
   @include sm {
     font-size: 44px;
+    line-height: 38px;
     letter-spacing: 2.2px;
   }
   @include md {
     font-size: 54px;
+    line-height: 48px;
   }
 }
 
@@ -260,13 +275,24 @@ li {
   background: url(../assets/icons/icon-arrow-up.svg) center/80% no-repeat;
 }
 .icon-arrow-down {
-  transform: rotate(180deg);
+  transform: rotate(180deg) scale(0.8);
+  @include md {
+    transform: rotate(180deg);
+  }
 }
+
 .icon-arrow-left {
-  transform: rotate(270deg);
+  transform: rotate(270deg) scale(0.8);
+  @include md {
+    transform: rotate(270deg);
+  }
 }
+
 .icon-arrow-right {
-  transform: rotate(90deg);
+  transform: rotate(90deg) scale(0.8);
+  @include md {
+    transform: rotate(90deg);
+  }
 }
 
 .icon-play {
@@ -339,9 +365,6 @@ li {
   @include sm {
     padding: 0 8px;
   }
-  // @include md {
-  //   padding: 0 20px;
-  // }
 }
 
 .main-view {
@@ -350,40 +373,47 @@ li {
 }
 
 .nav {
-  height: 110px;
   padding-left: 10px;
-  margin-bottom: 30px;
-  // h1 {
-  //   margin-left: 20px;
-  //   margin-top: 27px;
-  // }
-  div, ul {
-    // border: solid
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 
-  // .scale-selector {
-  //   flex: 4;
-  // }
-  // .record-play-group {
-  //   flex: 1;
-  // }
-  // .nav-buttons {
-  //   flex: 4;
-  // }
+  h1 span {
+    font-size: small;
+    color: gray;
+  }
 }
 
 .scale-selector  {
-  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+  margin-bottom: 60px;
+
+  @include sm {
+    justify-content: center;
+  }
   .scale-text-container {
     display: flex;
     align-items: center;
-    max-width: 460px;
-    width: 100%;
-    height: 100%;
-    padding-left: 36px;
+    justify-content: center;
+    text-align: center;
+    @include sm {
+      padding: 0 60px 0 50px;
+      width: 640px;
+    }
     h1 {
-      line-height: 50px;
-      margin: 0 20px;
+      // line-height: 50px;
+      @include md {
+        line-height: 42px;
+        font-size: 48px;
+      }
+      @include lg {
+        line-height: 72px;
+        font-size: 78px;
+      }
     }
   }
   .arrows {
@@ -404,12 +434,17 @@ li {
 }
 
 .nav-buttons {
-  // padding: 24px 34px;
   display: flex;
   justify-content: flex-end;
 
-  li {
-    margin: 27px 23px;
+  .btn {
+    margin: 5px;
+    @include md {
+      margin: 24px 23px 0;
+    }
+    @include landscape-xs {
+      margin: 0 8px 0 8px;
+    }
   }
 }
 
@@ -436,34 +471,67 @@ li {
 }
 
 .middle-section {
-  // flex: 6;
-  flex-direction: column-reverse;
-  padding-bottom: 200px;
-  padding-top: 100px;
-  // height: 374px;
-  // order: 1;
-  @include sm {
-    flex-wrap: wrap-reverse;
-    flex-direction: row;
+  flex: 4;
+  flex-direction: row;
+  align-items: center;
+  padding-bottom: 100px;
+
+  @include md {
+    // padding-bottom: 190px;
+    // padding-top: 100px;
   }
-  // @include md {
-  //   order: 2;
-  // }
+
+  @include landscape-xs {
+    display: none;
+  }
+
+  &--2 .pitch-constellation-section {
+    position: absolute;
+    left: -100%;
+    @include md {
+      position: static;
+      left: auto;
+    }
+  }
+
+  &--2 .xy-pad-section {
+    display: flex;
+    position: static;
+    left: auto;
+  }
 }
 
+
+.middle-switch {
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 10px;
+  @include md {
+    display: none;
+    bottom: auto;
+  }
+}
 
 .pitch-constellation-section, .xy-pad-section {
   @extend .flex;
   @extend .justify-center;
   flex: 1;
+  $d: 200px;
 
-  // display: none;
 
-  $d: 300px;
   .pitch-constellation, .xy-pad {
     width: $d;
     height: $d;
     position: relative;
+    @include sm {
+      width: $d + 100;
+      height: $d + 100;
+    }
+    @include low-height {
+      width: $d;
+      height: $d;
+    }
   }
   .circle {
     width: 100%;
@@ -518,40 +586,112 @@ li {
 
   // numbers on a clock face
   &.n0 {
-    transform: translate(0, -183px);
+    transform: translate(0, -133px);
+    @include sm {
+      transform: translate(0, -183px);
+    }
+    @include low-height {
+      transform: translate(0, -133px);
+    }
   }
   &.n1 {
-    transform: translate(91px, -154px);
+    transform: translate(71px, -114px);
+    @include sm {
+      transform: translate(91px, -154px);
+    }
+    @include low-height {
+      transform: translate(71px, -114px);
+    }
   }
   &.n2 {
-    transform: translate(159px, -89px);
+    transform: translate(119px, -69px);
+    @include sm {
+      transform: translate(159px, -89px);
+    }
+    @include low-height {
+      transform: translate(119px, -69px);
+    }
   }
   &.n3 {
-    transform: translate(183px, 2px);
+    transform: translate(133px, 2px);
+    @include sm {
+      transform: translate(183px, 2px);
+    }
+    @include low-height {
+      transform: translate(133px, 2px);
+    }
   }
   &.n4 {
-    transform: translate(152px, 89px);
+    transform: translate(112px, 69px);
+    @include sm {
+      transform: translate(152px, 89px);
+    }
+    @include low-height {
+      transform: translate(112px, 69px);
+    }
   }
   &.n5 {
-    transform: translate(87px, 153px);
+    transform: translate(67px, 113px);
+    @include sm {
+      transform: translate(87px, 153px);
+    }
+    @include low-height {
+      transform: translate(67px, 113px);
+    }
   }
   &.n6 {
-    transform: translate(2px, 175px);
+    transform: translate(2px, 125px);
+    @include sm {
+      transform: translate(2px, 175px);
+    }
+    @include low-height {
+      transform: translate(2px, 125px);
+    }
   }
   &.n7 {
-    transform: translate(-88px, 155px);
+    transform: translate(-68px, 115px);
+    @include sm {
+      transform: translate(-88px, 155px);
+    }
+    @include low-height {
+      transform: translate(-68px, 115px);
+    }
   }
   &.n8 {
-    transform: translate(-156px, 92px);
+    transform: translate(-116px, 72px);
+    @include sm {
+      transform: translate(-156px, 92px);
+    }
+    @include low-height {
+      transform: translate(-116px, 72px);
+    }
   }
   &.n9 {
-    transform: translate(-176px, 2px);
+    transform: translate(-126px, 2px);
+    @include sm {
+      transform: translate(-176px, 2px);
+    }
+    @include low-height {
+      transform: translate(-126px, 2px);
+    }
   }
   &.n10 {
-    transform: translate(-159px, -89px);
+    transform: translate(-119px, -69px);
+    @include sm {
+      transform: translate(-159px, -89px);
+    }
+    @include low-height {
+      transform: translate(-119px, -69px);
+    }
   }
   &.n11 {
-    transform: translate(-89px, -153px);
+    transform: translate(-69px, -113px);
+    @include sm {
+      transform: translate(-89px, -153px);
+    }
+    @include low-height {
+      transform: translate(-69px, -113px);
+    }
   }
 
 }
@@ -559,14 +699,17 @@ li {
 
 .xy-pad-section {
   @extend .flex;
+  position: absolute;
+  left: -100%;
   min-width: auto;
-  display: none;
   @include sm {
     min-width: 50%;
   }
   @include md {
     display: flex;
     min-width: auto;
+    position: static;
+    left: auto;
   }
 }
 
@@ -630,7 +773,6 @@ li {
   position: absolute;
   width: 50px;
   height: 50px;
-  /* transform: scale(0.2); */
   top: 0;
   left: 0px;
   overflow: hidden;
@@ -643,10 +785,6 @@ li {
   max-width: 500px;
   margin: auto;
 }
-// .scale-name {
-//   margin: 30px;
-//   line-height: 50px;
-// }
 
 .fav-scale-controller {
   position: absolute;
@@ -660,14 +798,9 @@ li {
 }
 
 .selector-section {
-  // flex: 1;
   position: relative;
   flex-flow: row wrap;
   align-content: flex-end;
-  // order: 3;
-  // @include md {
-  //   flex: 2;
-  // }
 }
 .drone-selector, .fav-scale-selector {
   @extend .flex;
@@ -686,6 +819,7 @@ li {
       display: block;
     }
   }
+
   li {
     @extend .flex;
     align-items: center;
@@ -708,9 +842,8 @@ li {
   }
 }
 .fav-scale-selector {
-  // @include sm {
-    @extend .flex;
-  // }
+  @extend .flex;
+
   h5 {
     text-align: right;
   }
@@ -723,22 +856,9 @@ li {
     @include sm {
       max-width: 120px;
     }
-    @include md-down {
-      // &:nth-of-type(1n +3) {
-      //   display: none;
-      //   border: solid red;
-      // }
-    }
     &.is-selected {
       color: $color-primary;
     }
-  }
-}
-
-.drone-selector {
-  li {
-    background: $color-primary-alpha1;
-    // border: 3px solid $color-primary;
   }
 }
 
@@ -754,8 +874,6 @@ li {
   canvas {
     width: 100%;
   }
-
-  // order: 4;
 }
 
 .effects-choice-overlay {
@@ -843,14 +961,8 @@ li {
 
 
 // MODIFIERS
-
 .is-hidden {
   display: none;
-}
-
-.is-selected {
-  // background: $color-primary;
-  // color: $color-primary !important;
 }
 
 // APP IS ACTIVE

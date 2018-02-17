@@ -210,17 +210,17 @@ const _scales: IScale[] = [
     intervals: [0, 2, 4, 7, 9],
     description: ''
   },
-  {
-    name: 'Melodic Minor Desc',
-    intervals: [0, 2, 3, 5, 6, 9, 10],
-    description: ''
-  },
-  {
-    //maybe
-    name: 'Melodic Minor Asc',
-    intervals: [0, 2, 3, 5, 7, 9, 11],
-    description: ''
-  },
+  // {
+  //   name: 'Melodic Minor Desc',
+  //   intervals: [0, 2, 3, 5, 6, 9, 10],
+  //   description: ''
+  // },
+  // {
+  //   //maybe
+  //   name: 'Melodic Minor Asc',
+  //   intervals: [0, 2, 3, 5, 7, 9, 11],
+  //   description: ''
+  // },
   {
     name: 'Minor Pent',
     intervals: [0, 3, 5, 7, 10],

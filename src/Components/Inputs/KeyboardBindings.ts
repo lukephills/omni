@@ -74,8 +74,10 @@ export const keyboardCodeMap: KeyboardCodes = {
   ArrowDown: 102,
 
   // Arrows left & right to switch between favourite scales
-  ArrowLeft: 103,
-  ArrowRight: 104,
+  ArrowLeft: 101,
+  // ArrowLeft: 103,
+  ArrowRight: 102,
+  // ArrowRight: 104,
 
   // Tab to switch between fav scales (TODO: add shift tab to switch back)
   Tab: 105,
