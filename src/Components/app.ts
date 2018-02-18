@@ -230,28 +230,39 @@ class App {
 
   handleFXChange(e) {
     const data = (e.target as HTMLElement).dataset;
+    const fxLen = this.effects.length - 1;
+    const yFx = this.state.yEffect;
+    const xFx = this.state.xEffect;
 
     if (data.direction === "prev") {
       if (data.xy === 'y') {
-        // const idx = decrementIfWithinRange(this.state.yEffect, 0)
-        const idx = this.state.yEffect === 0 ? this.effects.length - 1 : this.state.yEffect - 1;
+        let idx = yFx === 0 ? fxLen : yFx - 1;
+        if (xFx === idx) {
+          idx = xFx === 0 ? fxLen : xFx - 1;
+        }
         this.setYEffect(idx)
       } else {
-        // const idx = decrementIfWithinRange(this.state.xEffect, 0)
-        const idx = this.state.xEffect === 0 ? this.effects.length - 1 : this.state.xEffect - 1;
+        let idx = xFx === 0 ? fxLen : xFx - 1;
+        if (yFx === idx) {
+          idx = yFx === 0 ? fxLen : yFx - 1;
+        }
         this.setXEffect(idx)
       }
-
     } else {
       if (data.xy === 'y') {
-        const idx = this.state.yEffect >= this.effects.length - 1 ? 0 : this.state.yEffect + 1;
+        let idx = yFx >= fxLen ? 0 : yFx + 1;
+        if (xFx === idx) {
+          idx = xFx >= fxLen ? 0 : xFx + 1;
+        }
         this.setYEffect(idx)
       } else {
-        const idx = this.state.xEffect >= this.effects.length - 1 ? 0 : this.state.xEffect + 1;
+        let idx = xFx >= fxLen ? 0 : xFx + 1;
+        if (yFx === idx) {
+          idx = yFx >= fxLen ? 0 : yFx + 1;
+        }
         this.setXEffect(idx)
       }
     }
-
   }
 
   onScaleChange(direction: 'prev' | 'next', e) {
