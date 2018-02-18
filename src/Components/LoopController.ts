@@ -13,9 +13,10 @@ class LoopController {
     this.render();
   }
 
-  onRecordPressed() {
+  onRecordPressed(e) {
     Omni.audio.looper.recordBtnPressed();
     this.render();
+    this.recordBtnEl.classList.add('has-loop');
   }
 
   onPlayPressed() {
@@ -24,34 +25,22 @@ class LoopController {
   }
 
   onDownloadPressed() {
-    Omni.audio.looper.exportWav(blob => {
-      console.log(blob);
-      const oldLink = document.getElementById('downloadLink');
-      if (!oldLink) {
-        const a: HTMLAnchorElement = document.createElement('a');
-        a.href = window.URL.createObjectURL(blob);
-        a.id = 'downloadLink'
-        a.style.position = 'absolute'
-        a.style.left = '0';
-        a.style.top = '0';
-        a.style.zIndex = '999';
-        a.download = 'omni';
-        a.innerText = 'download me'
-        document.body.appendChild(a);
-      } else {
-        (oldLink as HTMLAnchorElement).href = window.URL.createObjectURL(blob);
-      }
-
+    Omni.audio.looper.exportWav((blob) => {
+      const a = document.getElementById('downloadBtn') as HTMLAnchorElement;
+      const date = new Date();
+      a.href = window.URL.createObjectURL(blob);
+      a.download = `Omni_${date.getDate()}_${date.getMonth() + 1}_${date.getFullYear()}`;
+      a.innerText = 'Download';
     })
   }
 
   private addEventListeners() {
-      this.recordBtnEl.addEventListener('touchstart', this.onRecordPressed);
-      this.recordBtnEl.addEventListener('mousedown', this.onRecordPressed);
-      this.playBtnEl.addEventListener('touchstart', this.onPlayPressed);
-      this.playBtnEl.addEventListener('mousedown', this.onPlayPressed);
-      this.downloadBtnEl.addEventListener('touchstart', this.onDownloadPressed);
-      this.downloadBtnEl.addEventListener('mousedown', this.onDownloadPressed);
+    this.recordBtnEl.addEventListener('touchstart', this.onRecordPressed);
+    this.recordBtnEl.addEventListener('mousedown', this.onRecordPressed);
+    this.playBtnEl.addEventListener('touchstart', this.onPlayPressed);
+    this.playBtnEl.addEventListener('mousedown', this.onPlayPressed);
+    this.downloadBtnEl.addEventListener('touchstart', this.onDownloadPressed);
+    this.downloadBtnEl.addEventListener('mousedown', this.onDownloadPressed);
   }
 
   resetClasses() {
@@ -66,22 +55,22 @@ class LoopController {
       case 'recording':
         this.recordBtnEl.classList.add('is-recording')
         console.log('is-recording')
-      break;
+        break;
       case 'overdubbing':
         this.recordBtnEl.classList.add('is-overdubbing')
         console.log('is-overdubbing')
-      break;
+        break;
       case 'playing':
         this.recordBtnEl.classList.add('is-playing')
         this.playBtnEl.classList.add('is-playing')
         console.log('is-playing')
-      break;
+        break;
       case 'stopped':
         // this.playBtnEl.classList.add('is-stopped')
         console.log('is-stopped')
-      break;
+        break;
       default:
-      console.log('no state found');
+        console.log('no state found');
     }
     console.log(state);
   }

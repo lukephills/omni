@@ -3,12 +3,11 @@
     <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="star" stroke="#ffb2a3">
-            <path d="M1,1 L1,49" id="Line"></path>
-            <path d="M49,1 L49,49" id="Line"></path>
-            <path d="M1,1 L49,1" id="Line"></path>
-            <path d="M1,49 L49,49" id="Line-Copy"></path>
+            <circle id="Oval" cx="25" cy="25" r="24"></circle>
+            <path d="M25,35 L25,15" id="Line-Copy-6" stroke-linecap="square"></path>
+            <path d="M15,25 L35,25" id="Line-Copy-6" stroke-linecap="square"></path>
         </g>
     </g>
 </svg>

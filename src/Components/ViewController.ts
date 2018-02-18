@@ -57,6 +57,13 @@ const initEffectPanelSwitcher = () => {
 
 }
 
+const getTheAppLinks = () => {
+  const getTheApp = document.getElementById('getTheApp');
+  getTheApp.addEventListener('click', (e) => {
+    getTheApp.classList.toggle('is-open');
+  })
+}
+
 
 export const initViewController = () => {
 
@@ -70,7 +77,7 @@ export const initViewController = () => {
   playIntroScene();
 
   // ADD OTHER VIEWS BELOW
-
+  getTheAppLinks();
 }
 
 

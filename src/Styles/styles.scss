@@ -351,6 +351,16 @@ li {
   background-size: contain;
 }
 
+.icon-overdub {
+  background: url(../assets/icons/icon-overdub.svg) center no-repeat;
+  background-size: contain;
+}
+
+.icon-stop {
+  background: url(../assets/icons/icon-stop.svg) center no-repeat;
+  background-size: contain;
+}
+
 .icon-plus {
   background: url(../assets/icons/icon-plus.svg) center no-repeat;
   background-size: contain;
@@ -374,17 +384,17 @@ li {
 .btn-record {
   @extend .icon-record;
   &.is-overdubbing {
-    @extend .icon-minus;
+    @extend .icon-stop;
   }
   &.is-recording, &.is-playing {
-    @extend .icon-plus;
+    @extend .icon-overdub;
   }
 }
 
 .btn-play {
   @extend .icon-play;
   &.is-playing {
-    @extend .icon-minus; //todo change to stop icon
+    @extend .icon-stop;
   }
 }
 
@@ -444,12 +454,18 @@ li {
 
   @include sm {
     margin-bottom: 20px;
-    // justify-content: center;
+    justify-content: center;
   }
   @include md {
     margin-bottom: 60px;
     // justify-content: center;
   }
+
+  @include lg {
+    margin-bottom: 70px;
+    margin-top: -40px;
+  }
+
   .scale-text-container {
     display: flex;
     align-items: center;
@@ -495,10 +511,10 @@ li {
 
   .btn {
     margin: 5px;
-    background-size: 80%;
+    background-size: 60%;
     @include md {
       margin: 0 16px 0;
-      background-size: contain;
+      background-size: 60%;
     }
     @include landscape-xs {
       margin: 0 8px 0 8px;
@@ -1071,12 +1087,14 @@ li {
 
 
 .btn-download {
+  display: none;
   border: 1px solid;
   padding: 0 20px;
   margin-right: 9px;
   line-height: 50px;
-  @include md {
 
+  &.has-loop {
+    display: block;
   }
 }
 
@@ -1173,25 +1191,51 @@ footer {
   display: flex;
   position: relative;
   flex-direction: column;
-  padding: 0 20px 0 0;
+  padding: 0 45px 0 0;
   cursor: pointer;
   max-width: 225px;
 
   h2 {
     margin-left: 20px;
+    &:after {
+      font-style: normal;
+      content: '\2303';
+      position: absolute;
+      margin-left: 10px;
+      margin-top: 6px;
+    }
   }
 
   .app-store-links {
     display: none;
   }
 
+  &.is-open h2:after {
+    transform: rotate(180deg);
+    transform-origin: 50% 36%;
+  }
+
   &.is-open .app-store-links {
-    display: block;
+    display: flex;
+    flex-direction: column;
     position: absolute;
     background: #ffffffba;
-    height: 300px;
     bottom: 80px;
     width: 100%;
+
+    a {
+      border-bottom: 1px solid $color-primary;
+      border-right: 1px solid $color-primary;
+      padding: 20px;
+      text-decoration: none;
+      position: relative;
+
+      &:after {
+        content: '\203A';
+        position: absolute;
+        margin-left: 10px;
+      }
+    }
   }
 }
 
