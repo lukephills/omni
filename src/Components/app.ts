@@ -9,23 +9,23 @@ import RootNoteSelector from './RootNoteSelector';
 import FavScaleSelector from './FavScaleSelector';
 import SettingsCarouselManager from './SettingsCarousels';
 import LoopController from './LoopController';
-import {scales, IScale} from '../Utils/Scales/scales-shortlist';
+import { scales, IScale } from '../Utils/Scales/scales-shortlist';
 
-import {populateFXCarousels} from './appSpecific/populateFXCarousels';
+import { populateFXCarousels } from './appSpecific/populateFXCarousels';
 
-import {scaleFromRoot12Idx} from '../Utils/Audio/scales';
+import { scaleFromRoot12Idx } from '../Utils/Audio/scales';
 
-import {initViewController} from './ViewController'
-import {$} from '../Utils/selector'
-import {round} from '../Utils/number'
+import { initViewController } from './ViewController'
+import { $ } from '../Utils/selector'
+import { round, incrementIfWithinRange, decrementIfWithinRange } from '../Utils/number'
 
 const SVGInjector = require('svg-injector')
 // import {effects} from '../Constants/Effects'
 
 // import {log} from '../Utils/logger'
 
-import {KeyboardManager} from './Inputs/KeyboardManager';
-import {getKeyBinding, getKeyType, KeyType, KeyboardEventLatest, keyboardCodeMap} from './Inputs/KeyboardBindings';
+import { KeyboardManager } from './Inputs/KeyboardManager';
+import { getKeyBinding, getKeyType, KeyType, KeyboardEventLatest, keyboardCodeMap } from './Inputs/KeyboardBindings';
 
 interface IState {
   droneIdx: number;
@@ -119,11 +119,11 @@ class App {
 
   }
 
-	init() {
-		console.log('INITIALIZED APP');
+  init() {
+    console.log('INITIALIZED APP');
 
-		// on resize event listener
-		window.addEventListener('resize', this.onResize.bind(this));
+    // on resize event listener
+    window.addEventListener('resize', this.onResize.bind(this));
 
     // this.actx = createIOSSafeAudioContext(44100);
 
@@ -135,12 +135,12 @@ class App {
     const xAxisOutputEl = $('#xAxisVal')[0];
     const yAxisOutputEl = $('#yAxisVal')[0];
 
-    this.xyPad.onChange = (x:any, y:any) => {
+    this.xyPad.onChange = (x: any, y: any) => {
       this.effects[this.state.xEffect].setVal(x);
       this.effects[this.state.yEffect].setVal(y);
       if (xAxisOutputEl && yAxisOutputEl) {
-        xAxisOutputEl.innerHTML = round(x*100, 0).toString();
-        yAxisOutputEl.innerHTML = round(y*100, 0).toString();
+        xAxisOutputEl.innerHTML = round(x * 100, 0).toString();
+        yAxisOutputEl.innerHTML = round(y * 100, 0).toString();
       }
     }
 
@@ -183,10 +183,12 @@ class App {
         getVal: () => this.audio.harp.release / 3 - 0.1,
       }
     ]
+
     this.setXEffect(this.state.xEffect)
     this.setYEffect(this.state.yEffect)
 
-    populateFXCarousels(this.state, this.effects)
+    this.setupEffectsSwitch();
+    // populateFXCarousels(this.state, this.effects)
 
     // todo: do these if checks inside loop controller instead
     const recBtnEl = document.getElementById('recordBtn');
@@ -213,7 +215,44 @@ class App {
       onKeyUp: this.onKeyUp.bind(this),
     });
 
-	}
+  }
+
+
+  setupEffectsSwitch() {
+    const effectChoiceTriggerEls = $('.js-fx-switch')
+    if (!effectChoiceTriggerEls.length) return;
+
+    // TODO use a class selector to group these two together
+    effectChoiceTriggerEls.forEach(el => {
+      el.addEventListener('click', this.handleFXChange.bind(this))
+    })
+  }
+
+  handleFXChange(e) {
+    const data = (e.target as HTMLElement).dataset;
+
+    if (data.direction === "prev") {
+      if (data.xy === 'y') {
+        // const idx = decrementIfWithinRange(this.state.yEffect, 0)
+        const idx = this.state.yEffect === 0 ? this.effects.length - 1 : this.state.yEffect - 1;
+        this.setYEffect(idx)
+      } else {
+        // const idx = decrementIfWithinRange(this.state.xEffect, 0)
+        const idx = this.state.xEffect === 0 ? this.effects.length - 1 : this.state.xEffect - 1;
+        this.setXEffect(idx)
+      }
+
+    } else {
+      if (data.xy === 'y') {
+        const idx = this.state.yEffect >= this.effects.length - 1 ? 0 : this.state.yEffect + 1;
+        this.setYEffect(idx)
+      } else {
+        const idx = this.state.xEffect >= this.effects.length - 1 ? 0 : this.state.xEffect + 1;
+        this.setXEffect(idx)
+      }
+    }
+
+  }
 
   onScaleChange(direction: 'prev' | 'next', e) {
     if (direction === 'prev') this.onScaleChangePrev(e);
@@ -238,7 +277,7 @@ class App {
     // update the xyPad button position
     this.xyPad.xPos = this.effects[val].getVal()
 
-    console.log('set', val,  this.effects[val], this.effects[val].name)
+    console.log('set', val, this.effects[val], this.effects[val].name)
     if (this.xEffectNameEl) {
       this.xEffectNameEl.innerHTML = this.effects[val].name;
     }
@@ -257,7 +296,7 @@ class App {
   }
 
   private isDuplicateXYPadChoice() {
-     return this.state.yEffect === this.state.xEffect ? true : false;
+    return this.state.yEffect === this.state.xEffect ? true : false;
   }
 
   setHarpOctaves(val: number) {
@@ -302,20 +341,14 @@ class App {
     this.setScale();
   }
 
-	onResize() {
+  onResize() {
 
     // Resize canvas components
     this.harp.onResize();
     this.xyPad.onResize();
 
-		this.draw();
-	}
-
-  // onStateChange() {
-  //   // console.log('new state =', this.state);
-  // }
-
-
+    this.draw();
+  }
 
   /**
    * DRAW ALL COMPONENTS
@@ -328,9 +361,6 @@ class App {
       // this.sliders.forEach(s => s.draw());
     }
   }
-
-
-
 
   onKeyDown(e: KeyboardEventLatest) {
     const key = getKeyBinding(e);

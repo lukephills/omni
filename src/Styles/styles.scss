@@ -208,7 +208,9 @@ h5 {
   font-weight: 400;
 }
 
-
+a {
+  color: #ff6969;
+}
 
 
 // GENERIC
@@ -361,12 +363,12 @@ li {
 
 .icon-fb {
   background: url(../assets/icons/icon-fb.svg) center no-repeat;
-  background-size: contain;
+  background-size: 40%;
 }
 
 .icon-tw {
   background: url(../assets/icons/icon-tw.svg) center no-repeat;
-  background-size: contain;
+  background-size: 40%;
 }
 
 .btn-record {
@@ -528,7 +530,7 @@ li {
 
 .middle-section {
   flex: 4;
-  flex-direction: row;
+  flex-direction: row-reverse;
   align-items: center;
   padding-bottom: 40px;
 
@@ -812,11 +814,11 @@ li {
     width: 100%;
     cursor: pointer;
     position: absolute;
+    z-index: 1;
   }
 
   .fx-name {
     padding: 10px 20px;
-    cursor: pointer;
   }
 
   .x-name, .y-name {
@@ -824,19 +826,43 @@ li {
     width: 100%;
     text-align: center;
     color: $color-dark-grey;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .js-fx-switch {
+      background-size: 30%;
+      background-position-y: 0%;
+    }
     output {
       position: absolute;
-      right: 0;
+      right: 2px;
+      color: #ffb2a3;
+
     }
   }
   .x-name {
-    bottom: -38px;
+    bottom: -48px;
+    output {
+      top: -20px;
+      @include low-height {
+        top: -13px;
+        font-size: 10px;
+      }
+    }
   }
   .y-name {
     bottom: 0;
-    left: -10px;
+    left: 0;
     transform-origin: left bottom;
     transform: rotate(270deg);
+    output {
+      top: 47px;
+      @include low-height {
+        top: 49px;
+        font-size: 10px;
+      }
+    }
   }
 }
 
@@ -1061,7 +1087,7 @@ li {
   align-items: center;
   border-bottom: 1px solid #ffa699;
   margin: 0 auto 30px;
-  padding: 20px 0 30px;
+  padding: 20px 0;
   ul {
     @extend .flex;
     @extend .justify-center;

@@ -57,25 +57,6 @@ const initEffectPanelSwitcher = () => {
 
 }
 
-const initEffectChoiceSwitcher = () => {
-  const effectChoiceTriggerEls = $('.js-fx-name')
-  const effectsChoiceOverlay = document.getElementById('effectsChoiceOverlay')
-  const closeBtn = document.getElementById('closeBtnEffects')
-  if (!effectChoiceTriggerEls.length || !effectsChoiceOverlay || !closeBtn) return;
-
-  // TODO use a class selector to group these two together
-  effectChoiceTriggerEls.forEach(el => {
-    el.addEventListener('click', function(e) {
-      show(effectsChoiceOverlay);
-    })
-  })
-
-  closeBtn.addEventListener('click', function(e) {
-    hide(effectsChoiceOverlay);
-  });
-
-
-}
 
 export const initViewController = () => {
 
@@ -84,9 +65,6 @@ export const initViewController = () => {
 
   // Buttons to show and hide pitch contellation and/or XYPad views
   initEffectPanelSwitcher();
-
-  // Buttons to show hide XYPad effect choices
-  initEffectChoiceSwitcher();
 
   // INTRO SPLASH
   playIntroScene();

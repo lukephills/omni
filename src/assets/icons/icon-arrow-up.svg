@@ -5,7 +5,7 @@
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="UI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="constellation-active" transform="translate(-29.000000, -21.000000)" stroke-width="1" stroke="#555">
+        <g id="constellation-active" transform="translate(-29.000000, -21.000000)" stroke-width="1" stroke="#ffb2a3">
             <g id="Scale-Title" transform="translate(30.000000, 21.000000)">
                 <polyline id="Path-1" transform="translate(18.413069, 12.220306) scale(-1, 1) rotate(-270.000000) translate(-18.413069, -12.220306) " points="28.2867581 -5.53631084 8.53938008 12.1700194 28.2867581 29.9769223"></polyline>
             </g>
