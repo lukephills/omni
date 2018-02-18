@@ -1,0 +1,15 @@
+
+<svg width="50px" height="50px" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
+        <g id="star" stroke="#979797">
+            <path d="M1,1 L1,49" id="Line"></path>
+            <path d="M49,1 L49,49" id="Line"></path>
+            <path d="M1,1 L49,1" id="Line"></path>
+            <path d="M7.5,8.5 L41.3241161,42.1170094" id="Line-Copy-7"></path>
+            <path d="M1,49 L49,49" id="Line-Copy"></path>
+        </g>
+    </g>
+</svg>

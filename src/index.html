@@ -63,7 +63,8 @@
   <div id="app" class="container fixed-window">
     <div class="flex main-view">
       <nav class="nav">
-        <h1><span class="omni-first-letter"></span>MNI</h1>
+        <h1>
+          <span class="omni-first-letter"></span>MNI</h1>
         <div class="nav-buttons">
           <div id="recordBtn" class="btn icon-record btn-record"></div>
           <div id="playBtn" class="btn icon-play btn-play"></div>
@@ -88,14 +89,14 @@
 
                 <h4>y effect</h4>
                 <div class="flex space-between settings-carousel js-fx-carousel" data-carousel='yEffect' data-carousel-group=1>
-                  <span data-carousel-prev id="scaleSelectPrevBtn" class="icon-arrow-left"></span>
-                  <span data-carousel-next id="scaleSelectNextBtn" class="icon-arrow-right"></span>
+                  <span data-carousel-prev class="icon-arrow-left"></span>
+                  <span data-carousel-next class="icon-arrow-right"></span>
                 </div>
 
                 <h4>x effect</h4>
                 <div class="flex space-between settings-carousel js-fx-carousel" data-carousel='xEffect' data-carousel-group=1>
-                  <span data-carousel-prev id="scaleSelectPrevBtn" class="icon-arrow-left"></span>
-                  <span data-carousel-next id="scaleSelectNextBtn" class="icon-arrow-right"></span>
+                  <span data-carousel-prev class="icon-arrow-left"></span>
+                  <span data-carousel-next class="icon-arrow-right"></span>
                 </div>
 
 
@@ -111,7 +112,7 @@
             </div>
           </div>
         </section>
-        <div id="middle-switch" class="icon-arrow-left middle-switch"></div>
+        <div id="middle-switch" class="icon-xy middle-switch"></div>
         <section class="pitch-constellation-section">
           <div class="pitch-constellation">
             <div class="circle" id="pitchConstellation"></div>
@@ -162,19 +163,24 @@
 
 
     <div class="container settings-overlay" id="settingsOverlay">
-      <nav class="flex space-between nav">
-        <h1><span class="omni-first-letter"></span>MNI</h1>
-        <ul class="flex space-between">
-          <li>
-            <span id="closeBtnSettings" class="icon-close btn-close"></span>
-          </li>
-        </ul>
+
+      <nav class="nav">
+        <h1>
+          <span class="omni-first-letter"></span>MNI</h1>
+        <div class="nav-buttons">
+          <div id="downloadBtn" class="btn-download">Download Recording</div>
+          <div id="closeBtnSettings" class="btn icon-close btn-close"></div>
+        </div>
       </nav>
-      <section class="scale-selector inline">
-        <span id="scaleSelectPrevBtn" class="icon-arrow-left js-scaleSelectPrevBtn"></span>
-        <h1 class="scale-name js-scale-name"></h1>
-        <span id="scaleSelectNextBtn" class="icon-arrow-right js-scaleSelectNextBtn"></span>
-      </section>
+
+      <div class="scale-selector">
+        <div id="scaleSelectPrevBtn" class="icon-arrow-left js-scaleSelectPrevBtn"></div>
+        <div class="scale-text-container">
+          <h1 class="scale-name js-scale-name">xenakis</h1>
+        </div>
+        <div class="icon-arrow-right js-scaleSelectNextBtn"></div>
+      </div>
+
       <section class="scale-info">
         <ul id="scaleFrequencies" class="freqs list-inline"></ul>
         <p id="scaleDescription" class="scale-descrip"></p>
@@ -182,7 +188,7 @@
 
 
       <section class="settings text-center">
-        <div class="setting">
+        <!-- <div class="setting">
           <h4>voices</h4>
           <div class="flex space-between settings-carousel" data-carousel='voices'>
             <span data-carousel-prev id="scaleSelectPrevBtn" class="icon-arrow-left"></span>
@@ -192,9 +198,9 @@
               <li data-val="2">Sound3</li>
               <li data-val="3">Sound4</li>
             </ul>
-            <span data-carousel-next id="scaleSelectNextBtn" class="icon-arrow-right"></span>
+            <span data-carousel-next class="icon-arrow-right"></span>
           </div>
-        </div>
+        </div> -->
         <div class="setting">
           <h4>octaves</h4>
           <div class="flex space-between settings-carousel" data-carousel='octave' data-carousel-rotate=false>
@@ -210,7 +216,7 @@
           </div>
         </div>
         <div class="setting">
-          <h4>octave offset</h4>
+          <h4>offset</h4>
           <div class="flex space-between settings-carousel" data-carousel='octaveOffset' data-carousel-rotate=false>
             <span data-carousel-prev class="icon-minus"></span>
             <ul>
@@ -225,9 +231,12 @@
           </div>
         </div>
       </section>
-      <section class="download">
-        <div id="downloadBtn" class="btn-download">Download Recording</div>
-      </section>
+      <article>
+          <p>So much music tends to be written in the western major or minor modes, but there are actually infinite ways of assembling a scale.</p>
+          <p>Omni aims to let anyone effortlessly play and experiment with these alternative modes and scales created by composers and cultures from around the world.</p>
+          <p>Play the harp, use the pitch constellation to switch keys and play bass drones. There are 6 different effects available to experiment with on the XY pad and you can record/overdub and play along with your loops.</p>
+          <p>If you want more, consider supporting me by buying the app on iOS and Android.</p>
+      </article>
       <footer>
         <div class="get-the-app">
           <h2>Get the app
@@ -257,6 +266,7 @@
         </div>
       </footer>
     </div>
+
 
   </div>
 

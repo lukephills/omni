@@ -51,8 +51,8 @@ const initEffectPanelSwitcher = () => {
 
   middleSwitch.addEventListener('click', function(e) {
     middleSection.classList.toggle('middle-section--2');
-    middleSwitch.classList.toggle('icon-arrow-left');
-    middleSwitch.classList.toggle('icon-arrow-right');
+    middleSwitch.classList.toggle('icon-constellation');
+    middleSwitch.classList.toggle('icon-xy');
   });
 
 }

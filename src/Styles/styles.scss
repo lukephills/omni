@@ -175,8 +175,9 @@ h1 {
     width: 27px;
     height: 27px;
     border-radius: 50%;
-    border: 1px solid darken($color-primary, 3%);
+    background-color: #ffe4cb;
     margin-right: 3px;
+    transition: background-color 1s ease;
 
     @include sm {
       width: 33px;
@@ -338,6 +339,16 @@ li {
   background-size: contain;
 }
 
+.icon-constellation {
+  background: url(../assets/icons/icon-constellation.svg) center no-repeat;
+  background-size: contain;
+}
+
+.icon-xy {
+  background: url(../assets/icons/icon-xy.svg) center no-repeat;
+  background-size: contain;
+}
+
 .icon-plus {
   background: url(../assets/icons/icon-plus.svg) center no-repeat;
   background-size: contain;
@@ -415,6 +426,7 @@ li {
   }
   h1 {
     font-style: normal;
+    color: #ffb2a3;
   }
 }
 
@@ -549,11 +561,15 @@ li {
   display: block;
   position: absolute;
   right: 0;
-  bottom: 10px;
+  bottom: 0;
+  @include sm {
+    bottom: 10px;
+  }
   @include md {
     display: none;
     bottom: auto;
   }
+
 }
 
 .pitch-constellation-section, .xy-pad-section {
@@ -837,8 +853,8 @@ li {
 
 .scale-info {
   text-align: center;
-  max-width: 500px;
-  margin: auto;
+  max-width: 580px;
+  margin: 0 auto 30px;
 }
 
 .fav-scale-controller {
@@ -967,17 +983,44 @@ li {
 // SETTINGS PANE
 .settings-overlay {
   position: absolute;
-  top: -100%;
+  display: none;
+  top: 0;
   left: 0;
   background: $color-primary-alpha1-opaque;
-  height: 100%;
+  height: 100vh;
   width: 100%;
   z-index: $z5;
   overflow: auto;
-  transform: translateY(0);
   &.is-active {
-    transform: translateY(100%);
+    display: flex;
+    flex-direction: column;
   }
+
+  .omni-first-letter {
+    background-color: #ffb2a3;
+  }
+
+  > nav, > section, > footer {
+    flex-shrink: 0;
+  }
+
+  > article {
+    flex: 1 0 auto;
+    max-width: 580px;
+    margin: 30px auto;
+    text-align: center;
+  }
+
+  .scale-selector  {
+
+    @include sm {
+      margin-bottom: 0;
+    }
+    @include md {
+      margin-bottom: 30px;
+    }
+  }
+
 }
 
 .freqs li {
@@ -990,6 +1033,7 @@ li {
   flex-direction: row;
   justify-content: space-around;
   flex-wrap: wrap;
+  margin-bottom: 30px;
 
   .setting {
     margin: 20px 0;
@@ -999,14 +1043,17 @@ li {
   }
 }
 
-.download {
-  display: flex;
-  justify-content: center;
-  .btn-download {
-    border: 1px solid;
-    padding: 20px;
+
+.btn-download {
+  border: 1px solid;
+  padding: 0 20px;
+  margin-right: 9px;
+  line-height: 50px;
+  @include md {
+
   }
 }
+
 
 .settings-carousel {
   width: 260px;
