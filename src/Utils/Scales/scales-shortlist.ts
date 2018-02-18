@@ -149,19 +149,19 @@ const _scales: IScale[] = [
   },
   {
     // maybe
-    name: 'Hungarian Gypsy', //or hungarian minor
+    name: 'Hungarian', //or hungarian minor
     intervals: [0, 2, 3, 6, 7, 8, 11],
-    description: ''
+    description: 'Hungarian gypsy scale is found by sharpening the 4th degree of the harmonic minor scale to introduce an additional gap. This is a symmetrical scale that is very common in Flamenco but also Carnatic music associated with Southern India'
   },
   {
     name: 'Insen',
     intervals: [0, 1, 5, 7, 10],
-    description: 'A pentatonic scale adapted from shamisen music for the koto, a japanese stringed instrument'
+    description: 'A pentatonic scale adapted from shamisen music by Yatsuhashi Kengyō for the koto, a japanese stringed instrument'
   },
   {
     name: 'Major',
     intervals: [0, 2, 4, 5, 7, 9, 11],
-    description: ''
+    description: 'The major scale (or Ionian scale) is one of the most commonly used musical scales, especially in Western music.'
   },
   // {
   //   // maybe
@@ -172,7 +172,7 @@ const _scales: IScale[] = [
   {
     name: 'Iwato',
     intervals: [0, 1, 5, 6, 10],
-    description: ''
+    description: 'Used in traditional Japanese music for the koto. It is a mode of the Hirajōshi scale.'
   },
   {
     name: 'Just',
@@ -185,16 +185,16 @@ const _scales: IScale[] = [
   //   description: ''
   // },
   {
-    //maybe
-    name: 'Lydian Aug',
-    intervals: [0, 2, 4, 6, 8, 9, 11],
-    description: ''
-  },
-  {
     name: 'Lydian',
     intervals: [0, 2, 4, 6, 7, 9, 11],
-    description: ''
+    description: 'Similar to the major scale except the fourth note is raised half a step.'
   },
+  // {
+  //   //maybe
+  //   name: 'Lydian Aug',
+  //   intervals: [0, 2, 4, 6, 8, 9, 11],
+  //   description: ''
+  // },
   // {
   //   name: 'Major Bepop',
   //   intervals: [0, 2, 4, 5, 7, 8, 9, 11],
@@ -206,9 +206,9 @@ const _scales: IScale[] = [
   //   description: ''
   // },
   {
-    name: 'Major Pent',
+    name: 'Pentatonic',
     intervals: [0, 2, 4, 7, 9],
-    description: ''
+    description: "This scale, found in virtually every culture in the world, is the major pentatonic, or five-note scale. Though it’s commonly used in modern music, it's thought to be one of the oldest. Bone flutes dated to around 50,000 years old were found tuned to the major pentatonic."
   },
   // {
   //   name: 'Melodic Minor Desc',
@@ -222,9 +222,9 @@ const _scales: IScale[] = [
   //   description: ''
   // },
   {
-    name: 'Minor Pent',
+    name: 'Minor Pentatonic',
     intervals: [0, 3, 5, 7, 10],
-    description: ''
+    description: 'Like the major pentatonic, this is scale dates back to ancient times. Today, it’s as ubiquitous as ever as it offers a fantastic improvisational framework for jazz, blues and rock.'
   },
   {
     //maybe
@@ -232,12 +232,12 @@ const _scales: IScale[] = [
     intervals: [0, 2, 5, 7, 9],
     description: 'A pentatonic scale containing only major notes and is used in traditional Japanese folk music.'
   },
-  {
-    //maybe
-    name: 'Mixolydian',
-    intervals: [0, 2, 4, 5, 7, 9, 10],
-    description: ''
-  },
+  // {
+  //   //maybe
+  //   name: 'Mixolydian',
+  //   intervals: [0, 2, 4, 5, 7, 9, 10],
+  //   description: ''
+  // },
   // {
   //   name: 'Neapolitan Major',
   //   intervals: [0, 1, 3, 5, 7, 9, 11],
@@ -250,9 +250,9 @@ const _scales: IScale[] = [
   // },
   {
     //maybe
-    name: 'Octatonic',
+    name: 'Korsakovian',
     intervals: [0, 2, 3, 5, 6, 8, 9, 11],
-    description: ''
+    description: 'In St. Petersburg at the turn of the 20th century, this scale had become so familiar in the circle of composers around Nikolai Rimsky-Korsakov that it was referred to there as the Korsakovian scale. This is also known as an Octatonic because unlike most other seven-note scales this contains eight'
   },
   {
     //maybe
