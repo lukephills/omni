@@ -1,5 +1,5 @@
 import MultiTouch from './MultiTouch';
-import {numberWithinRange} from '../Utils/number';
+import { numberWithinRange } from '../Utils/number';
 import {
   getPixelRatio,
   getCoordinateFromEventAsPercentageWithinElement,
@@ -16,7 +16,7 @@ class XYPad {
   // The value that element has been zoom by using css
   zoom = 1;
 
-  onChange: (x, y) => void = () => {}
+  onChange: (x, y) => void = () => { }
   private pixelRatio: number = getPixelRatio();
 
   constructor(private canvas: HTMLCanvasElement) {
@@ -24,13 +24,13 @@ class XYPad {
     canvasRenderAtPixelRatio(this.canvas);
 
     new MultiTouch(this.canvas, {
-			onMouseDown: this.onPointerDown.bind(this),
-			onMouseUp: this.onPointerUp.bind(this),
-			onMouseMove: this.onPointerMove.bind(this),
-			onTouchStart: this.onPointerDown.bind(this),
-			onTouchEnd: this.onPointerUp.bind(this),
-			onTouchMove: this.onPointerMove.bind(this),
-		});
+      onMouseDown: this.onPointerDown.bind(this),
+      onMouseUp: this.onPointerUp.bind(this),
+      onMouseMove: this.onPointerMove.bind(this),
+      onTouchStart: this.onPointerDown.bind(this),
+      onTouchEnd: this.onPointerUp.bind(this),
+      onTouchMove: this.onPointerMove.bind(this),
+    });
 
     this.draw();
   }
@@ -49,14 +49,14 @@ class XYPad {
     const ctx = this.canvas.getContext('2d');
     if (!ctx) return;
 
-		const w: number = this.canvas.width / this.pixelRatio;
-		const h: number = this.canvas.height / this.pixelRatio;
+    const w: number = this.canvas.width / this.pixelRatio;
+    const h: number = this.canvas.height / this.pixelRatio;
     ctx.clearRect(0, 0, w, h);
 
     const buttonSize = this.buttonSize;
-    const buttonSizeHalved = buttonSize/2;
-    const x =  numberWithinRange(w * this.x, buttonSizeHalved, w - buttonSizeHalved)
-    const y =  numberWithinRange(h * (1- this.y), buttonSizeHalved, h - buttonSizeHalved)
+    const buttonSizeHalved = buttonSize / 2;
+    const x = numberWithinRange(w * this.x, buttonSizeHalved, w - buttonSizeHalved)
+    const y = numberWithinRange(h * (1 - this.y), buttonSizeHalved, h - buttonSizeHalved)
 
     ctx.fillStyle = this.buttonColor;
 
@@ -76,15 +76,13 @@ class XYPad {
 
   onPointerDown(e, id) {
     const pos = getCoordinateFromEventAsPercentageWithinElement(e, this.canvas, this.zoom);
-    console.log(pos, e)
     if (!e.shiftKey) this.x = pos.x;
     if (!e.metaKey) this.y = pos.y;
     this.render()
   }
 
   onPointerUp(e, id) {
-    console.log(e.pageX, e.pageY)
-   const pos = getCoordinateFromEventAsPercentageWithinElement(e, this.canvas, this.zoom);
+    const pos = getCoordinateFromEventAsPercentageWithinElement(e, this.canvas, this.zoom);
     if (!e.shiftKey) this.x = pos.x;
     if (!e.metaKey) this.y = pos.y;
     this.render()

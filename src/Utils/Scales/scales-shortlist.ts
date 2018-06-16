@@ -258,12 +258,12 @@ const _scales: IScale[] = [
     //maybe
     name: 'Persian',
     intervals: [0, 1, 4, 5, 6, 8, 11],
-    description: ''
+    description: 'Traditionally found in Iranian music.'
   },
   {
-    name: 'Phrygian Dominant',
+    name: 'Bayātī',
     intervals: [0, 1, 4, 5, 7, 8, 10],
-    description: '' //https://en.wikipedia.org/wiki/Phrygian_dominant_scale
+    description: 'Also know as the Phrygian dominant or Freygish scale, this is most commonly found in Arabic and Egyptian music in which it is used in Hebrew prayers and Klezmer music.' //https://en.wikipedia.org/wiki/Phrygian_dominant_scale
   },
   // {
   //   name: 'Phrygian',

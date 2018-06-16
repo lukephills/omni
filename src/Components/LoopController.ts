@@ -14,12 +14,14 @@ class LoopController {
   }
 
   onRecordPressed(e) {
+    e.preventDefault();
     Omni.audio.looper.recordBtnPressed();
     this.render();
     this.recordBtnEl.classList.add('has-loop');
   }
 
-  onPlayPressed() {
+  onPlayPressed(e) {
+    e.preventDefault();
     Omni.audio.looper.playBtnPressed();
     this.render();
   }
@@ -54,25 +56,19 @@ class LoopController {
     switch (state) {
       case 'recording':
         this.recordBtnEl.classList.add('is-recording')
-        console.log('is-recording')
         break;
       case 'overdubbing':
         this.recordBtnEl.classList.add('is-overdubbing')
-        console.log('is-overdubbing')
         break;
       case 'playing':
         this.recordBtnEl.classList.add('is-playing')
         this.playBtnEl.classList.add('is-playing')
-        console.log('is-playing')
         break;
       case 'stopped':
         // this.playBtnEl.classList.add('is-stopped')
-        console.log('is-stopped')
         break;
       default:
-        console.log('no state found');
     }
-    console.log(state);
   }
 
 }

@@ -1,125 +1,156 @@
-import {IdentifierIndexMap} from '../Utils/utils';
-import {getPixelRatio, getCoordinateFromEventAsPercentageWithinElement} from '../Utils/CanvasUtils';
+import { IdentifierIndexMap } from '../Utils/utils';
+import { getPixelRatio, getCoordinateFromEventAsPercentageWithinElement } from '../Utils/CanvasUtils';
 import MultiTouch from './MultiTouch';
 
-import {palette} from '../Constants/Defaults'
-import {canvasRenderAtPixelRatio} from '../Utils/CanvasUtils';
-import {getPerfectFifthIndex} from '../Utils/Audio/scales';
+import { palette } from '../Constants/Defaults'
+import { canvasRenderAtPixelRatio } from '../Utils/CanvasUtils';
+import { getPerfectFifthIndex } from '../Utils/Audio/scales';
 
-import {Omni} from '../index';
+import { Omni } from '../index';
+
+const ROOT_NOTE_MIN_ALPHA = 0.15;
 
 class Harp {
   // public audio: Synth
   public lines: number = 32;
   public octavesToDisplay = 3;
   private touches: IdentifierIndexMap;
-	private activeTouches: any = {};
+  private activeTouches: any = {};
   private pixelRatio: number = getPixelRatio();
-
+  _DrawAnimationFrame;
   private colors: any[] = [];
+  activeNoteStates: {noteIndex: number, val: number}[] = [];
 
   constructor(private canvas: HTMLCanvasElement) {
 
     canvasRenderAtPixelRatio(this.canvas);
 
-
-
-
     // Initialize touch and pointer listeners
-		this.touches = new IdentifierIndexMap();
-		new MultiTouch(this.canvas, {
-			onMouseDown: this.onPointerDown.bind(this),
-			onMouseUp: this.onPointerUp.bind(this),
-			onMouseMove: this.onPointerMove.bind(this),
-			onTouchStart: this.onPointerDown.bind(this),
-			onTouchEnd: this.onPointerUp.bind(this),
-			onTouchMove: this.onPointerMove.bind(this),
-		});
+    this.touches = new IdentifierIndexMap();
+    new MultiTouch(this.canvas, {
+      onMouseDown: this.onPointerDown.bind(this),
+      onMouseUp: this.onPointerUp.bind(this),
+      onMouseMove: this.onPointerMove.bind(this),
+      onTouchStart: this.onPointerDown.bind(this),
+      onTouchEnd: this.onPointerUp.bind(this),
+      onTouchMove: this.onPointerMove.bind(this),
+    });
+
+    let start = null;
+    function step(timestamp) {
+      if (!start) start = timestamp;
+      let progress = timestamp - start;
+      if (progress < 2000) {
+        window.requestAnimationFrame(step);
+      }
+    }
+
+    window.requestAnimationFrame(step);
+  }
+
+
+  decrementAlpha = (alpha, noteIndex, scale) => {
+    if (alpha <= 0) return 0;
+    if (noteIndex % scale.length === 0) {
+      return alpha > ROOT_NOTE_MIN_ALPHA ? alpha - 0.01 : ROOT_NOTE_MIN_ALPHA;
+    }
+    return alpha - 0.01;
   }
 
   draw(scale): void {
-		// this._DrawAnimationFrame = requestAnimationFrame(this.draw.bind(this));
-		console.log('DRAW');
+    // drawing every frame - better to only draw when notes are playing
+    this._DrawAnimationFrame = requestAnimationFrame(this.draw.bind(this, scale));
 
-		const ctx = this.canvas.getContext('2d');
+    const ctx = this.canvas.getContext('2d');
     if (!ctx) return;
 
-		const w: number = this.canvas.width / this.pixelRatio;
-		const h: number = this.canvas.height / this.pixelRatio;
-		const {lines} = this;
+    const w: number = this.canvas.width / this.pixelRatio;
+    const h: number = this.canvas.height / this.pixelRatio;
+    const { lines } = this;
     // const colors = Object.keys(palette).map(key => palette[key]);
-		const lineWidth = w / lines;
+    const lineWidth = w / lines;
     // some of this doesn't need to be called every draw loop
     const borderWidth = 1;
 
-		ctx.clearRect(0, 0, w, h);
+    ctx.clearRect(0, 0, w, h);
 
-    const p5 = getPerfectFifthIndex(scale);
-    const color1 = 'rgba(255, 105, 105, 0.5)';
-    const color2 = 'rgba(255, 105, 105, 0.15)';
+    // const p5 = getPerfectFifthIndex(scale);
+    const color1 = [236, 114, 110, 1];
     const colorBorder = 'rgba(255, 105, 105, 1)';
 
+    // fill active notes
+    if (this.activeNoteStates.length) {
 
-		// DRAW THE LINES
-		// for (let i = 0; i < lines; i++) {
-    //   if (i % scale.length === 0) {
-    //     // Root note string
-    //     ctx.fillStyle = color1;
-    //   } else if (i % scale.length === p5) {
-    //     // Perfect 5th string
-    //     ctx.fillStyle = color2;
-    //   } else {
-    //     // All other strings
-    //     ctx.fillStyle = 'white';
-    //   }
-    //   ctx.fillRect(i * lineWidth + (lineWidth*0.5), 0,   borderWidth, h);
-		// }
+      this.activeNoteStates = this.activeNoteStates.map(n => {
+        return {
+          noteIndex: n.noteIndex,
+          val: this.decrementAlpha(n.val, n.noteIndex, scale),
+        }
+      }).filter(n => {
+        if (n.noteIndex % scale.length === 0) {
+          return n.val > ROOT_NOTE_MIN_ALPHA;
+        }
+        return n.val > 0;
+      });
 
-		// DRAW THE LINES
-		for (let i = 0; i < lines; i++) {
+    }
 
-      if (i % scale.length === 0) {
-        // Root note string
-        ctx.fillStyle = color1;
+    // DRAW THE LINES
+    for (let i = 0; i < lines; i++) {
+
+      if (this.activeNoteStates.length && this.activeNoteStates.some(n => n.noteIndex === i)) {
+
+        const note = this.activeNoteStates.find(n => n.noteIndex === i);
+
+        // if (i % scale.length !== 0) {
+          ctx.fillStyle = `rgba(${color1[0]},${color1[1]},${color1[2]},${note.val})`;
+        // }
         ctx.fillRect(i * lineWidth, 0, lineWidth + 1, h);
-      }
 
-      // Perfect 5th note
-      if (i % scale.length === p5) {
-        ctx.fillStyle = color2;
-        ctx.fillRect(i * lineWidth, 0, lineWidth + 1, h); // +1 is for overlap to avoid nasty small gaps
+      } else if (i % scale.length === 0) {
+        // Root note string
+        ctx.fillStyle = `rgb(${color1[0]},${color1[1]},${color1[2]}, ${ROOT_NOTE_MIN_ALPHA})`;
+        ctx.fillRect(i * lineWidth, 0, lineWidth + 1, h);
       }
 
       // All line borders
       ctx.fillStyle = colorBorder;
-      ctx.fillRect(i * lineWidth, 0,   borderWidth, h);
-		}
-	}
+      ctx.fillRect(i * lineWidth, 0, borderWidth, h);
+    }
+  }
 
-  onPointerDown(e, id: number): void {
-		const index = this.touches.Add(id);
-		const pos = getCoordinateFromEventAsPercentageWithinElement(e, this.canvas);
-		const noteIndex = this._getNoteIndexFromPosition(pos.x);
+  highlightHarpKey(noteIndex: number) {
+    this.activeNoteStates.push({
+      noteIndex,
+      val: 1,
+    });
+  }
 
-		// store the current noteIndex in activeTouches
-		this.activeTouches[id] = noteIndex;
-		// Play the note
-    console.log(pos)
-		Omni.audio.harpNoteOn(noteIndex, pos.y, index);
-	}
+  onPointerDown(e, id: number) {
+    const index = this.touches.Add(id);
+    const pos = getCoordinateFromEventAsPercentageWithinElement(e, this.canvas);
+    const noteIndex = this._getNoteIndexFromPosition(pos.x);
 
-	onPointerUp(e, id: number): void {
-		// delete this noteIndex from active touches
-		delete this.activeTouches[id];
-	}
+    // store the current noteIndex in activeTouches
+    this.activeTouches[id] = noteIndex;
+    // Play the note
+    Omni.audio.harpNoteOn(noteIndex, pos.y, index);
+    this.highlightHarpKey(noteIndex)
+  }
 
-	onPointerMove(e, id: number): void {
-		const index = this.touches.GetIndexFromIdentifier(id);
-		const {x, y} = getCoordinateFromEventAsPercentageWithinElement(e, this.canvas);
-		const noteIndex = this._getNoteIndexFromPosition(x);
+  onPointerUp(e, id: number): void {
+    // delete this noteIndex from active touches
+    delete this.activeTouches[id];
+  }
 
-		// If noteIndex hasn't changed (note is the same)
-		if (this.activeTouches[id] === noteIndex) {
+  onPointerMove(e, id: number): void {
+    const index = this.touches.GetIndexFromIdentifier(id);
+    const { x, y } = getCoordinateFromEventAsPercentageWithinElement(e, this.canvas);
+    const noteIndex = this._getNoteIndexFromPosition(x);
+
+
+    // If noteIndex hasn't changed (note is the same)
+    if (this.activeTouches[id] === noteIndex) {
       // Update the notes position on the note
       // Omni.audio.harp.updateNote(x, y, index); //TODO: do we need this
 
@@ -134,10 +165,12 @@ class Harp {
 
       // Play the new note
       Omni.audio.harpNoteOn(noteIndex, y, index);
+      this.highlightHarpKey(noteIndex)
     }
-	}
+  }
 
   onKeyDown(key: number) {
+    this.highlightHarpKey(key);
     Omni.audio.harpNoteOn(key, undefined, -1);
   }
 
@@ -147,36 +180,33 @@ class Harp {
 
   updateScale(scale, rootNoteIdx = 0) {
 
-    console.log(scale);
-
-		const len = scale.length;
-		const p5 = getPerfectFifthIndex(scale);
+    const len = scale.length;
+    const p5 = getPerfectFifthIndex(scale);
 
 
-		let colors: string[] = [];
-		// colors[0] = palette.grey;
-		// colors[0] = 'fff';
-		// colors[p5] = palette.pink;
-		colors[0] = 'FF6969';
-		colors[p5] = 'FFC3C3';
-		for (let i = 0; i < len; i++) {
-			if (!colors[i]) {
-				colors[i] = (i % 2 === 0) ? palette.green : palette.blue;
-			}
-		}
-		console.log(colors);
+    let colors: string[] = [];
+    // colors[0] = palette.grey;
+    // colors[0] = 'fff';
+    // colors[p5] = palette.pink;
+    colors[0] = 'FF6969';
+    colors[p5] = 'FFC3C3';
+    for (let i = 0; i < len; i++) {
+      if (!colors[i]) {
+        colors[i] = (i % 2 === 0) ? palette.green : palette.blue;
+      }
+    }
 
-		this.lines = (len * this.octavesToDisplay) + 1; // add 1 to include top octave note
+    this.lines = (len * this.octavesToDisplay) + 1; // add 1 to include top octave note
 
-		this.colors = colors;
-		Omni.audio.scale = scale;
+    this.colors = colors;
+    Omni.audio.scale = scale;
     Omni.audio.rootNoteIdx = rootNoteIdx;
-		this.draw(scale);
-	}
+    this.draw(scale);
+  }
 
-	private _getNoteIndexFromPosition(x: number): number {
+  private _getNoteIndexFromPosition(x: number): number {
     return Math.floor(x * this.lines);
-	}
+  }
 
 }
 

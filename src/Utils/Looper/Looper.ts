@@ -105,7 +105,6 @@ class Looper {
 			this.stopPlaying();
       this.state = 'stopped';
 		}
-    console.log('this recording state =', this.state)
 	}
 
 	/**

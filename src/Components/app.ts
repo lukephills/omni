@@ -120,8 +120,6 @@ class App {
   }
 
   init() {
-    console.log('INITIALIZED APP');
-
     // on resize event listener
     window.addEventListener('resize', this.onResize.bind(this));
 
@@ -288,7 +286,6 @@ class App {
     // update the xyPad button position
     this.xyPad.xPos = this.effects[val].getVal()
 
-    console.log('set', val, this.effects[val], this.effects[val].name)
     if (this.xEffectNameEl) {
       this.xEffectNameEl.innerHTML = this.effects[val].name;
     }
@@ -387,7 +384,6 @@ class App {
     } else if (keyType === 'control') {
       this.emitKeyControlAction(key);
     }
-    console.log('start ', key)
   }
 
   onKeyUp(e: KeyboardEventLatest) {
@@ -396,7 +392,6 @@ class App {
     if (keyType === 'bass') {
       this.audio.bassNoteOff(key)
     }
-    console.log('stop ', key, keyType)
   }
 
   emitKeyControlAction(key: number) {

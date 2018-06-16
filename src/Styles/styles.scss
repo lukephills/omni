@@ -178,6 +178,7 @@ h1 {
     background-color: #ffe4cb;
     margin-right: 3px;
     transition: background-color 1s ease;
+    border: 2px solid;
 
     @include sm {
       width: 33px;
@@ -514,7 +515,7 @@ li {
     background-size: 60%;
     @include md {
       margin: 0 16px 0;
-      background-size: 60%;
+      background-size: 70%;
     }
     @include landscape-xs {
       margin: 0 8px 0 8px;
