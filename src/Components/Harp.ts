@@ -51,10 +51,11 @@ class Harp {
 
   decrementAlpha = (alpha, noteIndex, scale) => {
     if (alpha <= 0) return 0;
+    const decreaseAmount = 0.01;
     if (noteIndex % scale.length === 0) {
-      return alpha > ROOT_NOTE_MIN_ALPHA ? alpha - 0.01 : ROOT_NOTE_MIN_ALPHA;
+      return alpha > ROOT_NOTE_MIN_ALPHA ? alpha - decreaseAmount : ROOT_NOTE_MIN_ALPHA;
     }
-    return alpha - 0.01;
+    return alpha - decreaseAmount;
   }
 
   draw(scale): void {
@@ -92,7 +93,6 @@ class Harp {
         }
         return n.val > 0;
       });
-
     }
 
     // DRAW THE LINES
@@ -120,10 +120,19 @@ class Harp {
   }
 
   highlightHarpKey(noteIndex: number) {
-    this.activeNoteStates.push({
-      noteIndex,
-      val: 1,
-    });
+    const alreadyActiveIndex = this.activeNoteStates.findIndex(n => n.noteIndex === noteIndex)
+    if (alreadyActiveIndex > -1) {
+      // note already playing so update it instead
+      this.activeNoteStates[alreadyActiveIndex] = {
+        noteIndex,
+        val: 1,
+      }
+    } else {
+      this.activeNoteStates.push({
+        noteIndex,
+        val: 1,
+      });
+    }
   }
 
   onPointerDown(e, id: number) {
