@@ -59,9 +59,11 @@ const initEffectPanelSwitcher = () => {
 
 const getTheAppLinks = () => {
   const getTheApp = document.getElementById('getTheApp');
-  getTheApp.addEventListener('click', (e) => {
-    getTheApp.classList.toggle('is-open');
-  })
+  if (getTheApp) {
+    getTheApp.addEventListener('click', (e) => {
+      getTheApp.classList.toggle('is-open');
+    })
+  }
 }
 
 

@@ -117,6 +117,10 @@ class Harp {
       ctx.fillStyle = colorBorder;
       ctx.fillRect(i * lineWidth, 0, borderWidth, h);
     }
+
+    // last line border
+    ctx.fillStyle = colorBorder;
+    ctx.fillRect(w -1, 0, borderWidth, h);
   }
 
   highlightHarpKey(noteIndex: number) {

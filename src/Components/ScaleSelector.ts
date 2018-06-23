@@ -17,9 +17,6 @@ class ScaleSelector {
     this.scaleNames = Omni.scales.map(scale => scale.name)
     this.scaleDescriptions = Omni.scales.map(scale => scale.description)
 
-
-    console.log(Omni.scales)
-
     // By default set to first scale
     this.setTo(0);
   }

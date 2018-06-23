@@ -1,3 +1,5 @@
+const Map = require('es6-map');
+
 // Empty function
 export const noOp: any = () => {};
 
@@ -15,7 +17,7 @@ export class IdentifierIndexMap {
 	public Add(identifier: number): number {
 		let num: number = 0;
 		// loop through values stored
-		for (let value of this.identifiers.values()) {
+		for (let value of this.identifiers.values() as any) {
 			if (value === num) {
 				num++;
 			}

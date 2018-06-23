@@ -1,1 +1,328 @@
-<!DOCTYPE html> <html lang=en> <head> <meta charset=UTF-8> <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/> <style>.overlay{position:fixed;width:100%;height:100%;top:0;left:0;background:rgba(0,0,0,1)}.loading-spinner{position:absolute;top:0;left:0;bottom:0;right:0;margin:auto;width:40px;height:40px;background:rgba(255,105,105,1);opacity:.3;border-radius:50%;animation:glow .8s ease-in infinite alternate}@keyframes glow{from{opacity:.3}to{opacity:1}}</style> <script>WebFontConfig={google:{families:["Roboto:100,100i"]}},function(){var e=document.createElement("script");e.src="https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js",e.type="text/javascript",e.async="true";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script> <link href="styles.css" rel="stylesheet"></head> <body> <div id=app class="container fixed-window"> <div class="flex main-view"> <nav class=nav> <h1> <span class=omni-first-letter></span>MNI</h1> <div class=nav-buttons> <div id=recordBtn class="btn icon-record btn-record"></div> <div id=playBtn class="btn icon-play btn-play"></div> <div id=menuBtn class="btn icon-menu js-menu-btn"></div> </div> </nav> <div class=scale-selector> <div id=scaleSelectPrevBtn class="icon-arrow-left js-scaleSelectPrevBtn"></div> <div class=scale-text-container> <h1 class="scale-name js-scale-name">xenakis</h1> </div> <div id=scaleSelectNextBtn class="icon-arrow-right js-scaleSelectNextBtn"></div> </div> <div id=middle-section class="flex middle-section rel"> <section class=xy-pad-section> <div class=xy-pad> <div class=overflow-hidden> <div class=triange></div> <canvas id=xyPad></canvas> <div class=effects-choice-overlay id=effectsChoiceOverlay> <span id=closeBtnEffects class="icon-close btn-close"></span> <h4>y effect</h4> <div class="flex space-between settings-carousel js-fx-carousel" data-carousel=yEffect data-carousel-group=1> <span data-carousel-prev class=icon-arrow-left></span> <span data-carousel-next class=icon-arrow-right></span> </div> <h4>x effect</h4> <div class="flex space-between settings-carousel js-fx-carousel" data-carousel=xEffect data-carousel-group=1> <span data-carousel-prev class=icon-arrow-left></span> <span data-carousel-next class=icon-arrow-right></span> </div> </div> </div> <div class=x-name> <span class="js-fx-switch icon-arrow-left" data-direction=prev data-xy=x></span> <span class=fx-name id=xAxisName>distortion</span> <span class="js-fx-switch icon-arrow-right" data-direction=next data-xy=x></span> <output id=xAxisVal>1</output> </div> <div class=y-name> <span class="js-fx-switch icon-arrow-left" data-direction=prev data-xy=y></span> <span class=fx-name id=yAxisName>reverb</span> <span class="js-fx-switch icon-arrow-right" data-direction=next data-xy=y></span> <output id=yAxisVal>1</output> </div> </div> </section> <div id=middle-switch class="icon-xy middle-switch"></div> <section class=pitch-constellation-section> <div class=pitch-constellation> <div class=circle id=pitchConstellation></div> <div class=letters id=pitch-constellation-letters> <span id=n0 class="n0 is-selected">C</span> <span id=n1 class=n1>C#</span> <span id=n2 class=n2>D</span> <span id=n3 class=n3>D#</span> <span id=n4 class=n4>E</span> <span id=n5 class=n5>F</span> <span id=n6 class=n6>F#</span> <span id=n7 class=n7>G</span> <span id=n8 class=n8>G#</span> <span id=n9 class=n9>A</span> <span id=n10 class=n10>A#</span> <span id=n11 class=n11>B</span> </div> </div> </section> </div> <div class="flex space-between selector-section"> </div> <section class="flex harp"> <canvas id=harp></canvas> </section> </div> <div class="container settings-overlay" id=settingsOverlay> <nav class=nav> <h1> <span class=omni-first-letter></span>MNI</h1> <div class=nav-buttons> <a id=downloadBtn class="btn-download has-loop">Export Loop</a> <div id=closeBtnSettings class="btn icon-close btn-close"></div> </div> </nav> <div class="scale-selector scale-selector--menu"> <div id=scaleSelectPrevBtn class="icon-arrow-left js-scaleSelectPrevBtn"></div> <div class=scale-text-container> <h1 class="scale-name js-scale-name">xenakis</h1> </div> <div class="icon-arrow-right js-scaleSelectNextBtn"></div> </div> <section class=scale-info> <ul id=scaleFrequencies class="freqs list-inline"></ul> <p id=scaleDescription class=scale-descrip></p> </section> <section class="settings text-center"> <div class=setting> <h4>octaves</h4> <div class="flex space-between settings-carousel" data-carousel=octave data-carousel-rotate=false> <span data-carousel-prev class=icon-minus></span> <ul> <li data-val=1>1</li> <li data-val=2>2</li> <li data-val=3 class=is-selected>3</li> <li data-val=4>4</li> <li data-val=5>5</li> </ul> <span data-carousel-next class=icon-plus></span> </div> </div> <div class=setting> <h4>offset</h4> <div class="flex space-between settings-carousel" data-carousel=octaveOffset data-carousel-rotate=false> <span data-carousel-prev class=icon-minus></span> <ul> <li data-val=-1>-1</li> <li data-val=0 class=is-selected>0</li> <li data-val=1>1</li> <li data-val=2>2</li> <li data-val=3>3</li> <li data-val=4>4</li> </ul> <span data-carousel-next class=icon-plus></span> </div> </div> </section> <article> </article> <footer> <div id=getTheApp class=get-the-app> <h2>Get the app</h2> <div class=app-store-links> <a href=#>iOS</a> <a href=#>android</a> <a href=#>desktop</a> </div> </div> <div class=website> <a href=https://femurdesign.com>femurdesign.com</a> </div> <div class=share> <h2>Share:</h2> <a href="" class=icon-fb></a> <a href="" class=icon-tw></a> </div> </footer> </div> </div> <div id=splashOverlay class="overlay splash-overlay"> </div> <div id=startOverlay class="overlay startOverlay"> <div class=loading-spinner></div> </div> <script type="text/javascript" src="vendor.bundle.js"></script><script type="text/javascript" src="bundle.js"></script></body> </html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <title>Omni - Play music using scales from around the world</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <meta name="description" content="Make beautiful music by playing and discovering old scales from around the world. Record loops, play with effects and experiment by mixing up scales &amp; key signatures.">
+  <meta property="og:url" content="http://www.femurdesign.com/omni/" />
+  <meta property="og:title" content="Omni - Experiment playing music using scales from around the world" />
+  <meta property="og:description" content="Make beautiful music by playing and discovering old scales from around the world. Record loops, play with effects and experiment by mixing up scales &amp; key signatures."
+  />
+  <meta property="og:image" content="http://femurdesign.com/omni/favicons/thumbnail-ipad.png" />
+
+  <link rel="image_src" href="favicons/thumbnail.png">
+
+  <!-- fb -->
+  <meta property="fb:admins" content="605035371" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@femurdesign">
+  <meta name="twitter:title" content="Omni - Experiment playing music using scales from around the world">
+  <meta name="twitter:description" content="Make beautiful music by playing and discovering old scales from around the world. Record loops, play with effects and experiment by mixing up scales &amp; key signatures.">
+  <meta name="twitter:image" content="favicons/thumbnail.png">
+
+  <!-- G+ -->
+  <meta itemprop="name" content="Omni - Experiment playing music using scales from around the world" />
+  <meta itemprop="description" content="Make beautiful music by playing and discovering old scales from around the world. Record loops, play with effects and experiment by mixing up scales &amp; key signatures."
+  />
+  <link rel="author" href="http://www.femurdesign.com" />
+  <link rel="publisher" href="https://plus.google.com/108918707363344775133" />
+
+  <!-- ICONS from http://realfavicongenerator.net/-->
+  <link rel="apple-touch-icon" sizes="57x57" href="favicons/apple-touch-icon-57x57.png?v2=GvvyQPg8Yv">
+  <link rel="apple-touch-icon" sizes="60x60" href="favicons/apple-touch-icon-60x60.png?v2=GvvyQPg8Yv">
+  <link rel="apple-touch-icon" sizes="72x72" href="favicons/apple-touch-icon-72x72.png?v2=GvvyQPg8Yv">
+  <link rel="apple-touch-icon" sizes="76x76" href="favicons/apple-touch-icon-76x76.png?v2=GvvyQPg8Yv">
+  <link rel="apple-touch-icon" sizes="114x114" href="favicons/apple-touch-icon-114x114.png?v2=GvvyQPg8Yv">
+  <link rel="apple-touch-icon" sizes="120x120" href="favicons/apple-touch-icon-120x120.png?v2=GvvyQPg8Yv">
+  <link rel="apple-touch-icon" sizes="144x144" href="favicons/apple-touch-icon-144x144.png?v2=GvvyQPg8Yv">
+  <link rel="apple-touch-icon" sizes="152x152" href="favicons/apple-touch-icon-152x152.png?v2=GvvyQPg8Yv">
+  <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon-180x180.png?v2=GvvyQPg8Yv">
+  <link rel="icon" type="image/png" href="favicons/favicon-32x32.png?v2=GvvyQPg8Yv" sizes="32x32">
+  <link rel="icon" type="image/png" href="favicons/android-chrome-192x192.png?v2=GvvyQPg8Yv" sizes="192x192">
+  <link rel="icon" type="image/png" href="favicons/favicon-96x96.png?v2=GvvyQPg8Yv" sizes="96x96">
+  <link rel="icon" type="image/png" href="favicons/favicon-16x16.png?v2=GvvyQPg8Yv" sizes="16x16">
+  <link rel="manifest" href="favicons/manifest.json?v2=GvvyQPg8Yv">
+  <link rel="mask-icon" href="favicons/safari-pinned-tab.svg?v2=GvvyQPg8Yv" color="#5bbad5">
+  <link rel="shortcut icon" href="favicons/favicon.ico?v2=GvvyQPg8Yv">
+  <meta name="apple-mobile-web-app-title" content="Omni">
+  <meta name="application-name" content="Omni">
+  <meta name="msapplication-TileColor" content="#00a300">
+  <meta name="msapplication-TileImage" content="favicons/mstile-144x144.png?v2=GvvyQPg8Yv">
+  <meta name="theme-color" content="#ffffff">
+
+  <style>
+    .overlay {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: rgba(0, 0, 0, 1);
+    }
+
+    .loading-spinner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      margin: auto;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 105, 105, 1);
+      opacity: 0.3;
+      border-radius: 50%;
+      animation: glow 0.8s ease-in infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        opacity: 0.3
+      }
+      to {
+        opacity: 1
+      }
+    }
+  </style>
+
+  <script type="text/javascript">
+    WebFontConfig = {
+      google: { families: ['Roboto:100,100i'] }
+    };
+    (function () {
+      var wf = document.createElement('script');
+      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+      wf.type = 'text/javascript';
+      wf.async = 'true';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(wf, s);
+    })(); </script>
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+  <div id="app" class="container fixed-window">
+    <div class="flex main-view">
+      <nav class="nav">
+        <h1><span class="omni-first-letter">O</span>MNI</h1>
+        <div class="nav-buttons">
+          <div id="recordBtn" class="btn icon-record btn-record"></div>
+          <div id="playBtn" class="btn icon-play btn-play"></div>
+          <div id="menuBtn" class="btn icon-menu js-menu-btn"></div>
+        </div>
+      </nav>
+      <div class="scale-selector">
+        <div id="scaleSelectPrevBtn" class="icon-arrow-left js-scaleSelectPrevBtn"></div>
+        <div class="scale-text-container">
+          <h1 class="scale-name js-scale-name">xenakis</h1>
+        </div>
+        <div id="scaleSelectNextBtn" class="icon-arrow-right js-scaleSelectNextBtn"></div>
+      </div>
+      <div id="middle-section" class="flex middle-section rel">
+        <section class="xy-pad-section">
+          <div class="xy-pad">
+            <div class="overflow-hidden">
+              <div class="triange"></div>
+              <canvas id="xyPad"></canvas>
+              <div class="effects-choice-overlay" id="effectsChoiceOverlay">
+                <span id="closeBtnEffects" class="icon-close btn-close"></span>
+
+                <h4>y effect</h4>
+                <div class="flex space-between settings-carousel js-fx-carousel" data-carousel='yEffect' data-carousel-group=1>
+                  <span data-carousel-prev class="icon-arrow-left"></span>
+                  <span data-carousel-next class="icon-arrow-right"></span>
+                </div>
+
+                <h4>x effect</h4>
+                <div class="flex space-between settings-carousel js-fx-carousel" data-carousel='xEffect' data-carousel-group=1>
+                  <span data-carousel-prev class="icon-arrow-left"></span>
+                  <span data-carousel-next class="icon-arrow-right"></span>
+                </div>
+
+
+              </div>
+            </div>
+            <div class="x-name">
+              <span class="js-fx-switch icon-arrow-left" data-direction="prev" data-xy="x"></span>
+              <span class="fx-name" id="xAxisName">distortion</span>
+              <span class="js-fx-switch icon-arrow-right" data-direction="next" data-xy="x"></span>
+              <output id="xAxisVal">1</output>
+            </div>
+            <div class="y-name">
+              <span class="js-fx-switch icon-arrow-left" data-direction="prev" data-xy="y"></span>
+              <span class="fx-name" id="yAxisName">reverb</span>
+              <span class="js-fx-switch icon-arrow-right" data-direction="next" data-xy="y"></span>
+              <output id="yAxisVal">1</output>
+            </div>
+          </div>
+        </section>
+        <div id="middle-switch" class="icon-xy middle-switch"></div>
+        <section class="pitch-constellation-section">
+          <div class="pitch-constellation">
+            <div class="circle" id="pitchConstellation"></div>
+            <div class="letters" id="pitch-constellation-letters">
+
+              <span id="n0" class="n0 is-selected">C</span>
+              <span id="n1" class="n1">C#</span>
+              <span id="n2" class="n2">D</span>
+              <span id="n3" class="n3">D#</span>
+              <span id="n4" class="n4">E</span>
+              <span id="n5" class="n5">F</span>
+              <span id="n6" class="n6">F#</span>
+              <span id="n7" class="n7">G</span>
+              <span id="n8" class="n8">G#</span>
+              <span id="n9" class="n9">A</span>
+              <span id="n10" class="n10">A#</span>
+              <span id="n11" class="n11">B</span>
+
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="flex space-between selector-section">
+        <!-- <section class="drone-selector">
+          <ul class="flex" id="drone-selector-buttons">
+            <li>i</li>
+            <li>ii</li>
+            <li>iii</li>
+            <li>iv</li>
+            <li class="is-selected">v</li>
+            <li>vi</li>
+            <li>vii</li>
+            <li>i</li>
+          </ul>
+        </section> -->
+        <!-- <section class="fav-scale-selector">
+          <div class="fav-scale-controller">
+            <a id="addFavScaleBtn" class="icon-plus"></a>
+          </div>
+          <ul class="flex" id="fav-scale-buttons"></ul>
+        </section> -->
+      </div>
+      <section class="flex harp">
+        <canvas id="harp"></canvas>
+      </section>
+    </div>
+
+
+
+    <div class="container settings-overlay" id="settingsOverlay">
+
+      <nav class="nav">
+        <h1>
+          <span class="omni-first-letter"></span>MNI</h1>
+        <div class="nav-buttons">
+          <div id="closeBtnSettings" class="btn icon-close btn-close"></div>
+        </div>
+      </nav>
+
+      <div class="scale-selector scale-selector--menu">
+        <div id="scaleSelectPrevBtn" class="icon-arrow-left js-scaleSelectPrevBtn"></div>
+        <div class="scale-text-container">
+          <h1 class="scale-name js-scale-name">xenakis</h1>
+        </div>
+        <div class="icon-arrow-right js-scaleSelectNextBtn"></div>
+      </div>
+
+      <section class="scale-info">
+        <ul id="scaleFrequencies" class="freqs list-inline"></ul>
+        <p id="scaleDescription" class="scale-descrip"></p>
+      </section>
+
+
+      <section class="settings text-center">
+        <!-- <div class="setting">
+          <h4>voices</h4>
+          <div class="flex space-between settings-carousel" data-carousel='voices'>
+            <span data-carousel-prev id="scaleSelectPrevBtn" class="icon-arrow-left"></span>
+            <ul>
+              <li data-val="0" class="is-selected">Sound1</li>
+              <li data-val="1">Sound2</li>
+              <li data-val="2">Sound3</li>
+              <li data-val="3">Sound4</li>
+            </ul>
+            <span data-carousel-next class="icon-arrow-right"></span>
+          </div>
+        </div> -->
+        <div class="setting">
+          <h4>octaves</h4>
+          <div class="flex space-between settings-carousel" data-carousel='octave' data-carousel-rotate=false>
+            <span data-carousel-prev class="icon-minus"></span>
+            <ul>
+              <li data-val="1">1</li>
+              <li data-val="2">2</li>
+              <li data-val="3" class="is-selected">3</li>
+              <li data-val="4">4</li>
+              <li data-val="5">5</li>
+            </ul>
+            <span data-carousel-next class="icon-plus"></span>
+          </div>
+        </div>
+        <div class="setting">
+          <h4>offset</h4>
+          <div class="flex space-between settings-carousel" data-carousel='octaveOffset' data-carousel-rotate=false>
+            <span data-carousel-prev class="icon-minus"></span>
+            <ul>
+              <li data-val="-1">-1</li>
+              <li data-val="0" class="is-selected">0</li>
+              <li data-val="1">1</li>
+              <li data-val="2">2</li>
+              <li data-val="3">3</li>
+              <li data-val="4">4</li>
+            </ul>
+            <span data-carousel-next class="icon-plus"></span>
+          </div>
+        </div>
+      </section>
+      <section class="settings text-center">
+        <a id="downloadBtn" class="btn-download">Export Loop</a>
+      </section>
+      <article>
+        <!-- <p>So much music tends to be written in the western major or minor modes, but there are actually infinite ways of assembling a scale.</p>
+          <p>Omni aims to let anyone effortlessly play and experiment with these alternative modes and scales created by composers and cultures from around the world.</p>
+          <p>Play the harp, use the pitch constellation to switch keys and play bass drones. There are 6 different effects available to experiment with on the XY pad and you can record/overdub and play along with your loops.</p>
+          <p>If you want more, consider supporting me by buying the app on iOS and Android.</p> -->
+      </article>
+      <footer>
+        <!-- <div id="getTheApp" class="get-the-app">
+          <h2>Get the app</h2>
+          <div class="app-store-links">
+            <a href="#">iOS</a>
+            <a href="#">android</a>
+            <a href="#">desktop</a>
+          </div>
+        </div> -->
+        <div class="website">
+          <a href="https://femurdesign.com">femurdesign.com</a>
+        </div>
+        <div class="share">
+          <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A//femurdesign.com/omni" class="icon-fb"></a>
+          <a target="_blank" href="https://twitter.com/home?status=Omni%20-%20Play%20music%20using%20scales%20from%20around%20the%20world%20by%20%40femurdesign%20https%3A//femurdesign.com/omni" class="icon-tw"></a>
+        </div>
+      </footer>
+    </div>
+
+
+  </div>
+
+  <div id="splashOverlay" class="overlay splash-overlay">
+    <!-- <img class="inject-me" src="./src/assets/splash.svg" /> -->
+  </div>
+
+  <div id="startOverlay" class="overlay startOverlay">
+    <div class="loading-spinner"></div>
+  </div>
+
+
+  <!--<script src="cordova.js"></script>-->
+
+<script type="text/javascript" src="/vendor.bundle.js"></script><script type="text/javascript" src="/bundle.js"></script></body>
+
+</html>

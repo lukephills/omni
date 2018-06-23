@@ -2,8 +2,9 @@ const Webpack = require('webpack');
 const Path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const Uglify = require("uglifyjs-webpack-plugin");
 
-const isProduction = process.argv.indexOf('-p') >= 0;
+const isProduction = process.argv.indexOf('-prodES6') >= 0;
 const outPath = Path.join(__dirname, './dist');
 const sourcePath = Path.join(__dirname, './src');
 
@@ -101,7 +102,12 @@ module.exports = {
   },
   plugins: [
     new Webpack.DefinePlugin({
-      'process.env.NODE_ENV': isProduction === true ? JSON.stringify('production') : JSON.stringify('development')
+      'process.env.NODE_ENV': JSON.stringify('production')
+    }),
+    new Uglify({
+      uglifyOptions: {
+        mangle: false,
+      }
     }),
     new Webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',

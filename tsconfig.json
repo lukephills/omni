@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "sourceMap": true,
-    "target": "es6",
+    "target": "esnext",
     "jsx": "react",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -12,6 +12,7 @@
     "noImplicitReturns": false,
     "removeComments": true,
     "strictNullChecks": false,
+    "allowSyntheticDefaultImports": true,
     "outDir": "build",
     "lib": [
       "es6",

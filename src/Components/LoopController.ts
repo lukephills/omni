@@ -18,6 +18,8 @@ class LoopController {
     Omni.audio.looper.recordBtnPressed();
     this.render();
     this.recordBtnEl.classList.add('has-loop');
+    this.playBtnEl.classList.add('has-loop');
+    this.downloadBtnEl.classList.add('has-loop');
   }
 
   onPlayPressed(e) {

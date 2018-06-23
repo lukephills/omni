@@ -178,11 +178,17 @@ h1 {
     background-color: #ffe4cb;
     margin-right: 3px;
     transition: background-color 1s ease;
-    border: 2px solid;
+    border: #ffb2a3 1px solid;
+
+    color: transparent;
+    position: absolute;
+    left: 0;
+    top: 2px;
 
     @include sm {
       width: 33px;
       height: 33px;
+      border: #ffb2a3 2px solid;
     }
 
     @include md {
@@ -288,6 +294,9 @@ li {
   display: block;
   width: 50px;
   height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   @include sm-down {
     transform: scale(0.8);
@@ -397,6 +406,10 @@ li {
   &.is-playing {
     @extend .icon-stop;
   }
+  opacity: 0.3;
+  &.has-loop {
+    opacity: 1;
+  }
 }
 
 .is-recording {
@@ -416,7 +429,7 @@ li {
 // SPECIFIC COMPONENTS
 
 .container {
-  padding: 0;
+  padding: 0 5px;
   @include sm {
     padding: 0 8px;
   }
@@ -433,6 +446,9 @@ li {
   justify-content: space-between;
   align-items: center;
   height: 58px;
+
+
+
   @include sm {
     height: 83px;
     margin-bottom: 30px;
@@ -440,6 +456,14 @@ li {
   h1 {
     font-style: normal;
     color: #ffb2a3;
+    position: relative;
+    padding-left: 31px;
+    @include sm {
+      padding-left: 37px;
+    }
+    @include md {
+      padding-left: 42px;
+    }
   }
 }
 
@@ -580,7 +604,7 @@ li {
   display: block;
   position: absolute;
   right: 0;
-  bottom: 0;
+  bottom: 7px;
   @include sm {
     bottom: 10px;
   }
@@ -900,6 +924,13 @@ li {
   margin: 0 auto 30px;
 }
 
+.scale-descrip {
+  margin: 40px 0 20px;
+  @include sm {
+    margin: 1em 0;
+  }
+}
+
 .fav-scale-controller {
   position: absolute;
   right: -9px;
@@ -1034,13 +1065,34 @@ li {
   width: 100%;
   z-index: $z5;
   overflow: auto;
+  padding-top: 58px;
+
+
   &.is-active {
-    display: flex;
+    display: block;
     flex-direction: column;
+
+    @include sm {
+      padding-top: 113px;
+      display: flex;
+    }
   }
 
   .omni-first-letter {
     background-color: #ffb2a3;
+  }
+
+  .nav {
+    position: fixed;
+    background: #ffe4cb;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    padding-left: 15px;
+    @include sm {
+      padding-left: 18px;
+    }
   }
 
   > nav, > section, > footer {
@@ -1093,6 +1145,7 @@ li {
   padding: 0 20px;
   margin-right: 9px;
   line-height: 50px;
+  cursor: pointer;
 
   &.has-loop {
     display: block;
@@ -1106,7 +1159,10 @@ li {
   align-items: center;
   border-bottom: 1px solid #ffa699;
   margin: 0 auto 30px;
-  padding: 20px 0;
+  padding: 10px 0;
+  @include sm {
+    padding: 20px 0;
+  }
   ul {
     @extend .flex;
     @extend .justify-center;
@@ -1179,12 +1235,15 @@ footer {
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  padding: 0 0 0 10px;
+  @include sm {
+    padding: 0 5px 10px 20px;
+  }
 }
 
 .share {
   display: flex;
   align-items: center;
-  padding-right: 20px;
 }
 
 
