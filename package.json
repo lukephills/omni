@@ -27,9 +27,9 @@
     "@types/node": "^4.0.22-alpha",
     "@types/react": "^16.0.25",
     "@types/react-dom": "16.0.3",
-    "@types/react-redux": "5.0.13",
     "@types/react-router": "4.0.18",
     "@types/redux-actions": "2.2.2",
+    "@types/tapable": "^0.2.5",
     "@types/webpack": "3.8.1",
     "@types/webpack-env": "1.13.2",
     "awesome-typescript-loader": "^3.4.0",
@@ -66,19 +66,19 @@
   },
   "dependencies": {
     "audio-buffer-utils": "^2.0.1",
+    "classnames": "^2.2.5",
     "document-visibility": "^1.0.1",
     "es6-map": "^0.1.4",
     "inline-worker": "^1.1.0",
     "merge-audio-buffers": "^1.0.0",
     "normalize.css": "^3.0.3",
-    "svg-injector": "^1.1.3",
-    "worker-timer": "^1.0.0",
-    "classnames": "^2.2.5",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "redux": "^3.7.2",
-    "redux-actions": "^2.2.1"
+    "redux-actions": "^2.2.1",
+    "svg-injector": "^1.1.3",
+    "worker-timer": "^1.0.0"
   }
 }
