@@ -29,7 +29,7 @@ class FeedbackDelay extends AudioEffect {
   }
 
   set delay(val: number) {
-    this._delay.delayTime.value = val;
+    this._delay.delayTime.linearRampToValueAtTime(val, this.ctx.currentTime + 0.1);
   }
 
   get feedback() {
