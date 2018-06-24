@@ -1077,6 +1077,9 @@ li {
     @include sm {
       padding-top: 113px;
       display: flex;
+      @media only screen and (max-height : 770px) {
+        display: block;
+      }
     }
   }
 

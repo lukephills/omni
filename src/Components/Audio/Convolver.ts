@@ -14,7 +14,7 @@ class Convolver extends AudioEffect {
 
     const ajaxRequest = new XMLHttpRequest();
     // ajaxRequest.open('GET', './teufelsberg01.ogg', true);
-    ajaxRequest.open('GET', '../../assets/teufelsberg01.ogg', true);
+    ajaxRequest.open('GET', 'https://femurdesign.com/omni/assets/teufelsberg01.ogg', true);
     ajaxRequest.responseType = 'arraybuffer';
 
     ajaxRequest.onload = () => {

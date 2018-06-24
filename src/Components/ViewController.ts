@@ -19,11 +19,11 @@ const playIntroScene = () => {
 
   setTimeout(() => {
     splashOverlay.classList.add('anim-ended')
-  }, 1500)
+  }, 100)
 
   setTimeout(() => {
     splashOverlay.style.display = 'none'
-  }, 2500)
+  }, 600)
 
 }
 
