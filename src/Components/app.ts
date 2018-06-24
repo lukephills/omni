@@ -213,6 +213,14 @@ class App {
       onKeyUp: this.onKeyUp.bind(this),
     });
 
+
+    // detect if touch device
+    window.addEventListener('touchstart', function onFirstTouch() {
+      document.body.classList.add('has-touchscreen');
+      window.removeEventListener('touchstart', onFirstTouch, false);
+    }, false);
+
+
   }
 
 

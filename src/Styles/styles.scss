@@ -406,8 +406,10 @@ li {
   &.is-playing {
     @extend .icon-stop;
   }
+  cursor: default;
   opacity: 0.3;
   &.has-loop {
+    cursor: pointer;
     opacity: 1;
   }
 }
@@ -1299,3 +1301,14 @@ footer {
   }
 }
 
+.tip-mobile {
+  display: none;
+}
+.has-touchscreen {
+  .tip-desktop {
+    display: none;
+  }
+  .tip-mobile {
+    display: block;
+  }
+}
