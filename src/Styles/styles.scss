@@ -384,12 +384,16 @@ li {
 
 .icon-fb {
   background: url(../assets/icons/icon-fb.svg) center no-repeat;
-  background-size: 40%;
+  background-size: 30%;
+  width: 35px;
+  height: 35px;
 }
 
 .icon-tw {
   background: url(../assets/icons/icon-tw.svg) center no-repeat;
-  background-size: 40%;
+  background-size: 30%;
+  width: 35px;
+  height: 35px;
 }
 
 .btn-record {
@@ -924,7 +928,7 @@ li {
 .scale-info {
   text-align: center;
   max-width: 580px;
-  margin: 0 auto 30px;
+  margin: 0 auto;
 }
 
 .scale-descrip {
@@ -1090,7 +1094,7 @@ li {
 
   .nav {
     position: fixed;
-    background: #ffe4cb;
+    background: linear-gradient(#ffe4cb 90%, rgba(255, 228, 203, 0) 100%);
     top: 0;
     left: 0;
     right: 0;
@@ -1106,10 +1110,12 @@ li {
   }
 
   > article {
-    flex: 1 0 auto;
     max-width: 580px;
     margin: 30px auto;
     text-align: center;
+    background: hsla(28, 100%, 96%, 1);
+    padding: 10px 20px;
+    user-select: auto;
   }
 
   .scale-selector  {
@@ -1127,6 +1133,7 @@ li {
 .freqs li {
   font-size: 12px;
   height: auto;
+  user-select: auto;
 }
 
 .settings {
@@ -1134,10 +1141,19 @@ li {
   flex-direction: row;
   justify-content: space-around;
   flex-wrap: wrap;
-  margin-bottom: 30px;
+  max-width: 580px;
+  margin: 0 auto;
+  padding: 0 40px;
+  border: 1px solid #ffb2a3;
+
+  margin-bottom: 5px;
+  @include sm {
+    margin-bottom: 20px;
+  }
 
   .setting {
-    margin: 20px 0;
+    margin: 20px 0 0;
+    width: 100%;
     h4 {
       margin: 0;
     }
@@ -1149,7 +1165,9 @@ li {
   display: none;
   border: 1px solid;
   padding: 0 20px;
-  margin-right: 9px;
+  width: 260px;
+  margin-top: 10px;
+  margin-bottom: 40px;
   line-height: 50px;
   cursor: pointer;
 
@@ -1250,6 +1268,7 @@ footer {
 .share {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 
