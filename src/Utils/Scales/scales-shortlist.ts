@@ -279,7 +279,7 @@ interesting algorithms in his music.`
   {
     name: 'Korsakovian',
     intervals: [0, 2, 3, 5, 6, 8, 9, 11],
-    description: 'In St. Petersburg at the turn of the 20th century, this scale had become so familiar in the circle of composers around Nikolai Rimsky-Korsakov that it was referred to there as the Korsakovian scale. This is also known as an Octatonic because unlike most other seven-note scales this contains eight.'
+    description: 'In St. Petersburg at the turn of the 20th century, this scale had become so familiar in the circle of composers around Nikolai Rimsky-Korsakov that it was referred to as the Korsakovian scale. This is also known as an Octatonic because unlike most other seven-note scales this contains eight.'
   },
   {
     name: 'Lusheng',
