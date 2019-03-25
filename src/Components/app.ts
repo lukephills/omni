@@ -221,6 +221,10 @@ class App {
     }, false);
 
 
+    setTimeout(() => {
+      // LOL - for safari
+      this.onResize()
+    }, 100);
   }
 
 
