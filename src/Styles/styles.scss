@@ -117,6 +117,7 @@ $screen-xlg: 1400px;
 
 *, *:before, *:after {
   box-sizing: border-box;
+  user-select: none;
 }
 
 
