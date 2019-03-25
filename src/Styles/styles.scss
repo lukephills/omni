@@ -495,7 +495,7 @@ li {
 
   @include lg {
     margin-bottom: 70px;
-    margin-top: -40px;
+    margin-top: -13px;
   }
 
   .scale-text-container {
@@ -1081,10 +1081,10 @@ li {
 
     @include sm {
       padding-top: 113px;
-      display: flex;
-      @media only screen and (max-height : 770px) {
+      // display: flex;
+      // @media only screen and (max-height : 770px) {
         display: block;
-      }
+      // }
     }
   }
 
@@ -1094,7 +1094,7 @@ li {
 
   .nav {
     position: fixed;
-    background: linear-gradient(#ffe4cb 90%, rgba(255, 228, 203, 0) 100%);
+    background: rgba(#ffe4cb, 0.8);
     top: 0;
     left: 0;
     right: 0;
