@@ -109,7 +109,7 @@ class Harp {
 
       } else if (i % scale.length === 0) {
         // Root note string
-        ctx.fillStyle = `rgb(${color1[0]},${color1[1]},${color1[2]}, ${ROOT_NOTE_MIN_ALPHA})`;
+        ctx.fillStyle = `rgba(${color1[0]},${color1[1]},${color1[2]}, ${ROOT_NOTE_MIN_ALPHA})`;
         ctx.fillRect(i * lineWidth, 0, lineWidth + 1, h);
       }
 
