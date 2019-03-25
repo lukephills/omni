@@ -933,6 +933,8 @@ li {
 
 .scale-descrip {
   margin: 40px 0 20px;
+  background: #fff4eb;
+  padding: 22px 20px;
   @include sm {
     margin: 1em 0;
   }
@@ -1130,10 +1132,47 @@ li {
 
 }
 
+.freqs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 .freqs li {
   font-size: 12px;
-  height: auto;
+  height: 18px;
   user-select: auto;
+  background: #fff4eb;
+  margin: 3px 0;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  width: 52px;
+
+  &:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-top: 18px solid transparent;
+    border-bottom: 0px solid transparent;
+    border-right: 8px solid #ffe3cb;
+    transform: rotate(180deg);
+
+  }
+  &:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-top: 18px solid transparent;
+    border-bottom: 0px solid transparent;
+    border-right: 8px solid #ffe3cb;
+    transform: rotate(360deg);
+  }
 }
 
 .settings {
