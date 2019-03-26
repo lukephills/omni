@@ -13,15 +13,17 @@ class Convolver extends AudioEffect {
     // grab audio track via XHR for convolver node
 
     const ajaxRequest = new XMLHttpRequest();
-    // ajaxRequest.open('GET', './teufelsberg01.ogg', true);
-    ajaxRequest.open('GET', 'https://femurdesign.com/omni/assets/teufelsberg01.ogg', true);
+    // ajaxRequest.open('GET', './assets/teufelsberg01.mp3', true);
+    ajaxRequest.open('GET', 'https://femurdesign.com/omni/assets/teufelsberg01.mp3', true);
     ajaxRequest.responseType = 'arraybuffer';
 
     ajaxRequest.onload = () => {
+      console.log("on load")
       this.context.decodeAudioData(ajaxRequest.response, (buffer) => {
+        console.log("loaded")
           this._convolver.buffer = buffer;
         }, (err: DOMException) => {
-          console.log("Error with decoding audio data" + err)
+          console.log("Error with decoding audio data " + err)
         }
       );
     }
