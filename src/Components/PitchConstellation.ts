@@ -11,7 +11,7 @@ class PitchConstellation {
   octavesToDisplay = 5;
   _currentNote = -1;
 
-  constructor(private el: HTMLElement) {
+  constructor(private el: HTMLElement, private bassViewEl: HTMLElement) {
     if (!this.el) return;
 
     new MultiTouch(this.el, {
@@ -80,11 +80,13 @@ class PitchConstellation {
     const pos = this.distanceFromCenter(getCoordinateFromEventAsPercentageWithinElement(e, this.el));
     const note = this.getDodrant(pos);
     Omni.audio.bassNoteOn(note)
+    this.setToBassView();
     this._currentNote = note;
   }
 
   onPointerUp(e, id) {
     Omni.audio.bassNotesOff()
+    this.setToConstellationView();
     this._currentNote = -1;
   }
 
@@ -98,6 +100,22 @@ class PitchConstellation {
     this._currentNote = note;
   }
 
+  setToBassView() {
+    this.bassViewEl.style.display = "block";
+    this.setLinesOpacity(0);
+  }
+
+  setToConstellationView() {
+    this.bassViewEl.style.display = "none";
+    this.setLinesOpacity(1);
+  }
+
+  setLinesOpacity(opacity: number) {
+    const currentLinesArray = nodeListToArray(this.el.children);
+    currentLinesArray.forEach(line => {
+      line.style.opacity = opacity.toString();
+    })
+  }
 
   /**
    * Takes an array of frequencies and draws the resulting lines

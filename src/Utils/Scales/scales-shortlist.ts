@@ -412,7 +412,7 @@ interesting algorithms in his music.`
   {
     name: 'Whole Tone',
     intervals: [0, 2, 4, 6, 8, 10],
-    description: 'A scale consisting entirely of intervals of a tone, with no semitones. Because of this no single tone stands out and the scale creates a blurred, indistinct effect.',
+    description: 'A scale consisting entirely of intervals of a tone, with no semitones. Because of this no single tone stands out and the scale creates a blurred, dreamlike effect.',
   },
   {
     name: 'Xenakis',

@@ -662,6 +662,35 @@ li {
       transform-origin: bottom;
       transition: transform 0.1s ease;
     }
+
+    &--bass {
+      display: none;
+      div {
+        width: 50%;
+        height: 50%;
+        transform-origin: left bottom;
+        border-top-right-radius: 100%;
+        background: rgba(255, 105, 105, 0.07);
+      }
+      div:nth-child(1) {
+        transform: rotate(15deg);
+      }
+      div:nth-child(2) {
+        transform: rotate(195deg);
+      }
+      div:nth-child(3) {
+        transform: rotate(45deg);
+      }
+      div:nth-child(4) {
+        transform: rotate(225deg);
+      }
+      div:nth-child(5) {
+        transform: rotate(75deg);
+      }
+      div:nth-child(6) {
+        transform: rotate(255deg);
+      }
+    }
   }
   .letters {
     @extend .flex;

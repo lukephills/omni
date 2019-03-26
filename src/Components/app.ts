@@ -142,7 +142,10 @@ class App {
       }
     }
 
-    this.pitchConstellation = new PitchConstellation(<HTMLElement>document.getElementById('pitchConstellation'))
+    this.pitchConstellation = new PitchConstellation(
+        <HTMLElement>document.getElementById('pitchConstellation'),
+        <HTMLElement>document.getElementById('bassView'),
+      )
 
     this.favScaleSelector = new FavScaleSelector()
 
