@@ -106,7 +106,7 @@ class App {
       octavesToDisplay: 2,
 
       // XY pad effect choices
-      yEffect: 2,
+      yEffect: 4,
       xEffect: 3,
 
     }

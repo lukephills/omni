@@ -13,11 +13,11 @@
     "url": "https://github.com/lukephills/omni/issues"
   },
   "scripts": {
-    "build": "webpack --progress --colors && npm run copyAssets && npm run copyFavicons && npm run copyOgImage",
+    "build": "webpack --progress --colors && npm run copyAssets && npm run copyFavicons && npm run copyOgImage && npm run zip",
     "zip": "zip -r bundle.zip dist/*",
     "copyFavicons": "cp -a src/favicons dist",
-    "copyOgImage": "cp og-image.png dist/og-image.png",
-    "copyAssets": "cp src/assets/teufelsberg01.ogg dist/assets/teufelsberg01.ogg",
+    "copyOgImage": "cp thumbnail.png dist/thumbnail.png",
+    "copyAssets": "cp src/assets/teufelsberg01.mp3 dist/assets/teufelsberg01.mp3",
     "start": "webpack-dev-server --debug --devtool cheap-module-source-map --output-pathinfo --history-api-fallback --hot --inline --progress --colors --port 3000",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

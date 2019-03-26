@@ -3,18 +3,18 @@
 
 <head>
 
-  <title>Omni - Play music using scales from around the world</title>
+  <title>Omni - Play &amp; learn about musical scales from around the world.</title>
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-  <meta name="description" content="Make beautiful music by playing and discovering old scales from around the world. Record loops, play with effects and experiment by mixing up scales &amp; key signatures.">
-  <meta property="og:url" content="http://www.femurdesign.com/omni/" />
-  <meta property="og:title" content="Omni - Experiment playing music using scales from around the world" />
-  <meta property="og:description" content="Make beautiful music by playing and discovering old scales from around the world. Record loops, play with effects and experiment by mixing up scales &amp; key signatures."
+  <meta name="description" content="Pluck the harp strings, add effects with the XY pad, change key signatures, add bass harmonies and record your own loops.">
+  <meta property="og:url" content="https://femurdesign.com/omni/" />
+  <meta property="og:title" content="Omni - Play &amp; learn about musical scales from around the world." />
+  <meta property="og:description" content="Pluck the harp strings, add effects with the XY pad, change key signatures, add bass harmonies and record your own loops."
   />
-  <meta property="og:image" content="http://femurdesign.com/omni/favicons/thumbnail-ipad.png" />
+  <meta property="og:image" content="thumbnail.png" />
 
-  <link rel="image_src" href="favicons/thumbnail.png">
+  <link rel="image_src" href="thumbnail.png">
 
   <!-- fb -->
   <meta property="fb:admins" content="605035371" />
@@ -22,18 +22,17 @@
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@femurdesign">
-  <meta name="twitter:title" content="Omni - Experiment playing music using scales from around the world">
-  <meta name="twitter:description" content="Make beautiful music by playing and discovering old scales from around the world. Record loops, play with effects and experiment by mixing up scales &amp; key signatures.">
-  <meta name="twitter:image" content="favicons/thumbnail.png">
+  <meta name="twitter:title" content="Omni - Play &amp; learn about musical scales from around the world.">
+  <meta name="twitter:description" content="Pluck the harp strings, add effects with the XY pad, change key signatures, add bass harmonies and record your own loops.">
+  <meta name="twitter:image" content="thumbnail.png">
 
   <!-- G+ -->
-  <meta itemprop="name" content="Omni - Experiment playing music using scales from around the world" />
-  <meta itemprop="description" content="Make beautiful music by playing and discovering old scales from around the world. Record loops, play with effects and experiment by mixing up scales &amp; key signatures."
+  <meta itemprop="name" content="Omni - Play &amp; learn about musical scales from around the world." />
+  <meta itemprop="description" content="Pluck the harp strings, add effects with the XY pad, change key signatures, add bass harmonies and record your own loops."
   />
-  <link rel="author" href="http://www.femurdesign.com" />
+  <link rel="author" href="https://femurdesign.com" />
   <link rel="publisher" href="https://plus.google.com/108918707363344775133" />
 
-  <!-- ICONS from http://realfavicongenerator.net/-->
   <link rel="apple-touch-icon" sizes="57x57" href="favicons/apple-touch-icon-57x57.png?v2=GvvyQPg8Yv">
   <link rel="apple-touch-icon" sizes="60x60" href="favicons/apple-touch-icon-60x60.png?v2=GvvyQPg8Yv">
   <link rel="apple-touch-icon" sizes="72x72" href="favicons/apple-touch-icon-72x72.png?v2=GvvyQPg8Yv">
@@ -103,16 +102,15 @@
       var s = document.getElementsByTagName('script')[0];
       s.parentNode.insertBefore(wf, s);
     })(); </script>
-  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="favicons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="favicons/favicon.ico" type="image/x-icon">
 </head>
 
 <body>
   <div id="app" class="container fixed-window">
     <div class="flex main-view">
       <nav class="nav">
-        <h1>
-          <span class="omni-first-letter">O</span>MNI</h1>
+        <h1><span class="omni-first-letter">O</span>MNI</h1>
         <div class="nav-buttons">
           <div id="recordBtn" class="btn icon-record btn-record"></div>
           <div id="playBtn" class="btn icon-play btn-play"></div>
@@ -122,7 +120,7 @@
       <div class="scale-selector">
         <div id="scaleSelectPrevBtn" class="icon-arrow-left js-scaleSelectPrevBtn"></div>
         <div class="scale-text-container">
-          <h1 class="scale-name js-scale-name">xenakis</h1>
+          <h1 class="scale-name js-scale-name">Hexany</h1>
         </div>
         <div id="scaleSelectNextBtn" class="icon-arrow-right js-scaleSelectNextBtn"></div>
       </div>
@@ -167,6 +165,14 @@
         <div id="middle-switch" class="icon-xy middle-switch"></div>
         <section class="pitch-constellation-section">
           <div class="pitch-constellation">
+            <div class="circle circle--bass" id="bassView">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
             <div class="circle" id="pitchConstellation"></div>
             <div class="letters" id="pitch-constellation-letters">
 
@@ -238,57 +244,72 @@
       </section>
 
 
-      <section class="settings text-center">
-        <!-- <div class="setting">
-          <h4>voices</h4>
-          <div class="flex space-between settings-carousel" data-carousel='voices'>
-            <span data-carousel-prev id="scaleSelectPrevBtn" class="icon-arrow-left"></span>
-            <ul>
-              <li data-val="0" class="is-selected">Sound1</li>
-              <li data-val="1">Sound2</li>
-              <li data-val="2">Sound3</li>
-              <li data-val="3">Sound4</li>
-            </ul>
-            <span data-carousel-next class="icon-arrow-right"></span>
-          </div>
-        </div> -->
-        <div class="setting">
-          <h4>octaves</h4>
-          <div class="flex space-between settings-carousel" data-carousel='octave' data-carousel-rotate=false>
-            <span data-carousel-prev class="icon-minus"></span>
-            <ul>
-              <li data-val="1">1</li>
-              <li data-val="2">2</li>
-              <li data-val="3" class="is-selected">3</li>
-              <li data-val="4">4</li>
-              <li data-val="5">5</li>
-            </ul>
-            <span data-carousel-next class="icon-plus"></span>
-          </div>
-        </div>
-        <div class="setting">
-          <h4>offset</h4>
-          <div class="flex space-between settings-carousel" data-carousel='octaveOffset' data-carousel-rotate=false>
-            <span data-carousel-prev class="icon-minus"></span>
-            <ul>
-              <li data-val="-1">-1</li>
-              <li data-val="0" class="is-selected">0</li>
-              <li data-val="1">1</li>
-              <li data-val="2">2</li>
-              <li data-val="3">3</li>
-              <li data-val="4">4</li>
-            </ul>
-            <span data-carousel-next class="icon-plus"></span>
-          </div>
-        </div>
-      </section>
+
       <article>
-        <p class="tip-desktop">TIP: Use your computer keyboard. Letters play notes, numbers change the key signature and arrows switch between scales.</p>
+        <h3>About</h3>
+        <p>I made this app for anyone to play and listen to how different musical scales sound.</p>
+
+        <p>A scale is simply a collection of tones. The major scale for instance has 7 different tones, but by changing the pitches of these we can completely change the mood and feel of music. I've picked 40 of my favourites to explore. They have roots from cultures all around the world and some have been in existence for over 50,000 years. The pitch constellation circle will tell you where the tones are situated within an octave and I've included the frequencies for each scale above.</p>
+
+        <p>Strum the harp, add effects with the XY pad, mix key signatures and record your own loops. Enjoy!</p>
+        <p><a href="https://femurdesign.com">Luke Phillips</a></p>
+
+
+        <!-- <p class="tip-desktop">TIP: Use your computer keyboard. Letters play notes, numbers change the key signature and arrows switch between scales.</p>
         <p class="tip-mobile">TIP: Swiping within the pitch constellation circle will play bass notes in the scale.</p>
+
+        <p class="omni-information">Omni </p> -->
       </article>
+
       <section class="settings text-center">
-        <a id="downloadBtn" class="btn-download">Export Loop</a>
-      </section>
+          <div class="setting">
+            <h3>Octaves</h3>
+            <div class="flex space-between settings-carousel" data-carousel='octave' data-carousel-rotate=false>
+              <span data-carousel-prev class="icon-minus"></span>
+              <ul>
+                <li data-val="1">1</li>
+                <li data-val="2">2</li>
+                <li data-val="3" class="is-selected">3</li>
+                <li data-val="4">4</li>
+                <li data-val="5">5</li>
+              </ul>
+              <span data-carousel-next class="icon-plus"></span>
+            </div>
+          </div>
+          <div class="setting">
+            <h3>Offset</h3>
+            <div class="flex space-between settings-carousel" data-carousel='octaveOffset' data-carousel-rotate=false>
+              <span data-carousel-prev class="icon-minus"></span>
+              <ul>
+                <li data-val="-1">-1</li>
+                <li data-val="0" class="is-selected">0</li>
+                <li data-val="1">1</li>
+                <li data-val="2">2</li>
+                <li data-val="3">3</li>
+                <li data-val="4">4</li>
+              </ul>
+              <span data-carousel-next class="icon-plus"></span>
+            </div>
+          </div>
+
+          <a id="downloadBtn" class="btn-download">Export Loop</a>
+
+        </section>
+
+        <article>
+
+          <h3>Keyboard Shortcuts</h3>
+
+          <p>Arrows - Change scales</br>
+          Numbers - Change key signatures</br>
+          Letters - Harp notes</br>
+          Letters (bottom row) - Bass notes</p>
+
+          <!-- <p class="tip-desktop">TIP: Use your computer keyboard. Letters play notes, numbers change the key signature and arrows switch between scales.</p>
+          <p class="tip-mobile">TIP: Swiping within the pitch constellation circle will play bass notes in the scale.</p>
+
+          <p class="omni-information">Omni </p> -->
+        </article>
       <footer>
         <!-- <div id="getTheApp" class="get-the-app">
           <h2>Get the app</h2>
@@ -298,14 +319,14 @@
             <a href="#">desktop</a>
           </div>
         </div> -->
-        <div class="website">
+        <!-- <div class="website">
           <a href="https://femurdesign.com">femurdesign.com</a>
-        </div>
-        <div class="share">
+        </div> -->
+        <!-- <div class="share">
           <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A//femurdesign.com/omni" class="icon-fb"></a>
           <a target="_blank" href="https://twitter.com/home?status=Omni%20-%20Play%20music%20using%20scales%20from%20around%20the%20world%20by%20%40femurdesign%20https%3A//femurdesign.com/omni"
             class="icon-tw"></a>
-        </div>
+        </div> -->
       </footer>
     </div>
 
@@ -323,6 +344,6 @@
 
   <!--<script src="cordova.js"></script>-->
 
-<script type="text/javascript" src="vendor.bundle.js"></script><script type="text/javascript" src="bundle-806f7dbfc59896d7dc07.js"></script></body>
+<script type="text/javascript" src="vendor.bundle.js"></script><script type="text/javascript" src="bundle-f46e704dba10b720ae06.js"></script></body>
 
 </html>

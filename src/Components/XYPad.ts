@@ -9,7 +9,7 @@ import {
 class XYPad {
 
   x = 0.5;
-  y = 0.3;
+  y = 0.9;
   buttonSize = 30;
   buttonColor = '#FF6969';
 

@@ -46,7 +46,7 @@ export function createIOSSafeAudioContext(desiredSampleRate = 44100): AudioConte
 
 
 var isWebAudioUnlocked = false;
-var isHTMLAudioUnlocked = false;
+var isHTMLAudioUnlocked = true;
 
 export function unlock(myContext: AudioContext) {
     if (isWebAudioUnlocked  && isHTMLAudioUnlocked) return;
@@ -59,11 +59,9 @@ export function unlock(myContext: AudioContext) {
     source.connect(myContext.destination);
     source.onended = function()
     {
-        console.log("WebAudio unlocked!");
         isWebAudioUnlocked = true;
         if (isWebAudioUnlocked && isHTMLAudioUnlocked)
         {
-            console.log("WebAudio unlocked and playable w/ mute toggled on!");
             window.removeEventListener("mousedown", () => unlock(myContext));
             window.removeEventListener("touchstart", () => unlock(myContext));
 
@@ -71,25 +69,24 @@ export function unlock(myContext: AudioContext) {
     };
     source.start();
 
+    // TODO: This makes iOS crackle and pop so I decided against using it. ToneJS has Unmute which does the same thing - but also crackles for me
     // Unlock HTML5 Audio - load a data url of short silence and play it
     // This will allow us to play web audio when the mute toggle is on
-    var silenceDataURL:string = "data:audio/mp3;base64,//MkxAAHiAICWABElBeKPL/RANb2w+yiT1g/gTok//lP/W/l3h8QO/OCdCqCW2Cw//MkxAQHkAIWUAhEmAQXWUOFW2dxPu//9mr60ElY5sseQ+xxesmHKtZr7bsqqX2L//MkxAgFwAYiQAhEAC2hq22d3///9FTV6tA36JdgBJoOGgc+7qvqej5Zu7/7uI9l//MkxBQHAAYi8AhEAO193vt9KGOq+6qcT7hhfN5FTInmwk8RkqKImTM55pRQHQSq//MkxBsGkgoIAABHhTACIJLf99nVI///yuW1uBqWfEu7CgNPWGpUadBmZ////4sL//MkxCMHMAH9iABEmAsKioqKigsLCwtVTEFNRTMuOTkuNVVVVVVVVVVVVVVVVVVV//MkxCkECAUYCAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV";
-    var tag:HTMLAudioElement = document.createElement("audio");
-    tag.controls = false;
-    tag.preload = "auto";
-    tag.loop = false;
-    tag.src = silenceDataURL;
-    tag.onended = function()
-    {
-        console.log("HTMLAudio unlocked!");
-        isHTMLAudioUnlocked = true;
-        if (isWebAudioUnlocked && isHTMLAudioUnlocked)
-        {
-            console.log("WebAudio unlocked and playable w/ mute toggled on!");
-            window.removeEventListener("mousedown", () => unlock(myContext));
-            window.removeEventListener("touchstart", () => unlock(myContext));
-        }
-    };
-    var p = tag.play();
-    if (p) p.then(function(){console.log("play success")}, function(reason){console.log("play failed", reason)});
+    // var silenceDataURL = "data:audio/mp3;base64,//MkxAAHiAICWABElBeKPL/RANb2w+yiT1g/gTok//lP/W/l3h8QO/OCdCqCW2Cw//MkxAQHkAIWUAhEmAQXWUOFW2dxPu//9mr60ElY5sseQ+xxesmHKtZr7bsqqX2L//MkxAgFwAYiQAhEAC2hq22d3///9FTV6tA36JdgBJoOGgc+7qvqej5Zu7/7uI9l//MkxBQHAAYi8AhEAO193vt9KGOq+6qcT7hhfN5FTInmwk8RkqKImTM55pRQHQSq//MkxBsGkgoIAABHhTACIJLf99nVI///yuW1uBqWfEu7CgNPWGpUadBmZ////4sL//MkxCMHMAH9iABEmAsKioqKigsLCwtVTEFNRTMuOTkuNVVVVVVVVVVVVVVVVVVV//MkxCkECAUYCAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV";
+    // var tag = document.createElement("audio");
+    // tag.controls = false;
+    // tag.preload = "auto";
+    // tag.loop = false;
+    // tag.src = silenceDataURL;
+    // tag.onended = function()
+    // {
+    //     isHTMLAudioUnlocked = true;
+    //     if (isWebAudioUnlocked && isHTMLAudioUnlocked)
+    //     {
+    //         window.removeEventListener("mousedown", () => unlock(myContext));
+    //         window.removeEventListener("touchstart", () => unlock(myContext));
+    //     }
+    // };
+    // tag.play();
+    // if (p) p.then(function(){console.log("play success")}, function(reason){console.log("play failed", reason)});
 }
