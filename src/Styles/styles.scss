@@ -217,7 +217,10 @@ h5 {
 }
 
 a {
-  color: #ff6969;
+  color: #797979;
+  &:hover {
+    color: #ff6969;
+  }
 }
 
 
@@ -935,6 +938,8 @@ li {
   margin: 40px 0 20px;
   background: #fff4eb;
   padding: 22px 20px;
+  border-right: 1px solid #ffb2a3;
+  border-bottom: 1px solid #ffb2a3;
   @include sm {
     margin: 1em 0;
   }
@@ -1117,6 +1122,8 @@ li {
     text-align: center;
     background: hsla(28, 100%, 96%, 1);
     padding: 10px 20px;
+    border-right: 1px solid #ffb2a3;
+    border-bottom: 1px solid #ffb2a3;
     user-select: auto;
   }
 
@@ -1183,11 +1190,17 @@ li {
   max-width: 580px;
   margin: 0 auto;
   padding: 0 40px;
-  border: 1px solid #ffb2a3;
+  border-right: 1px solid #ffb2a3;
+  border-bottom: 1px solid #ffb2a3;
+  background: #fff4eb;
 
   margin-bottom: 5px;
   @include sm {
     margin-bottom: 20px;
+  }
+
+  h3 {
+    margin-bottom: 0;
   }
 
   .setting {
