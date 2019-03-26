@@ -26,6 +26,7 @@ const SVGInjector = require('svg-injector')
 
 import { KeyboardManager } from './Inputs/KeyboardManager';
 import { getKeyBinding, getKeyType, KeyType, KeyboardEventLatest, keyboardCodeMap } from './Inputs/KeyboardBindings';
+import { unlock } from '../Utils/Audio/iOS';
 
 interface IState {
   droneIdx: number;
@@ -128,6 +129,9 @@ class App {
     this.harp = new Harp(<HTMLCanvasElement>document.getElementById('harp'));
 
     this.audio = new AudioController();
+
+    window.addEventListener("mousedown", () => unlock(this.audio.context));
+    window.addEventListener("touchstart", () => unlock(this.audio.context));
 
     this.xyPad = new XYPad(<HTMLCanvasElement>document.getElementById('xyPad'));
     const xAxisOutputEl = $('#xAxisVal')[0];
