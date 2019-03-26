@@ -8,4 +8,4 @@ Strum the harp, play with 5 effects using the XY pad, mix key signatures, add ba
 
 https://femurdesign.com/omni
 
-<img src="https://femurdesign.com/img/omni.png" />
+<a href="https://femurdesign.com/omni"><img src="https://femurdesign.com/img/omni.png" /></a>
