@@ -51,16 +51,26 @@ class Harp {
 
   decrementAlpha = (alpha, noteIndex, scale) => {
     if (alpha <= 0) return 0;
-    const decreaseAmount = 0.01;
+    const decreaseAmount = 0.04;
     if (noteIndex % scale.length === 0) {
-      return alpha > ROOT_NOTE_MIN_ALPHA ? alpha - decreaseAmount : ROOT_NOTE_MIN_ALPHA;
+      return alpha > (ROOT_NOTE_MIN_ALPHA + decreaseAmount) ?
+        alpha - decreaseAmount : ROOT_NOTE_MIN_ALPHA;
     }
     return alpha - decreaseAmount;
   }
 
-  draw(scale): void {
+  init = () => {
     // drawing every frame - better to only draw when notes are playing
-    this._DrawAnimationFrame = requestAnimationFrame(this.draw.bind(this, scale));
+    this._DrawAnimationFrame = requestAnimationFrame(this.animate);
+  }
+
+  animate = () => {
+    this._DrawAnimationFrame = requestAnimationFrame(this.animate);
+    this.draw();
+  }
+
+  draw = () => {
+    const scale = Omni.state.scale.frequencies;
 
     const ctx = this.canvas.getContext('2d');
     if (!ctx) return;
@@ -187,10 +197,6 @@ class Harp {
     Omni.audio.harpNoteOn(key, undefined, -1);
   }
 
-  onResize() {
-    canvasRenderAtPixelRatio(this.canvas);
-  }
-
   updateScale(scale, rootNoteIdx = 0) {
 
     const len = scale.length;
@@ -214,7 +220,7 @@ class Harp {
     this.colors = colors;
     Omni.audio.scale = scale;
     Omni.audio.rootNoteIdx = rootNoteIdx;
-    this.draw(scale);
+    this.draw();
   }
 
   private _getNoteIndexFromPosition(x: number): number {

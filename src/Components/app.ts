@@ -210,7 +210,7 @@ class App {
 
     initViewController();
 
-
+    this.harp.init();
     // draw everything
     this.draw();
 
@@ -371,7 +371,6 @@ class App {
   onResize() {
 
     // Resize canvas components
-    this.harp.onResize();
     this.xyPad.onResize();
 
     this.draw();
@@ -382,7 +381,6 @@ class App {
    */
   draw() {
     if (this.state.scale.frequencies) {
-      this.harp.draw(this.state.scale.frequencies);
       this.xyPad.draw();
       this.pitchConstellation.drawLines(this.state.scale.frequencies);
       // this.sliders.forEach(s => s.draw());
