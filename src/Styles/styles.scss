@@ -124,7 +124,7 @@ $screen-xlg: 1400px;
 // This stops the page from scrolling on overflow
 body, html {height:100%;}
 body {overflow: hidden; }
-div.fixed-window {height:100%; overflow:hidden;}
+div.fixed-window {overflow:hidden; height: 100%}
 
 body {
   font-family: $font-secondary;
@@ -463,6 +463,11 @@ li {
     height: 83px;
     margin-bottom: 30px;
   }
+
+  @include landscape-xs {
+    margin-bottom: 0;
+  }
+
   h1 {
     font-style: normal;
     color: #ffb2a3;
@@ -1062,6 +1067,14 @@ li {
   canvas {
     width: 100%;
   }
+  max-height: 45vh;
+  @include low-height {
+    max-height: 36vh;
+  }
+
+  @include landscape-xs {
+    max-height: 100vh;
+  }
 }
 
 .effects-choice-overlay {
@@ -1139,6 +1152,8 @@ li {
     @include sm {
       padding-left: 18px;
     }
+
+
   }
 
   > nav, > section, > footer {
