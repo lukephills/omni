@@ -13,7 +13,7 @@
     "url": "https://github.com/lukephills/omni/issues"
   },
   "scripts": {
-    "build": "webpack --progress --colors && npm run copyAssets && npm run copyFavicons && npm run copyOgImage && npm run zip",
+    "build": "rm -f dist/bundle-* && webpack --progress --colors && npm run copyAssets && npm run copyFavicons && npm run copyOgImage && npm run zip",
     "zip": "zip -r bundle.zip dist/*",
     "copyFavicons": "cp -a src/favicons dist",
     "copyOgImage": "cp thumbnail.png dist/thumbnail.png",

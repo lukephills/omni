@@ -117,7 +117,6 @@ $screen-xlg: 1400px;
 
 *, *:before, *:after {
   box-sizing: border-box;
-  user-select: none;
 }
 
 
@@ -448,6 +447,7 @@ li {
 .main-view {
   height: 100%;
   flex-direction: column;
+  user-select: none;
 }
 
 .nav {
@@ -456,6 +456,7 @@ li {
   justify-content: space-between;
   align-items: center;
   height: 58px;
+  user-select: none;
 
 
 
@@ -1058,7 +1059,7 @@ li {
 .harp {
   flex: 2;
   @include md {
-    flex: 4;
+    flex: 8;
   }
   border-top: $border;
   border-left: $border;

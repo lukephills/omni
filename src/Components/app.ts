@@ -372,6 +372,7 @@ class App {
 
     // Resize canvas components
     this.xyPad.onResize();
+    this.harp.onResize();
 
     this.draw();
   }

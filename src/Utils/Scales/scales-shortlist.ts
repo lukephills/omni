@@ -4,8 +4,6 @@ const NOTE_STRINGS = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb'
 
 // const midiPitchC = 60
 
-//TODO: all the conversion functions needed http://www.flutopedia.com/pitch_to_frequency.htm
-
 /**
  * Convert a MIDI pitch to the frequency. Can also pass an optional base tuning which is 440 by default
  * @param midi

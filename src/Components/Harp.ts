@@ -1,4 +1,4 @@
-import { IdentifierIndexMap } from '../Utils/utils';
+import { IdentifierIndexMap, throttle } from '../Utils/utils';
 import { getPixelRatio, getCoordinateFromEventAsPercentageWithinElement } from '../Utils/CanvasUtils';
 import MultiTouch from './MultiTouch';
 
@@ -68,6 +68,11 @@ class Harp {
     this._DrawAnimationFrame = requestAnimationFrame(this.animate);
     this.draw();
   }
+
+  onResize = throttle(() => {
+    canvasRenderAtPixelRatio(this.canvas);
+    this.pixelRatio = getPixelRatio();
+  }, 100)
 
   draw = () => {
     const scale = Omni.state.scale.frequencies;
