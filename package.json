@@ -2,7 +2,7 @@
   "name": "omni",
   "version": "0.3.0",
   "description": "Synthesizer with musical scales using multi-touch & keyboard",
-  "main": "dist/app.js",
+  "main": "main.js",
   "author": "Luke Phillips",
   "homepage": "http://femurdesign.com/",
   "repository": {
@@ -18,10 +18,17 @@
     "copyFavicons": "cp -a src/favicons dist",
     "copyOgImage": "cp thumbnail.png dist/thumbnail.png",
     "copyAssets": "cp src/assets/teufelsberg01.mp3 dist/assets/teufelsberg01.mp3",
-    "start": "webpack-dev-server --debug --devtool cheap-module-source-map --output-pathinfo --history-api-fallback --hot --inline --progress --colors --port 3000",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron-forge start",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.54",
+    "@electron-forge/maker-deb": "^6.0.0-beta.54",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.54",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
+    "@electron-forge/maker-zip": "^6.0.0-beta.54",
     "@types/classnames": "2.2.3",
     "@types/history": "4.6.2",
     "@types/node": "^4.0.22-alpha",
@@ -34,13 +41,14 @@
     "@types/webpack-env": "1.13.2",
     "awesome-typescript-loader": "^3.4.0",
     "css-loader": "^0.28.7",
+    "electron": "^12.0.4",
     "es6-promise": "^3.2.1",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.5",
     "glob": "^7.0.5",
     "html-loader": "^0.5.1",
     "html-webpack-plugin": "^2.30.1",
-    "node-sass": "^4.7.2",
+    "node-sass": "^4.14.1",
     "postcss": "^6.0.14",
     "postcss-browser-reporter": "^0.5.0",
     "postcss-cssnext": "^3.0.2",
@@ -68,6 +76,7 @@
     "audio-buffer-utils": "^2.0.1",
     "classnames": "^2.2.5",
     "document-visibility": "^1.0.1",
+    "electron-squirrel-startup": "^1.0.0",
     "es6-map": "^0.1.4",
     "inline-worker": "^1.1.0",
     "merge-audio-buffers": "^1.0.0",
@@ -80,5 +89,32 @@
     "redux-actions": "^2.2.1",
     "svg-injector": "^1.1.3",
     "worker-timer": "^1.0.0"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "omni"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
   }
 }
